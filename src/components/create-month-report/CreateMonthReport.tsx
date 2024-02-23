@@ -15,17 +15,20 @@ const CreateMonthReport = () => {
     <div className="create-month-report">
       <div className="create-month-report input-block">
         <InputElement
-          labelText="Hot"
-          onchange={(event) => onChangeHandler(event, "hot")}
-          value={hot}
-        />
-        <InputElement
           labelText="Cold"
+          meterName="cold"
           onchange={(event) => onChangeHandler(event, "cold")}
           value={cold}
         />
         <InputElement
+          labelText="Hot"
+          meterName="hot"
+          onchange={(event) => onChangeHandler(event, "hot")}
+          value={hot}
+        />
+        <InputElement
           labelText="Electricity"
+          meterName="electricity"
           onchange={(event) => onChangeHandler(event, "electricity")}
           value={electricity}
         />

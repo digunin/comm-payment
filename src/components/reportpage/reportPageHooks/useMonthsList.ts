@@ -18,7 +18,6 @@ type returnedFromUseMonthsList = {
   fullYear: Array<number>;
   recordedMonths: Array<number>;
   onMonthButtonClick: (month: Months) => void;
-  onAddButtonClick: () => void;
   selectedMonth: Months | null;
   selectedYear: number | null;
   isAddButtonNeed: boolean;
@@ -36,21 +35,8 @@ export function useMonthsList(): returnedFromUseMonthsList {
   let isAddButtonNeed = false;
   if (latestYear === selectedYear && latestMonth < Months.dec)
     isAddButtonNeed = true;
-  const { latestReadings } = useSelector(selectLatestRecord);
-  const { cold, hot, electricity } = latestReadings;
   const onMonthButtonClick = (month: Months) => {
     dispatch(setSelected({ selectedYear, selectedMonth: month }));
-  };
-
-  const onAddButtonClick = () => {
-    dispatch(toggleCreateMode());
-    dispatch(
-      setAllFields({
-        cold: { value: cold.totalValue, error: null },
-        hot: { value: hot.totalValue, error: null },
-        electricity: { value: electricity.totalValue, error: null },
-      })
-    );
   };
 
   const recordedMonths = Object.keys(yearReport).map((month) => Number(month));
@@ -65,7 +51,6 @@ export function useMonthsList(): returnedFromUseMonthsList {
     fullYear,
     recordedMonths,
     onMonthButtonClick,
-    onAddButtonClick,
     selectedMonth,
     selectedYear,
     isAddButtonNeed,

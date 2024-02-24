@@ -12,35 +12,21 @@ import {
 import YearButton from "./YearButton";
 import { AppDispatch } from "../../store";
 import { useSelected } from "./reportPageHooks/useSelected";
+import AddRecordButton from "./AddRecordButton";
 
 const YearsList = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const years = useSelector(selectYearsDesc);
   const { selectedYear } = useSelected();
-  const { latestReadings } = useSelector(selectLatestRecord);
-  const { cold, hot, electricity } = latestReadings;
 
   const onYearButtonClick = (year: number) => {
     dispatch(setSelected({ selectedYear: year, selectedMonth: null }));
   };
 
-  const onAddButtonClick = () => {
-    dispatch(toggleCreateMode());
-    dispatch(
-      setAllFields({
-        cold: { value: cold.totalValue, error: null },
-        hot: { value: hot.totalValue, error: null },
-        electricity: { value: electricity.totalValue, error: null },
-      })
-    );
-  };
-
   return (
     <div className="report-block years-list">
-      <button className="year-button add-button" onClick={onAddButtonClick}>
-        +
-      </button>
+      <AddRecordButton />
       {years.map((year) => {
         return (
           <YearButton

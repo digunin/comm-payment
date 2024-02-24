@@ -39,22 +39,11 @@ test("renders report page", () => {
   fireEvent.click(getByTestId("btn-setstate"));
   expect(container.firstChild).toHaveClass("global-report");
   expect(container.getElementsByClassName("years-list").length).toBe(1);
-  expect(
-    container.getElementsByClassName("year-button add-button").length
-  ).toBe(1);
+  expect(container.getElementsByClassName("add-button").length).toBe(1);
   expect(container.getElementsByClassName("year-button selected").length).toBe(
     0
   );
-  expect(container.getElementsByClassName("year-button").length).toBe(4);
-  expect(
-    container.getElementsByClassName("year-button add-button").length
-  ).toBe(1);
-  expect(container.getElementsByClassName("year-button selected").length).toBe(
-    0
-  );
-  expect(
-    container.getElementsByClassName("month-button add-button").length
-  ).toBe(0);
+  expect(container.getElementsByClassName("year-button").length).toBe(3);
 
   // click year 2016
   fireEvent.click(container.getElementsByClassName("year-button year-2016")[0]);
@@ -70,9 +59,7 @@ test("renders report page", () => {
     container.getElementsByClassName("year-button year-2021")[0]
   ).not.toHaveClass("selected");
   expect(container.getElementsByClassName("month-button").length).toBe(9);
-  expect(
-    container.getElementsByClassName("month-button add-button").length
-  ).toBe(0);
+  expect(container.getElementsByClassName("add-button").length).toBe(1);
   expect(container.getElementsByClassName("month-button disabled").length).toBe(
     5
   );
@@ -128,9 +115,7 @@ test("renders report page", () => {
     container.getElementsByClassName("year-button year-2021")[0]
   ).not.toHaveClass("selected");
   expect(container.getElementsByClassName("month-button").length).toBe(12);
-  expect(
-    container.getElementsByClassName("month-button add-button").length
-  ).toBe(0);
+  expect(container.getElementsByClassName("add-button").length).toBe(1);
   expect(container.getElementsByClassName("month-button disabled").length).toBe(
     8
   );
@@ -185,10 +170,8 @@ test("renders report page", () => {
   expect(
     container.getElementsByClassName("year-button year-2021")[0]
   ).toHaveClass("selected");
-  expect(container.getElementsByClassName("month-button").length).toBe(11);
-  expect(
-    container.getElementsByClassName("month-button add-button").length
-  ).toBe(1);
+  expect(container.getElementsByClassName("month-button").length).toBe(10);
+  expect(container.getElementsByClassName("add-button").length).toBe(2);
   expect(container.getElementsByClassName("month-button disabled").length).toBe(
     6
   );

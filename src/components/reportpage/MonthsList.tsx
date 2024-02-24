@@ -1,13 +1,13 @@
 import React from "react";
 import MonthButton from "./MonthButton";
 import { useMonthsList } from "./reportPageHooks/useMonthsList";
+import AddRecordButton from "./AddRecordButton";
 
 const MonthsList = () => {
   const {
     fullYear,
     recordedMonths,
     onMonthButtonClick,
-    onAddButtonClick,
     selectedMonth,
     selectedYear,
     isAddButtonNeed,
@@ -27,11 +27,7 @@ const MonthsList = () => {
           <MonthButton month={month} disabled={true} key={`month-${month}`} />
         );
       })}
-      {isAddButtonNeed && (
-        <button className="month-button add-button" onClick={onAddButtonClick}>
-          +
-        </button>
-      )}
+      {isAddButtonNeed && <AddRecordButton />}
     </div>
   );
 };

@@ -1,16 +1,21 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { Provider, useDispatch } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import { AppDispatch, store } from "../../store";
 import ReportPage from "./ReportPage";
 import { testTotalReport } from "../../store/payment/paymentReducer.utils";
 import { oldPrices } from "../../store/price/priceReducer.spec";
-import { setPaymentsState } from "../../store/payment/paymentReducer";
+import {
+  selectStartReadings,
+  setPaymentsState,
+} from "../../store/payment/paymentReducer";
 import { Price, setPriceState } from "../../store/price/priceReducer";
 
 const App = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const isNewReport = !useSelector(selectStartReadings);
+
   const actualPrice: Price = oldPrices[4];
   const setState = () => {
     dispatch(setPaymentsState(testTotalReport));
@@ -18,7 +23,7 @@ const App = () => {
   };
   return (
     <>
-      <ReportPage />
+      {!isNewReport && <ReportPage />}
       <button data-testid="btn-setstate" onClick={setState}></button>
     </>
   );
@@ -31,16 +36,15 @@ test("renders report page", () => {
     </Provider>
   );
 
+  fireEvent.click(getByTestId("btn-setstate"));
   expect(container.firstChild).toHaveClass("global-report");
   expect(container.getElementsByClassName("years-list").length).toBe(1);
-  expect(container.getElementsByClassName("year-button").length).toBe(1);
   expect(
     container.getElementsByClassName("year-button add-button").length
   ).toBe(1);
   expect(container.getElementsByClassName("year-button selected").length).toBe(
     0
   );
-  fireEvent.click(getByTestId("btn-setstate"));
   expect(container.getElementsByClassName("year-button").length).toBe(4);
   expect(
     container.getElementsByClassName("year-button add-button").length

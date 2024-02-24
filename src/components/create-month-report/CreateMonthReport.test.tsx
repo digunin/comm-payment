@@ -3,10 +3,7 @@ import "@testing-library/jest-dom";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { AppDispatch, store } from "../../store";
 import CreateMonthReport from "./CreateMonthReport";
-import {
-  MeterReadings,
-  testTotalReport,
-} from "../../store/payment/paymentReducer.utils";
+import { testTotalReport } from "../../store/payment/paymentReducer.utils";
 import { fireEvent, render } from "@testing-library/react";
 import { Price, setPriceState } from "../../store/price/priceReducer";
 import { oldPrices } from "../../store/price/priceReducer.spec";
@@ -14,6 +11,10 @@ import {
   selectStartReadings,
   setPaymentsState,
 } from "../../store/payment/paymentReducer";
+import {
+  PhysicalMeters,
+  setAllFields,
+} from "../../store/form/createMonthReportReducer";
 
 const App = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -22,6 +23,13 @@ const App = () => {
   const setState = () => {
     dispatch(setPaymentsState(testTotalReport));
     dispatch(setPriceState({ actualPrice, oldPrices: [] }));
+    dispatch(
+      setAllFields({
+        cold: { value: 211000, error: null },
+        hot: { value: 211001, error: null },
+        electricity: { value: 211002, error: null },
+      })
+    );
   };
 
   return (
@@ -33,7 +41,7 @@ const App = () => {
 };
 
 const enterText = (
-  meterName: Exclude<keyof MeterReadings, "waterWaste">,
+  meterName: PhysicalMeters,
   container: HTMLElement,
   text: string
 ) => {
@@ -46,7 +54,7 @@ const enterText = (
 };
 
 const chekEnteredText = (
-  meterName: Exclude<keyof MeterReadings, "waterWaste">,
+  meterName: PhysicalMeters,
   container: HTMLElement,
   text: string
 ) => {

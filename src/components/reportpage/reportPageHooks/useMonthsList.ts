@@ -7,8 +7,11 @@ import {
 import {
   selectLatestRecord,
   setSelected,
-  toggleCreateMode,
 } from "../../../store/payment/paymentReducer";
+import {
+  setAllFields,
+  toggleCreateMode,
+} from "../../../store/form/createMonthReportReducer";
 import { useSelected } from "./useSelected";
 
 type returnedFromUseMonthsList = {
@@ -33,12 +36,22 @@ export function useMonthsList(): returnedFromUseMonthsList {
   let isAddButtonNeed = false;
   if (latestYear === selectedYear && latestMonth < Months.dec)
     isAddButtonNeed = true;
-
+  const { latestReadings } = useSelector(selectLatestRecord);
+  const { cold, hot, electricity } = latestReadings;
   const onMonthButtonClick = (month: Months) => {
     dispatch(setSelected({ selectedYear, selectedMonth: month }));
   };
 
-  const onAddButtonClick = () => dispatch(toggleCreateMode());
+  const onAddButtonClick = () => {
+    dispatch(toggleCreateMode());
+    dispatch(
+      setAllFields({
+        cold: { value: cold.totalValue, error: null },
+        hot: { value: hot.totalValue, error: null },
+        electricity: { value: electricity.totalValue, error: null },
+      })
+    );
+  };
 
   const recordedMonths = Object.keys(yearReport).map((month) => Number(month));
   const fullYear =

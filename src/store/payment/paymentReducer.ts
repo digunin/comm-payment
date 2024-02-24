@@ -17,13 +17,11 @@ export interface PaymentsState {
   // key is year
   [key: number]: YearReport;
   selected: Selected;
-  createMode: boolean;
 }
 
 const initialState: PaymentsState = {
   startReadings: null,
   selected: { selectedYear: null, selectedMonth: null },
-  createMode: false,
 };
 
 const paymentSlice = createSlice({
@@ -38,9 +36,6 @@ const paymentSlice = createSlice({
     },
     setSelected: (state, action: PayloadAction<Selected>) => {
       state.selected = action.payload;
-    },
-    toggleCreateMode: (state) => {
-      state.createMode = !state.createMode;
     },
   },
 });
@@ -61,11 +56,7 @@ export const selectLatestRecord = (
   return getLatestMeterReadings(state.paymentState);
 };
 
-export const {
-  addStartReadings,
-  setPaymentsState,
-  setSelected,
-  toggleCreateMode,
-} = paymentSlice.actions;
+export const { addStartReadings, setPaymentsState, setSelected } =
+  paymentSlice.actions;
 
 export default paymentSlice.reducer;

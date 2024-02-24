@@ -6,7 +6,7 @@ type inputField = {
   error: string | null;
 };
 
-type PhysicalMeters = Exclude<keyof MeterReadings, "waterWaste">;
+export type PhysicalMeters = Exclude<keyof MeterReadings, "waterWaste">;
 
 type InputFields = {
   [key in PhysicalMeters]: inputField;
@@ -47,14 +47,23 @@ const CreateMonthReportSlice = createSlice({
     },
     setInputField: (
       state,
-      action: PayloadAction<{ name: PhysicalMeters; inputField: inputField }>
+      action: PayloadAction<{
+        name: PhysicalMeters;
+        inputField: Partial<inputField>;
+      }>
     ) => {
-      state.inputFields[action.payload.name] = action.payload.inputField;
+      state.inputFields[action.payload.name] = {
+        ...state.inputFields[action.payload.name],
+        ...action.payload.inputField,
+      };
+    },
+    setAllFields: (state, action: PayloadAction<InputFields>) => {
+      state.inputFields = action.payload;
     },
   },
 });
 
-export const { setCreateMode, toggleCreateMode, setInputField } =
+export const { setCreateMode, toggleCreateMode, setInputField, setAllFields } =
   CreateMonthReportSlice.actions;
 
 export default CreateMonthReportSlice.reducer;

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { MeterReadings } from "../../store/payment/paymentReducer.utils";
+import React from "react";
+import { PhysicalMeters } from "../../store/form/createMonthReportReducer";
 
 type IEProps = {
   labelText: string;
-  meterName: Exclude<keyof MeterReadings, "waterWaste">;
+  meterName: PhysicalMeters;
   value: string | number;
   onchange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { toggleCreateMode } from "../../store/payment/paymentReducer";
 import InputElement from "./InputElement";
+import { toggleCreateMode } from "../../store/form/createMonthReportReducer";
 import { useCreateMonthReport } from "./useCreateMonthReport";
 
 const CreateMonthReport = () => {

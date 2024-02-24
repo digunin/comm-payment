@@ -104,7 +104,6 @@ export const testTotalReport: PaymentsState = {
     waterWaste: { monthValue: 0, totalValue: 104 },
   },
   selected: { selectedYear: null, selectedMonth: null },
-  createMode: false,
   2014: {
     [Months.apr]: {
       meterReadings: {

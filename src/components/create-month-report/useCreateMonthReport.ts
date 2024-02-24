@@ -1,7 +1,9 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { selectLatestRecord } from "../../store/payment/paymentReducer";
-import { MeterReadings } from "../../store/payment/paymentReducer.utils";
+import { AppDispatch, RootState } from "./../../store/index";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  PhysicalMeters,
+  setInputField,
+} from "../../store/form/createMonthReportReducer";
 
 type returnedCreateMonthReport = {
   values: {
@@ -11,28 +13,39 @@ type returnedCreateMonthReport = {
   };
   onChangeHandler: (
     event: React.ChangeEvent<HTMLInputElement>,
-    meterName: Exclude<keyof MeterReadings, "waterWaste">
+    meterName: PhysicalMeters
   ) => void;
 };
 
 export function useCreateMonthReport(): returnedCreateMonthReport {
-  const { latestReadings } = useSelector(selectLatestRecord);
-  const { hot, cold, electricity } = latestReadings;
-  const [values, setValues] = useState({
-    hot: hot.totalValue,
-    cold: cold.totalValue,
-    electricity: electricity.totalValue,
-  });
+  const dispatch = useDispatch<AppDispatch>();
 
+  // const { latestReadings } = useSelector(selectLatestRecord);
+  // const { hot, cold, electricity } = latestReadings;
+  // const [values, setValues] = useState({
+  //   hot: hot.totalValue,
+  //   cold: cold.totalValue,
+  //   electricity: electricity.totalValue,
+  // });
+  const { hot, cold, electricity } = useSelector(
+    (state: RootState) => state.createMonthReportReducer.inputFields
+  );
+  const values = {
+    cold: cold.value,
+    hot: hot.value,
+    electricity: electricity.value,
+  };
   const onChangeHandler = (
     event: React.ChangeEvent<HTMLInputElement>,
-    meterName: Exclude<keyof MeterReadings, "waterWaste">
+    meterName: PhysicalMeters
   ) => {
     const inputed = Number(event.target.value);
     if (isNaN(inputed)) return;
     if (!Number.isInteger(inputed)) return;
     if (inputed === 0) return;
-    setValues({ ...values, [meterName]: inputed });
+    dispatch(
+      setInputField({ name: meterName, inputField: { value: inputed } })
+    );
   };
   return { values, onChangeHandler };
 }

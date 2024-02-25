@@ -4,29 +4,31 @@ import {
   PhysicalMeters,
   setInputField,
 } from "../../store/form/createMonthReportReducer";
+import { selectIsValidForm } from "./../../store/form/createMonthReportReducer";
+import { selectLatestRecord } from "../../store/payment/paymentReducer";
 
 type returnedCreateMonthReport = {
   values: {
-    hot: number;
-    cold: number;
-    electricity: number;
+    hot: number | string;
+    cold: number | string;
+    electricity: number | string;
+  };
+  errors: {
+    hot: string | null;
+    cold: string | null;
+    electricity: string | null;
   };
   onChangeHandler: (
     event: React.ChangeEvent<HTMLInputElement>,
     meterName: PhysicalMeters
   ) => void;
+  isValidForm: boolean;
 };
 
 export function useCreateMonthReport(): returnedCreateMonthReport {
   const dispatch = useDispatch<AppDispatch>();
-
-  // const { latestReadings } = useSelector(selectLatestRecord);
-  // const { hot, cold, electricity } = latestReadings;
-  // const [values, setValues] = useState({
-  //   hot: hot.totalValue,
-  //   cold: cold.totalValue,
-  //   electricity: electricity.totalValue,
-  // });
+  const { latestReadings } = useSelector(selectLatestRecord);
+  const isValidForm = useSelector(selectIsValidForm);
   const { hot, cold, electricity } = useSelector(
     (state: RootState) => state.createMonthReportReducer.inputFields
   );
@@ -35,17 +37,27 @@ export function useCreateMonthReport(): returnedCreateMonthReport {
     hot: hot.value,
     electricity: electricity.value,
   };
+  const errors = {
+    cold: cold.error,
+    hot: hot.error,
+    electricity: electricity.error,
+  };
   const onChangeHandler = (
     event: React.ChangeEvent<HTMLInputElement>,
     meterName: PhysicalMeters
   ) => {
-    const inputed = Number(event.target.value);
-    if (isNaN(inputed)) return;
-    if (!Number.isInteger(inputed)) return;
-    if (inputed === 0) return;
+    let inputed: number | string = event.target.value;
+    let error = null;
+    if (isNaN(Number(inputed)) || !Number.isInteger(Number(inputed))) {
+      error = "Показания счетчика должно быть целым полоительным числом";
+    }
+    if (Number(inputed) < latestReadings[meterName].totalValue) {
+      error = "Новое значение не может быть меньше предыдущего";
+    }
+    if (!error) inputed = Number(inputed);
     dispatch(
-      setInputField({ name: meterName, inputField: { value: inputed } })
+      setInputField({ name: meterName, inputField: { value: inputed, error } })
     );
   };
-  return { values, onChangeHandler };
+  return { errors, values, onChangeHandler, isValidForm };
 }

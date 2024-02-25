@@ -1,14 +1,9 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  selectLatestRecord,
   selectYearsDesc,
   setSelected,
 } from "../../store/payment/paymentReducer";
-import {
-  setAllFields,
-  toggleCreateMode,
-} from "../../store/form/createMonthReportReducer";
 import YearButton from "./YearButton";
 import { AppDispatch } from "../../store";
 import { useSelected } from "./reportPageHooks/useSelected";

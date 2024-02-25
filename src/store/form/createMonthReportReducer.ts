@@ -1,8 +1,9 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { MeterReadings } from "../payment/paymentReducer.utils";
+import { RootState } from "..";
 
 type inputField = {
-  value: number;
+  value: number | string;
   error: string | null;
 };
 
@@ -62,6 +63,14 @@ const CreateMonthReportSlice = createSlice({
     },
   },
 });
+
+export const selectIsValidForm = (state: RootState) => {
+  const fields: InputFields = state.createMonthReportReducer.inputFields;
+  for (const key of Object.keys(fields)) {
+    if (fields[key as PhysicalMeters].error) return false;
+  }
+  return true;
+};
 
 export const { setCreateMode, toggleCreateMode, setInputField, setAllFields } =
   CreateMonthReportSlice.actions;

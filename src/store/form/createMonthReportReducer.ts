@@ -2,14 +2,14 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { MeterReadings } from "../payment/paymentReducer.utils";
 import { RootState } from "..";
 
-type inputField = {
+export type inputField = {
   value: number | string;
   error: string | null;
 };
 
 export type PhysicalMeters = Exclude<keyof MeterReadings, "waterWaste">;
 
-type InputFields = {
+export type InputFields = {
   [key in PhysicalMeters]: inputField;
 };
 

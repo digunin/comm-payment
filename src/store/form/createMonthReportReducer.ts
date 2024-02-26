@@ -15,12 +15,13 @@ export type InputFields = {
 
 type CreateMonthReportState = {
   createMode: boolean;
-  inputFields: InputFields;
+  metersInputFields: InputFields;
+  // priceInputFields:
 };
 
 const initialState: CreateMonthReportState = {
   createMode: false,
-  inputFields: {
+  metersInputFields: {
     cold: {
       value: 0,
       error: null,
@@ -46,33 +47,37 @@ const CreateMonthReportSlice = createSlice({
     toggleCreateMode: (state) => {
       state.createMode = !state.createMode;
     },
-    setInputField: (
+    setMetersInputField: (
       state,
       action: PayloadAction<{
         name: PhysicalMeters;
         inputField: Partial<inputField>;
       }>
     ) => {
-      state.inputFields[action.payload.name] = {
-        ...state.inputFields[action.payload.name],
+      state.metersInputFields[action.payload.name] = {
+        ...state.metersInputFields[action.payload.name],
         ...action.payload.inputField,
       };
     },
     setAllFields: (state, action: PayloadAction<InputFields>) => {
-      state.inputFields = action.payload;
+      state.metersInputFields = action.payload;
     },
   },
 });
 
 export const selectIsValidForm = (state: RootState) => {
-  const fields: InputFields = state.createMonthReportReducer.inputFields;
+  const fields: InputFields = state.createMonthReportReducer.metersInputFields;
   for (const key of Object.keys(fields)) {
     if (fields[key as PhysicalMeters].error) return false;
   }
   return true;
 };
 
-export const { setCreateMode, toggleCreateMode, setInputField, setAllFields } =
-  CreateMonthReportSlice.actions;
+export const {
+  setCreateMode,
+  toggleCreateMode,
+  setMetersInputField,
+  setAllFields,
+} = CreateMonthReportSlice.actions;
 
 export default CreateMonthReportSlice.reducer;

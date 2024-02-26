@@ -1,11 +1,11 @@
-import { AppDispatch, RootState } from "./../../store/index";
+import { AppDispatch, RootState } from "../../store/index";
 import { useDispatch, useSelector } from "react-redux";
 import {
   InputFields,
   PhysicalMeters,
-  setInputField,
+  setMetersInputField,
 } from "../../store/form/createMonthReportReducer";
-import { selectIsValidForm } from "./../../store/form/createMonthReportReducer";
+import { selectIsValidForm } from "../../store/form/createMonthReportReducer";
 import { selectLatestRecord } from "../../store/payment/paymentReducer";
 
 type returnedCreateMonthReport = {
@@ -17,12 +17,12 @@ type returnedCreateMonthReport = {
   isValidForm: boolean;
 };
 
-export function useCreateMonthReport(): returnedCreateMonthReport {
+export function useMtersForm(): returnedCreateMonthReport {
   const dispatch = useDispatch<AppDispatch>();
   const { latestReadings } = useSelector(selectLatestRecord);
   const isValidForm = useSelector(selectIsValidForm);
   const { hot, cold, electricity } = useSelector(
-    (state: RootState) => state.createMonthReportReducer.inputFields
+    (state: RootState) => state.createMonthReportReducer.metersInputFields
   );
   const onChangeHandler = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -38,7 +38,10 @@ export function useCreateMonthReport(): returnedCreateMonthReport {
     }
     if (!error) inputed = Number(inputed);
     dispatch(
-      setInputField({ name: meterName, inputField: { value: inputed, error } })
+      setMetersInputField({
+        name: meterName,
+        inputField: { value: inputed, error },
+      })
     );
   };
   return { data: { cold, hot, electricity }, onChangeHandler, isValidForm };

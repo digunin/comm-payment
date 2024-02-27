@@ -5,7 +5,6 @@ import {
   PhysicalMeters,
   setMetersInputField,
 } from "../../store/form/createMonthReportReducer";
-import { selectIsValidForm } from "../../store/form/createMonthReportReducer";
 import { selectLatestRecord } from "../../store/payment/paymentReducer";
 
 type returnedCreateMonthReport = {
@@ -14,13 +13,11 @@ type returnedCreateMonthReport = {
     event: React.ChangeEvent<HTMLInputElement>,
     meterName: PhysicalMeters
   ) => void;
-  isValidForm: boolean;
 };
 
 export function useMtersForm(): returnedCreateMonthReport {
   const dispatch = useDispatch<AppDispatch>();
   const { latestReadings } = useSelector(selectLatestRecord);
-  const isValidForm = useSelector(selectIsValidForm);
   const { hot, cold, electricity } = useSelector(
     (state: RootState) => state.createMonthReportReducer.metersInputFields
   );
@@ -44,5 +41,5 @@ export function useMtersForm(): returnedCreateMonthReport {
       })
     );
   };
-  return { data: { cold, hot, electricity }, onChangeHandler, isValidForm };
+  return { data: { cold, hot, electricity }, onChangeHandler };
 }

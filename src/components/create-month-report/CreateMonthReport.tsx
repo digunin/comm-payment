@@ -1,26 +1,24 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { toggleCreateMode } from "../../store/form/createMonthReportReducer";
-import { useMtersForm } from "./useMetersForm";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectIsValidForm,
+  toggleCreateMode,
+} from "../../store/form/createMonthReportReducer";
 import MeterReadingsForm from "./MeterReadingsForm";
+import SubmitBlock from "./SubmitBlock";
 
 const CreateMonthReport = () => {
   const dispatch = useDispatch();
-  const { isValidForm } = useMtersForm();
+  const isValidForm = useSelector(selectIsValidForm);
 
   return (
     <div className="create-month-report">
       <MeterReadingsForm />
-      <div className="create-month-report submit-block">
-        <button
-          data-testid="btn-ok"
-          disabled={!isValidForm}
-          // onClick={() => console.log(data)}
-        >
-          OK
-        </button>
-        <button onClick={() => dispatch(toggleCreateMode())}>Cancel</button>
-      </div>
+      <SubmitBlock
+        isValidForm={isValidForm}
+        onSubmit={() => console.log("Submitted")}
+        onCancel={() => dispatch(toggleCreateMode())}
+      />
     </div>
   );
 };

@@ -6,6 +6,7 @@ import {
 } from "../../store/form/createMonthReportReducer";
 import MeterReadingsForm from "./MeterReadingsForm";
 import SubmitBlock from "./SubmitBlock";
+import PriceForm from "./PriceForm";
 
 const CreateMonthReport = () => {
   const dispatch = useDispatch();
@@ -13,7 +14,9 @@ const CreateMonthReport = () => {
 
   return (
     <div className="create-month-report">
+      <h1>Добавить новую запись</h1>
       <MeterReadingsForm />
+      <PriceForm />
       <SubmitBlock
         isValidForm={isValidForm}
         onSubmit={() => console.log("Submitted")}

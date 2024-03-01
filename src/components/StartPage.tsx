@@ -9,6 +9,7 @@ import {
   MeterReadings,
   testTotalReport,
 } from "../store/payment/paymentReducer.utils";
+import { setPriceState } from "../store/price/priceReducer";
 
 export function StartPage() {
   const dispatch = useDispatch<AppDispatch>();
@@ -31,7 +32,20 @@ export function StartPage() {
       <button
         className="btn-add-testTotalReport"
         data-testid="btn-add-testTotalReport"
-        onClick={() => dispatch(setPaymentsState(testTotalReport))}
+        onClick={() => {
+          dispatch(setPaymentsState(testTotalReport));
+          dispatch(
+            setPriceState({
+              actualPrice: {
+                cold: 2404,
+                hot: 16793,
+                electricity: 505,
+                waterWaste: 5220,
+              },
+              oldPrices: [],
+            })
+          );
+        }}
       >
         Добавить тестовый totalReport
       </button>

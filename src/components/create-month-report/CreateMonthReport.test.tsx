@@ -12,7 +12,7 @@ import {
   setPaymentsState,
 } from "../../store/payment/paymentReducer";
 import {
-  PhysicalMeterName,
+  InputFieldName,
   setInitialValues,
 } from "../../store/form/createMonthReportReducer";
 
@@ -31,10 +31,10 @@ const App = () => {
           electricity: { value: 211002, error: null },
         },
         priceInputFields: {
-          cold: { value: 111, error: null },
-          hot: { value: 222, error: null },
-          electricity: { value: 333, error: null },
-          waterWaste: { value: 444, error: null },
+          cold: { value: 24.04, error: null },
+          hot: { value: 167.93, error: null },
+          electricity: { value: 5.05, error: null },
+          waterWaste: { value: 52.2, error: null },
         },
       })
     );
@@ -49,12 +49,13 @@ const App = () => {
 };
 
 const enterText = (
-  meterName: PhysicalMeterName,
+  meterName: InputFieldName,
+  formName: string,
   container: HTMLElement,
   text: string
 ) => {
   const input = container
-    .getElementsByClassName(`input-element ${meterName}`)[0]
+    .getElementsByClassName(`${formName}-input-element ${meterName}`)[0]
     .children.namedItem(meterName) as HTMLInputElement;
   fireEvent.change(input, {
     target: { value: text },
@@ -62,12 +63,13 @@ const enterText = (
 };
 
 const chekEnteredText = (
-  meterName: PhysicalMeterName,
+  meterName: InputFieldName,
+  formName: string,
   container: HTMLElement,
   text: string
 ) => {
   const input = container
-    .getElementsByClassName(`input-element ${meterName}`)[0]
+    .getElementsByClassName(`${formName}-input-element ${meterName}`)[0]
     .children.namedItem(meterName) as HTMLInputElement;
   expect(input.value).toBe(text);
 };
@@ -87,7 +89,7 @@ test("create month report render", () => {
     0
   );
   fireEvent.click(getByTestId("btn-setstate"));
-  expect(container.getElementsByClassName("input-element").length).toBe(3);
+  expect(container.getElementsByClassName("input-element").length).toBe(7);
 });
 
 test("check input value", () => {
@@ -96,45 +98,50 @@ test("check input value", () => {
       <App />
     </Provider>
   );
-  chekEnteredText("cold", container, "211000");
-  chekEnteredText("hot", container, "211001");
-  chekEnteredText("electricity", container, "211002");
+  chekEnteredText("cold", "meters", container, "211000");
+  chekEnteredText("hot", "meters", container, "211001");
+  chekEnteredText("electricity", "meters", container, "211002");
 
-  enterText("hot", container, "211002");
-  chekEnteredText("hot", container, "211002");
+  chekEnteredText("cold", "price", container, "24.04");
+  chekEnteredText("hot", "price", container, "167.93");
+  chekEnteredText("electricity", "price", container, "5.05");
+  chekEnteredText("waterWaste", "price", container, "52.2");
 
-  enterText("hot", container, "21as");
-  chekEnteredText("hot", container, "21as");
+  enterText("hot", "meters", container, "211002");
+  chekEnteredText("hot", "meters", container, "211002");
 
-  enterText("hot", container, "222222");
-  chekEnteredText("hot", container, "222222");
+  enterText("hot", "meters", container, "21as");
+  chekEnteredText("hot", "meters", container, "21as");
 
-  enterText("hot", container, "0");
-  chekEnteredText("hot", container, "0");
+  enterText("hot", "meters", container, "222222");
+  chekEnteredText("hot", "meters", container, "222222");
 
-  enterText("cold", container, "211002");
-  chekEnteredText("cold", container, "211002");
+  enterText("hot", "meters", container, "0");
+  chekEnteredText("hot", "meters", container, "0");
 
-  enterText("cold", container, "21as");
-  chekEnteredText("cold", container, "21as");
+  enterText("cold", "meters", container, "211002");
+  chekEnteredText("cold", "meters", container, "211002");
 
-  enterText("cold", container, "222222");
-  chekEnteredText("cold", container, "222222");
+  enterText("cold", "meters", container, "21as");
+  chekEnteredText("cold", "meters", container, "21as");
 
-  enterText("cold", container, "0");
-  chekEnteredText("cold", container, "0");
+  enterText("cold", "meters", container, "222222");
+  chekEnteredText("cold", "meters", container, "222222");
 
-  enterText("electricity", container, "211002");
-  chekEnteredText("electricity", container, "211002");
+  enterText("cold", "meters", container, "0");
+  chekEnteredText("cold", "meters", container, "0");
 
-  enterText("electricity", container, "21as");
-  chekEnteredText("electricity", container, "21as");
+  enterText("electricity", "meters", container, "211002");
+  chekEnteredText("electricity", "meters", container, "211002");
 
-  enterText("electricity", container, "222222");
-  chekEnteredText("electricity", container, "222222");
+  enterText("electricity", "meters", container, "21as");
+  chekEnteredText("electricity", "meters", container, "21as");
 
-  enterText("electricity", container, "0");
-  chekEnteredText("electricity", container, "0");
+  enterText("electricity", "meters", container, "222222");
+  chekEnteredText("electricity", "meters", container, "222222");
+
+  enterText("electricity", "meters", container, "0");
+  chekEnteredText("electricity", "meters", container, "0");
 });
 
 test("errors", () => {
@@ -144,39 +151,39 @@ test("errors", () => {
     </Provider>
   );
   fireEvent.click(getByTestId("btn-setstate"));
-  chekEnteredText("cold", container, "211000");
-  chekEnteredText("hot", container, "211001");
-  chekEnteredText("electricity", container, "211002");
+  chekEnteredText("cold", "meters", container, "211000");
+  chekEnteredText("hot", "meters", container, "211001");
+  chekEnteredText("electricity", "meters", container, "211002");
   expect(errorInputQuantity(container)).toBe(0);
 
   const buttonOK = getByTestId("btn-ok");
   expect(buttonOK).not.toBeDisabled();
 
-  enterText("cold", container, "incorrect");
+  enterText("cold", "meters", container, "incorrect");
   expect(errorInputQuantity(container)).toBe(1);
   expect(buttonOK).toBeDisabled();
 
-  enterText("hot", container, "incorrect");
+  enterText("hot", "meters", container, "incorrect");
   expect(errorInputQuantity(container)).toBe(2);
   expect(buttonOK).toBeDisabled();
 
-  enterText("electricity", container, "incorrect");
+  enterText("electricity", "meters", container, "incorrect");
   expect(errorInputQuantity(container)).toBe(3);
   expect(buttonOK).toBeDisabled();
 
-  enterText("hot", container, "211222");
+  enterText("hot", "meters", container, "211222");
   expect(errorInputQuantity(container)).toBe(2);
   expect(buttonOK).toBeDisabled();
 
-  enterText("cold", container, "211");
+  enterText("cold", "meters", container, "211");
   expect(errorInputQuantity(container)).toBe(2);
   expect(buttonOK).toBeDisabled();
 
-  enterText("cold", container, "211111");
+  enterText("cold", "meters", container, "211111");
   expect(errorInputQuantity(container)).toBe(1);
   expect(buttonOK).toBeDisabled();
 
-  enterText("electricity", container, "211333");
+  enterText("electricity", "meters", container, "211333");
   expect(errorInputQuantity(container)).toBe(0);
   expect(buttonOK).not.toBeDisabled();
 });

@@ -110,6 +110,7 @@ export const {
   setCreateMode,
   toggleCreateMode,
   setMetersInputField,
+  setPriceInputField,
   setInitialValues,
 } = CreateMonthReportSlice.actions;
 

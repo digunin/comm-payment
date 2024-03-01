@@ -1,11 +1,15 @@
 import React from "react";
-import { PhysicalMeterName } from "../../store/form/createMonthReportReducer";
+import {
+  InputFieldName,
+  PhysicalMeterName,
+} from "../../store/form/createMonthReportReducer";
 
 type IEProps = {
   labelText: string;
-  meterName: PhysicalMeterName;
+  meterName: PhysicalMeterName | InputFieldName;
   value: string | number;
   error: string | null;
+  formName: string;
   onchange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -14,10 +18,15 @@ const InputElement = ({
   meterName,
   value,
   error,
+  formName,
   onchange,
 }: IEProps) => {
   return (
-    <div className={`input-element${error ? " input-error" : ""} ${meterName}`}>
+    <div
+      className={`input-element ${formName}-input-element${
+        error ? " input-error" : ""
+      } ${meterName}`}
+    >
       <label htmlFor={meterName}>
         <p>{labelText}</p>
       </label>

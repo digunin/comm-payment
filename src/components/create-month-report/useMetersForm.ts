@@ -7,7 +7,7 @@ import {
 } from "../../store/form/createMonthReportReducer";
 import { selectLatestRecord } from "../../store/payment/paymentReducer";
 
-type returnedCreateMonthReport = {
+type returnedUseMetersForm = {
   data: { [key in PhysicalMeterName]: InputField };
   onChangeHandler: (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -15,7 +15,7 @@ type returnedCreateMonthReport = {
   ) => void;
 };
 
-export function useMtersForm(): returnedCreateMonthReport {
+export function useMetersForm(): returnedUseMetersForm {
   const dispatch = useDispatch<AppDispatch>();
   const { latestReadings } = useSelector(selectLatestRecord);
   const { metersInputFields } = useSelector(

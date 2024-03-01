@@ -1,29 +1,29 @@
 import { AppDispatch, RootState } from "../../store/index";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  InputFields,
-  PhysicalMeters,
+  InputField,
+  PhysicalMeterName,
   setMetersInputField,
 } from "../../store/form/createMonthReportReducer";
 import { selectLatestRecord } from "../../store/payment/paymentReducer";
 
 type returnedCreateMonthReport = {
-  data: InputFields;
+  data: { [key in PhysicalMeterName]: InputField };
   onChangeHandler: (
     event: React.ChangeEvent<HTMLInputElement>,
-    meterName: PhysicalMeters
+    meterName: PhysicalMeterName
   ) => void;
 };
 
 export function useMtersForm(): returnedCreateMonthReport {
   const dispatch = useDispatch<AppDispatch>();
   const { latestReadings } = useSelector(selectLatestRecord);
-  const { hot, cold, electricity } = useSelector(
-    (state: RootState) => state.createMonthReportReducer.metersInputFields
+  const { metersInputFields } = useSelector(
+    (state: RootState) => state.createMonthReportReducer
   );
   const onChangeHandler = (
     event: React.ChangeEvent<HTMLInputElement>,
-    meterName: PhysicalMeters
+    meterName: PhysicalMeterName
   ) => {
     let inputed: number | string = event.target.value;
     let error = null;
@@ -41,5 +41,5 @@ export function useMtersForm(): returnedCreateMonthReport {
       })
     );
   };
-  return { data: { cold, hot, electricity }, onChangeHandler };
+  return { data: metersInputFields, onChangeHandler };
 }

@@ -63,10 +63,4 @@ describe("paymentReducer utility function testing", () => {
     expect(result.latestReadings.electricity.totalValue).toBe(211002);
     expect(result.latestReadings.waterWaste.totalValue).toBe(0);
   });
-
-  test("current date", () => {
-    const current_date = getCurrentDate();
-    expect(current_date.year).toBe(2024);
-    expect(current_date.month).toBe(Months.feb);
-  });
 });

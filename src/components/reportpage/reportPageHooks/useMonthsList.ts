@@ -8,10 +8,6 @@ import {
   selectLatestRecord,
   setSelected,
 } from "../../../store/payment/paymentReducer";
-import {
-  setAllFields,
-  toggleCreateMode,
-} from "../../../store/form/createMonthReportReducer";
 import { useSelected } from "./useSelected";
 
 type returnedFromUseMonthsList = {

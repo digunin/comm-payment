@@ -12,8 +12,8 @@ import {
   setPaymentsState,
 } from "../../store/payment/paymentReducer";
 import {
-  PhysicalMeters,
-  setAllFields,
+  PhysicalMeterName,
+  setInitialValues,
 } from "../../store/form/createMonthReportReducer";
 
 const App = () => {
@@ -24,10 +24,18 @@ const App = () => {
     dispatch(setPaymentsState(testTotalReport));
     dispatch(setPriceState({ actualPrice, oldPrices: [] }));
     dispatch(
-      setAllFields({
-        cold: { value: 211000, error: null },
-        hot: { value: 211001, error: null },
-        electricity: { value: 211002, error: null },
+      setInitialValues({
+        metersInputFields: {
+          cold: { value: 211000, error: null },
+          hot: { value: 211001, error: null },
+          electricity: { value: 211002, error: null },
+        },
+        priceInputFields: {
+          cold: { value: 111, error: null },
+          hot: { value: 222, error: null },
+          electricity: { value: 333, error: null },
+          waterWaste: { value: 444, error: null },
+        },
       })
     );
   };
@@ -41,7 +49,7 @@ const App = () => {
 };
 
 const enterText = (
-  meterName: PhysicalMeters,
+  meterName: PhysicalMeterName,
   container: HTMLElement,
   text: string
 ) => {
@@ -54,7 +62,7 @@ const enterText = (
 };
 
 const chekEnteredText = (
-  meterName: PhysicalMeters,
+  meterName: PhysicalMeterName,
   container: HTMLElement,
   text: string
 ) => {

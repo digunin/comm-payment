@@ -2,22 +2,21 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { MeterReadings } from "../payment/paymentReducer.utils";
 import { RootState } from "..";
 
-export type inputField = {
+export type InputField = {
   value: number | string;
   error: string | null;
 };
 
-export type PhysicalMeters = Exclude<keyof MeterReadings, "waterWaste">;
-
-export type InputFields = {
-  [key in PhysicalMeters]: inputField;
-};
+export type InputFieldName = keyof MeterReadings;
+export type PhysicalMeterName = Exclude<InputFieldName, "waterWaste">;
 
 type CreateMonthReportState = {
   createMode: boolean;
-  metersInputFields: InputFields;
-  // priceInputFields:
+  metersInputFields: { [key in PhysicalMeterName]: InputField };
+  priceInputFields: { [key in InputFieldName]: InputField };
 };
+
+export type MonthReportFormData = Omit<CreateMonthReportState, "createMode">;
 
 const initialState: CreateMonthReportState = {
   createMode: false,
@@ -31,6 +30,24 @@ const initialState: CreateMonthReportState = {
       error: null,
     },
     electricity: {
+      value: 0,
+      error: null,
+    },
+  },
+  priceInputFields: {
+    cold: {
+      value: 0,
+      error: null,
+    },
+    hot: {
+      value: 0,
+      error: null,
+    },
+    electricity: {
+      value: 0,
+      error: null,
+    },
+    waterWaste: {
       value: 0,
       error: null,
     },
@@ -50,8 +67,8 @@ const CreateMonthReportSlice = createSlice({
     setMetersInputField: (
       state,
       action: PayloadAction<{
-        name: PhysicalMeters;
-        inputField: Partial<inputField>;
+        name: PhysicalMeterName;
+        inputField: InputField;
       }>
     ) => {
       state.metersInputFields[action.payload.name] = {
@@ -59,16 +76,32 @@ const CreateMonthReportSlice = createSlice({
         ...action.payload.inputField,
       };
     },
-    setAllFields: (state, action: PayloadAction<InputFields>) => {
-      state.metersInputFields = action.payload;
+    setPriceInputField: (
+      state,
+      action: PayloadAction<{
+        name: InputFieldName;
+        inputField: InputField;
+      }>
+    ) => {
+      state.priceInputFields[action.payload.name] = {
+        ...state.priceInputFields[action.payload.name],
+        ...action.payload.inputField,
+      };
+    },
+    setInitialValues: (state, action: PayloadAction<MonthReportFormData>) => {
+      return { createMode: state.createMode, ...action.payload };
     },
   },
 });
 
 export const selectIsValidForm = (state: RootState) => {
-  const fields: InputFields = state.createMonthReportReducer.metersInputFields;
-  for (const key of Object.keys(fields)) {
-    if (fields[key as PhysicalMeters].error) return false;
+  const meterFields = state.createMonthReportReducer.metersInputFields;
+  for (const key of Object.keys(meterFields)) {
+    if (meterFields[key as PhysicalMeterName].error) return false;
+  }
+  const priceFields = state.createMonthReportReducer.priceInputFields;
+  for (const key of Object(priceFields)) {
+    if (priceFields[key as InputFieldName].error) return false;
   }
   return true;
 };
@@ -77,7 +110,7 @@ export const {
   setCreateMode,
   toggleCreateMode,
   setMetersInputField,
-  setAllFields,
+  setInitialValues,
 } = CreateMonthReportSlice.actions;
 
 export default CreateMonthReportSlice.reducer;

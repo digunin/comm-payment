@@ -1,9 +1,9 @@
 import React from "react";
-import { PhysicalMeters } from "../../store/form/createMonthReportReducer";
+import { PhysicalMeterName } from "../../store/form/createMonthReportReducer";
 
 type IEProps = {
   labelText: string;
-  meterName: PhysicalMeters;
+  meterName: PhysicalMeterName;
   value: string | number;
   error: string | null;
   onchange: (event: React.ChangeEvent<HTMLInputElement>) => void;

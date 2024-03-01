@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "..";
 
 export interface PriceState {
   actualPrice: Price;
@@ -75,6 +76,9 @@ const priceSlice = createSlice({
     },
   },
 });
+
+export const selectActualPrice = (state: RootState) =>
+  state.priceState.actualPrice;
 
 export const { setPrice, setPriceState } = priceSlice.actions;
 

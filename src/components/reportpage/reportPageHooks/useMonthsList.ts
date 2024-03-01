@@ -5,7 +5,7 @@ import {
   YearReport,
 } from "../../../store/payment/paymentReducer.utils";
 import {
-  selectLatestRecord,
+  selectDateOfLatestRecord,
   setSelected,
 } from "../../../store/payment/paymentReducer";
 import { useSelected } from "./useSelected";
@@ -27,7 +27,12 @@ export function useMonthsList(): returnedFromUseMonthsList {
     selectedYear === null ? {} : state.paymentState[selectedYear]
   );
 
-  const { latestYear, latestMonth } = useSelector(selectLatestRecord);
+  const latestYear = useSelector(
+    (state: RootState) => selectDateOfLatestRecord(state).latestYear
+  );
+  const latestMonth = useSelector(
+    (state: RootState) => selectDateOfLatestRecord(state).latestMonth
+  );
   let isAddButtonNeed = false;
   if (latestYear === selectedYear && latestMonth < Months.dec)
     isAddButtonNeed = true;

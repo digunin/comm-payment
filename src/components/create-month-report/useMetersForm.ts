@@ -17,7 +17,7 @@ type returnedUseMetersForm = {
 
 export function useMetersForm(): returnedUseMetersForm {
   const dispatch = useDispatch<AppDispatch>();
-  const { latestReadings } = useSelector(selectLatestRecord);
+  const latestReadings = useSelector(selectLatestRecord);
   const { metersInputFields } = useSelector(
     (state: RootState) => state.createMonthReportReducer
   );

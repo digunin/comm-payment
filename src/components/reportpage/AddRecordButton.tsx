@@ -10,7 +10,7 @@ import { selectActualPrice } from "../../store/price/priceReducer";
 
 const AddRecordButton = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { latestReadings } = useSelector(selectLatestRecord);
+  const latestReadings = useSelector(selectLatestRecord);
   const price = useSelector(selectActualPrice);
 
   const { cold, hot, electricity } = latestReadings;

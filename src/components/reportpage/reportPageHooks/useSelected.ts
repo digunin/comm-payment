@@ -2,12 +2,16 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
 
 export function useSelected() {
-  return useSelector((state: RootState) => {
-    let selectedReport = null;
-    const { selectedYear, selectedMonth } = state.paymentState.selected;
+  const selectedMonth = useSelector(
+    (state: RootState) => state.paymentState.selected.selectedMonth
+  );
+  const selectedYear = useSelector(
+    (state: RootState) => state.paymentState.selected.selectedYear
+  );
+  const selectedReport = useSelector((state: RootState) => {
     if (selectedMonth !== null)
-      selectedReport =
-        state.paymentState[selectedYear as number][selectedMonth];
-    return { selectedMonth, selectedYear, selectedReport };
+      return state.paymentState[selectedYear as number][selectedMonth];
+    return null;
   });
+  return { selectedMonth, selectedYear, selectedReport };
 }

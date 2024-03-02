@@ -5,6 +5,7 @@ import {
   InputFieldName,
   setPriceInputField,
 } from "../../store/form/createMonthReportReducer";
+import errorsList from "./errors";
 
 type returnedUsePriceForm = {
   data: { [key in InputFieldName]: InputField };
@@ -19,16 +20,22 @@ export function usePriceForm(): returnedUsePriceForm {
   const { priceInputFields } = useSelector(
     (state: RootState) => state.createMonthReportReducer
   );
+  const { priceInputErrors } = errorsList;
   const onChangeHandler = (
     event: React.ChangeEvent<HTMLInputElement>,
     meterName: InputFieldName
   ) => {
     let inputed: number | string = event.target.value;
     let error = null;
+    if (inputed.endsWith(",") || inputed.startsWith(","))
+      inputed = inputed.replace(",", ".");
+    if (inputed.startsWith(".")) inputed = `0${inputed}`;
     if (isNaN(Number(inputed))) {
-      error = "Цена должна быть целым или дробным числом";
+      error = priceInputErrors.notNumber.text;
     }
-    if (!error) inputed = Number(inputed);
+    if (!error && inputed.split(".")[1]?.length > 2) {
+      error = priceInputErrors.max2digitsAfterDot.text;
+    }
     dispatch(
       setPriceInputField({
         name: meterName,

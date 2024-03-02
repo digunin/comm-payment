@@ -6,6 +6,7 @@ import {
   setMetersInputField,
 } from "../../store/form/createMonthReportReducer";
 import { selectLatestRecord } from "../../store/payment/paymentReducer";
+import errorsList from "./errors";
 
 type returnedUseMetersForm = {
   data: { [key in PhysicalMeterName]: InputField };
@@ -21,6 +22,7 @@ export function useMetersForm(): returnedUseMetersForm {
   const { metersInputFields } = useSelector(
     (state: RootState) => state.createMonthReportReducer
   );
+  const { metersInputErrors } = errorsList;
   const onChangeHandler = (
     event: React.ChangeEvent<HTMLInputElement>,
     meterName: PhysicalMeterName
@@ -28,10 +30,10 @@ export function useMetersForm(): returnedUseMetersForm {
     let inputed: number | string = event.target.value;
     let error = null;
     if (isNaN(Number(inputed)) || !Number.isInteger(Number(inputed))) {
-      error = "Показания счетчика должно быть целым положительным числом";
+      error = metersInputErrors.notInteger.text;
     }
-    if (Number(inputed) < latestReadings[meterName].totalValue) {
-      error = "Новое значение не может быть меньше предыдущего";
+    if (!error && Number(inputed) < latestReadings[meterName].totalValue) {
+      error = metersInputErrors.lessThenPrevious.text;
     }
     if (!error) inputed = Number(inputed);
     dispatch(

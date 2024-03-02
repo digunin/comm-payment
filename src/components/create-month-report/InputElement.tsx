@@ -31,6 +31,11 @@ const InputElement = ({
         <p>{labelText}</p>
       </label>
       <input type="text" name={meterName} onChange={onchange} value={value} />
+      {error && (
+        <p className={`${formName}-${meterName}-error-message error-message`}>
+          {error}
+        </p>
+      )}
     </div>
   );
 };

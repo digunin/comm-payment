@@ -15,6 +15,7 @@ import {
   InputFieldName,
   setInitialValues,
 } from "../../store/form/createMonthReportReducer";
+import errorsList from "./errors";
 
 const App = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -48,9 +49,16 @@ const App = () => {
   );
 };
 
+type FormName = "meters" | "price";
+const {
+  priceInputErrors: { notNumber, max2digitsAfterDot },
+  metersInputErrors: { notInteger, lessThenPrevious },
+} = errorsList;
+const errorNotFound = "error-not-found";
+
 const enterText = (
   meterName: InputFieldName,
-  formName: string,
+  formName: FormName,
   container: HTMLElement,
   text: string
 ) => {
@@ -64,7 +72,7 @@ const enterText = (
 
 const chekEnteredText = (
   meterName: InputFieldName,
-  formName: string,
+  formName: FormName,
   container: HTMLElement,
   text: string
 ) => {
@@ -76,6 +84,17 @@ const chekEnteredText = (
 
 const errorInputQuantity = (container: HTMLElement) => {
   return container.getElementsByClassName("input-error").length;
+};
+
+const getError = (
+  meterName: InputFieldName,
+  formName: FormName,
+  container: HTMLElement
+) => {
+  const errorElement = container.getElementsByClassName(
+    `${formName}-${meterName}-error-message`
+  )[0];
+  return errorElement?.textContent || errorNotFound;
 };
 
 test("create month report render", () => {
@@ -92,7 +111,7 @@ test("create month report render", () => {
   expect(container.getElementsByClassName("input-element").length).toBe(7);
 });
 
-test("check input value", () => {
+test("check meters form input value", () => {
   const { container } = render(
     <Provider store={store}>
       <App />
@@ -101,11 +120,6 @@ test("check input value", () => {
   chekEnteredText("cold", "meters", container, "211000");
   chekEnteredText("hot", "meters", container, "211001");
   chekEnteredText("electricity", "meters", container, "211002");
-
-  chekEnteredText("cold", "price", container, "24.04");
-  chekEnteredText("hot", "price", container, "167.93");
-  chekEnteredText("electricity", "price", container, "5.05");
-  chekEnteredText("waterWaste", "price", container, "52.2");
 
   enterText("hot", "meters", container, "211002");
   chekEnteredText("hot", "meters", container, "211002");
@@ -144,7 +158,7 @@ test("check input value", () => {
   chekEnteredText("electricity", "meters", container, "0");
 });
 
-test("errors", () => {
+test("errors meters form", () => {
   const { container, getByTestId } = render(
     <Provider store={store}>
       <App />
@@ -162,28 +176,112 @@ test("errors", () => {
   enterText("cold", "meters", container, "incorrect");
   expect(errorInputQuantity(container)).toBe(1);
   expect(buttonOK).toBeDisabled();
+  expect(getError("cold", "meters", container)).toBe(notInteger.text);
+  expect(getError("hot", "meters", container)).toBe(errorNotFound);
+  expect(getError("electricity", "meters", container)).toBe(errorNotFound);
 
   enterText("hot", "meters", container, "incorrect");
   expect(errorInputQuantity(container)).toBe(2);
   expect(buttonOK).toBeDisabled();
+  expect(getError("cold", "meters", container)).toBe(notInteger.text);
+  expect(getError("hot", "meters", container)).toBe(notInteger.text);
+  expect(getError("electricity", "meters", container)).toBe(errorNotFound);
 
   enterText("electricity", "meters", container, "incorrect");
   expect(errorInputQuantity(container)).toBe(3);
   expect(buttonOK).toBeDisabled();
+  expect(getError("cold", "meters", container)).toBe(notInteger.text);
+  expect(getError("hot", "meters", container)).toBe(notInteger.text);
+  expect(getError("electricity", "meters", container)).toBe(notInteger.text);
 
   enterText("hot", "meters", container, "211222");
   expect(errorInputQuantity(container)).toBe(2);
   expect(buttonOK).toBeDisabled();
+  expect(getError("cold", "meters", container)).toBe(notInteger.text);
+  expect(getError("hot", "meters", container)).toBe(errorNotFound);
+  expect(getError("electricity", "meters", container)).toBe(notInteger.text);
 
   enterText("cold", "meters", container, "211");
   expect(errorInputQuantity(container)).toBe(2);
   expect(buttonOK).toBeDisabled();
+  expect(getError("cold", "meters", container)).toBe(lessThenPrevious.text);
+  expect(getError("hot", "meters", container)).toBe(errorNotFound);
+  expect(getError("electricity", "meters", container)).toBe(notInteger.text);
 
   enterText("cold", "meters", container, "211111");
   expect(errorInputQuantity(container)).toBe(1);
   expect(buttonOK).toBeDisabled();
+  expect(getError("cold", "meters", container)).toBe(errorNotFound);
+  expect(getError("hot", "meters", container)).toBe(errorNotFound);
+  expect(getError("electricity", "meters", container)).toBe(notInteger.text);
 
   enterText("electricity", "meters", container, "211333");
   expect(errorInputQuantity(container)).toBe(0);
   expect(buttonOK).not.toBeDisabled();
+  expect(getError("cold", "meters", container)).toBe(errorNotFound);
+  expect(getError("hot", "meters", container)).toBe(errorNotFound);
+  expect(getError("electricity", "meters", container)).toBe(errorNotFound);
+
+  enterText("electricity", "meters", container, "21.33");
+  expect(errorInputQuantity(container)).toBe(1);
+  expect(buttonOK).toBeDisabled();
+  expect(getError("cold", "meters", container)).toBe(errorNotFound);
+  expect(getError("hot", "meters", container)).toBe(errorNotFound);
+  expect(getError("electricity", "meters", container)).toBe(notInteger.text);
+
+  enterText("cold", "meters", container, "2199999.33");
+  expect(errorInputQuantity(container)).toBe(2);
+  expect(buttonOK).toBeDisabled();
+  expect(getError("cold", "meters", container)).toBe(notInteger.text);
+  expect(getError("hot", "meters", container)).toBe(errorNotFound);
+  expect(getError("electricity", "meters", container)).toBe(notInteger.text);
+});
+
+test("check price form input value and errors", () => {
+  const { container, getByTestId } = render(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
+  fireEvent.click(getByTestId("btn-setstate"));
+  chekEnteredText("cold", "price", container, "24.04");
+  chekEnteredText("hot", "price", container, "167.93");
+  chekEnteredText("electricity", "price", container, "5.05");
+  chekEnteredText("waterWaste", "price", container, "52.2");
+
+  enterText("cold", "price", container, "2233");
+  chekEnteredText("cold", "price", container, "2233");
+  enterText("hot", "price", container, ".5");
+  chekEnteredText("hot", "price", container, "0.5");
+  enterText("electricity", "price", container, "4455,");
+  chekEnteredText("electricity", "price", container, "4455.");
+  enterText("waterWaste", "price", container, ",788");
+  chekEnteredText("waterWaste", "price", container, "0.788");
+  expect(errorInputQuantity(container)).toBe(1);
+  expect(getError("cold", "price", container)).toBe(errorNotFound);
+  expect(getError("hot", "price", container)).toBe(errorNotFound);
+  expect(getError("electricity", "price", container)).toBe(errorNotFound);
+  expect(getError("waterWaste", "price", container)).toBe(
+    max2digitsAfterDot.text
+  );
+
+  enterText("hot", "price", container, "767n.5654");
+  chekEnteredText("hot", "price", container, "767n.5654");
+  expect(errorInputQuantity(container)).toBe(2);
+  expect(getError("cold", "price", container)).toBe(errorNotFound);
+  expect(getError("hot", "price", container)).toBe(notNumber.text);
+  expect(getError("electricity", "price", container)).toBe(errorNotFound);
+  expect(getError("waterWaste", "price", container)).toBe(
+    max2digitsAfterDot.text
+  );
+
+  enterText("electricity", "price", container, "74.5h67");
+  chekEnteredText("electricity", "price", container, "74.5h67");
+  expect(errorInputQuantity(container)).toBe(3);
+  expect(getError("cold", "price", container)).toBe(errorNotFound);
+  expect(getError("hot", "price", container)).toBe(notNumber.text);
+  expect(getError("electricity", "price", container)).toBe(notNumber.text);
+  expect(getError("waterWaste", "price", container)).toBe(
+    max2digitsAfterDot.text
+  );
 });

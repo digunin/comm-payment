@@ -37,10 +37,10 @@ export function StartPage() {
           dispatch(
             setPriceState({
               actualPrice: {
-                cold: 2404,
-                hot: 16793,
-                electricity: 505,
-                waterWaste: 5220,
+                cold: 24.04,
+                hot: 167.93,
+                electricity: 5.05,
+                waterWaste: 52.2,
               },
               oldPrices: [],
             })

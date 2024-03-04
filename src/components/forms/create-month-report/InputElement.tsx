@@ -2,7 +2,7 @@ import React from "react";
 import {
   InputFieldName,
   PhysicalMeterName,
-} from "../../store/form/createMonthReportReducer";
+} from "../../../store/form/createMonthReportReducer";
 
 type IEProps = {
   labelText: string;

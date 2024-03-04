@@ -1,12 +1,13 @@
-import { AppDispatch, RootState } from "../../store/index";
+import { AppDispatch, RootState } from "../../../store/index";
 import { useDispatch, useSelector } from "react-redux";
 import {
   InputField,
   PhysicalMeterName,
   setMetersInputField,
-} from "../../store/form/createMonthReportReducer";
-import { selectLatestRecord } from "../../store/payment/paymentReducer";
-import errorsList from "./errors";
+} from "../../../store/form/createMonthReportReducer";
+import { selectLatestRecord } from "../../../store/payment/paymentReducer";
+import { metersInputErrors } from "./createMonthReportErrors";
+import { CheckErrorOptions } from "../errors";
 
 type returnedUseMetersForm = {
   data: { [key in PhysicalMeterName]: InputField };
@@ -22,20 +23,26 @@ export function useMetersForm(): returnedUseMetersForm {
   const { metersInputFields } = useSelector(
     (state: RootState) => state.createMonthReportReducer
   );
-  const { metersInputErrors } = errorsList;
+
   const onChangeHandler = (
     event: React.ChangeEvent<HTMLInputElement>,
     meterName: PhysicalMeterName
   ) => {
     let inputed: number | string = event.target.value;
     let error = null;
-    if (isNaN(Number(inputed)) || !Number.isInteger(Number(inputed))) {
-      error = metersInputErrors.notInteger.text;
-    }
-    if (!error && Number(inputed) < latestReadings[meterName].totalValue) {
-      error = metersInputErrors.lessThenPrevious.text;
+    const opt: CheckErrorOptions = {
+      min: latestReadings[meterName].totalValue,
+    };
+
+    for (const errorName of Object.keys(metersInputErrors)) {
+      const { text, check } = metersInputErrors[errorName];
+      if (!check(inputed, opt)) {
+        error = text;
+        break;
+      }
     }
     if (!error) inputed = Number(inputed);
+
     dispatch(
       setMetersInputField({
         name: meterName,
@@ -43,5 +50,6 @@ export function useMetersForm(): returnedUseMetersForm {
       })
     );
   };
+
   return { data: metersInputFields, onChangeHandler };
 }

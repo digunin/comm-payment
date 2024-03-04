@@ -1,11 +1,12 @@
-import { AppDispatch, RootState } from "../../store/index";
+import { AppDispatch, RootState } from "../../../store/index";
 import { useDispatch, useSelector } from "react-redux";
 import {
   InputField,
   InputFieldName,
   setPriceInputField,
-} from "../../store/form/createMonthReportReducer";
-import errorsList from "./errors";
+} from "../../../store/form/createMonthReportReducer";
+import { priceInputErrors } from "./createMonthReportErrors";
+import { CheckErrorOptions } from "../errors";
 
 type returnedUsePriceForm = {
   data: { [key in InputFieldName]: InputField };
@@ -20,21 +21,25 @@ export function usePriceForm(): returnedUsePriceForm {
   const { priceInputFields } = useSelector(
     (state: RootState) => state.createMonthReportReducer
   );
-  const { priceInputErrors } = errorsList;
+
   const onChangeHandler = (
     event: React.ChangeEvent<HTMLInputElement>,
     meterName: InputFieldName
   ) => {
     let inputed: number | string = event.target.value;
     let error = null;
+    const opt: CheckErrorOptions = { maxAfterDot: 2 };
+
     if (inputed.endsWith(",") || inputed.startsWith(","))
       inputed = inputed.replace(",", ".");
     if (inputed.startsWith(".")) inputed = `0${inputed}`;
-    if (isNaN(Number(inputed))) {
-      error = priceInputErrors.notNumber.text;
-    }
-    if (!error && inputed.split(".")[1]?.length > 2) {
-      error = priceInputErrors.max2digitsAfterDot.text;
+
+    for (const errorName of Object.keys(priceInputErrors)) {
+      const { text, check } = priceInputErrors[errorName];
+      if (!check(inputed, opt)) {
+        error = text;
+        break;
+      }
     }
     dispatch(
       setPriceInputField({
@@ -43,5 +48,6 @@ export function usePriceForm(): returnedUsePriceForm {
       })
     );
   };
+
   return { data: priceInputFields, onChangeHandler };
 }

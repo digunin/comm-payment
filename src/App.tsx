@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { StartPage } from "./components/StartPage";
 import ReportPage from "./components/reportpage/ReportPage";
 import { RootState } from "./store";
-import CreateMonthReport from "./components/create-month-report/CreateMonthReport";
+import CreateMonthReport from "./components/forms/create-month-report/CreateMonthReport";
 
 function App() {
   const isNewReport = !useSelector(selectStartReadings);

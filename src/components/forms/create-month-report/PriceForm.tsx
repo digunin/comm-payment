@@ -1,6 +1,6 @@
 import React from "react";
 import InputElement from "./InputElement";
-import { InputFieldName } from "../../store/form/createMonthReportReducer";
+import { InputFieldName } from "../../../store/form/createMonthReportReducer";
 import { usePriceForm } from "./usePriceForm";
 
 const PriceForm = () => {

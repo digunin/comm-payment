@@ -1,6 +1,6 @@
 import React from "react";
 import InputElement from "./InputElement";
-import { PhysicalMeterName } from "../../store/form/createMonthReportReducer";
+import { PhysicalMeterName } from "../../../store/form/createMonthReportReducer";
 import { useMetersForm } from "./useMetersForm";
 
 const MeterReadingsForm = () => {

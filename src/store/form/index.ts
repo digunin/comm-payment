@@ -1,3 +1,3 @@
 import createMonthReportReducer from "./createMonthReportReducer";
 
-export default { createMonthReportReducer };
+export default { createMonthReportState: createMonthReportReducer };

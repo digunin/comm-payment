@@ -19,7 +19,7 @@ type returnedUsePriceForm = {
 export function usePriceForm(): returnedUsePriceForm {
   const dispatch = useDispatch<AppDispatch>();
   const { priceInputFields } = useSelector(
-    (state: RootState) => state.createMonthReportReducer
+    (state: RootState) => state.createMonthReportState
   );
 
   const onChangeHandler = (

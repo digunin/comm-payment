@@ -9,7 +9,7 @@ import CreateMonthReport from "./components/forms/create-month-report/CreateMont
 function App() {
   const isNewReport = !useSelector(selectStartReadings);
   const isCreateMode = useSelector(
-    (state: RootState) => state.createMonthReportReducer.createMode
+    (state: RootState) => state.createMonthReportState.createMode
   );
 
   return (

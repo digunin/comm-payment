@@ -95,11 +95,11 @@ const CreateMonthReportSlice = createSlice({
 });
 
 export const selectIsValidForm = (state: RootState) => {
-  const meterFields = state.createMonthReportReducer.metersInputFields;
+  const meterFields = state.createMonthReportState.metersInputFields;
   for (const key of Object.keys(meterFields)) {
     if (meterFields[key as PhysicalMeterName].error) return false;
   }
-  const priceFields = state.createMonthReportReducer.priceInputFields;
+  const priceFields = state.createMonthReportState.priceInputFields;
   for (const key of Object(priceFields)) {
     if (priceFields[key as InputFieldName].error) return false;
   }

@@ -60,9 +60,9 @@ const enterText = (
   container: HTMLElement,
   text: string
 ) => {
-  const input = container
-    .getElementsByClassName(`${formName}-input-element ${meterName}`)[0]
-    .children.namedItem(meterName) as HTMLInputElement;
+  const input = container.getElementsByClassName(
+    `${formName}-input-element ${meterName}`
+  )[0] as HTMLInputElement;
   fireEvent.change(input, {
     target: { value: text },
   });
@@ -74,9 +74,9 @@ const chekEnteredText = (
   container: HTMLElement,
   text: string
 ) => {
-  const input = container
-    .getElementsByClassName(`${formName}-input-element ${meterName}`)[0]
-    .children.namedItem(meterName) as HTMLInputElement;
+  const input = container.getElementsByClassName(
+    `${formName}-input-element ${meterName}`
+  )[0] as HTMLInputElement;
   expect(input.value).toBe(text);
 };
 

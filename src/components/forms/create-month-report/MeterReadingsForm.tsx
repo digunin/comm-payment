@@ -14,7 +14,6 @@ const MeterReadingsForm = () => {
         const { value, error } = data[meterName];
         return (
           <InputElement
-            labelText={meterName}
             meterName={meterName}
             formName="meters"
             onchange={(event) => onChangeHandler(event.target.value, meterName)}

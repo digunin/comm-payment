@@ -12,7 +12,7 @@ import { CheckErrorOptions } from "../errors";
 type returnedUseMetersForm = {
   data: { [key in PhysicalMeterName]: InputField };
   onChangeHandler: (
-    event: React.ChangeEvent<HTMLInputElement>,
+    inputed: string | number,
     meterName: PhysicalMeterName
   ) => void;
 };
@@ -25,10 +25,9 @@ export function useMetersForm(): returnedUseMetersForm {
   );
 
   const onChangeHandler = (
-    event: React.ChangeEvent<HTMLInputElement>,
+    inputed: string | number,
     meterName: PhysicalMeterName
   ) => {
-    let inputed: number | string = event.target.value;
     let error = null;
     const opt: CheckErrorOptions = {
       min: latestReadings[meterName].totalValue,

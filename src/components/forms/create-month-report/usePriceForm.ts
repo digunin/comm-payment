@@ -11,7 +11,7 @@ import { CheckErrorOptions } from "../errors";
 type returnedUsePriceForm = {
   data: { [key in InputFieldName]: InputField };
   onChangeHandler: (
-    event: React.ChangeEvent<HTMLInputElement>,
+    inputed: string | number,
     meterName: InputFieldName
   ) => void;
 };
@@ -23,11 +23,11 @@ export function usePriceForm(): returnedUsePriceForm {
   );
 
   const onChangeHandler = (
-    event: React.ChangeEvent<HTMLInputElement>,
+    inputed: string | number,
     meterName: InputFieldName
   ) => {
-    let inputed: number | string = event.target.value;
     let error = null;
+    inputed = String(inputed);
     const opt: CheckErrorOptions = { maxAfterDot: 2 };
 
     if (inputed.endsWith(",") || inputed.startsWith(","))

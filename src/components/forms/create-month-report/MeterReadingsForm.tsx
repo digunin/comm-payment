@@ -1,10 +1,13 @@
 import React from "react";
 import InputElement from "./InputElement";
-import { PhysicalMeterName } from "../../../store/form/createMonthReportReducer";
-import { useMetersForm } from "./useMetersForm";
+import {
+  PhysicalMeterName,
+  setMetersInputField,
+} from "../../../store/form/createMonthReportReducer";
+import { useForm } from "../useForm";
 
 const MeterReadingsForm = () => {
-  const { data, onChangeHandler } = useMetersForm();
+  const { data, onChangeHandler } = useForm("meters", setMetersInputField);
 
   return (
     <div className="form meter-readings-form">

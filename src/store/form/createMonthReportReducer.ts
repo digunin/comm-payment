@@ -9,11 +9,12 @@ export type InputField = {
 
 export type InputFieldName = keyof MeterReadings;
 export type PhysicalMeterName = Exclude<InputFieldName, "waterWaste">;
+export type InputFields = { [key in InputFieldName]: InputField };
 
 type CreateMonthReportState = {
   createMode: boolean;
-  metersInputFields: { [key in PhysicalMeterName]: InputField };
-  priceInputFields: { [key in InputFieldName]: InputField };
+  metersInputFields: Omit<InputFields, "waterWaste">;
+  priceInputFields: InputFields;
 };
 
 export type MonthReportFormData = Omit<CreateMonthReportState, "createMode">;

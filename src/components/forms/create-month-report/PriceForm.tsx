@@ -1,17 +1,21 @@
 import React from "react";
 import InputElement from "./InputElement";
-import { InputFieldName } from "../../../store/form/createMonthReportReducer";
-import { usePriceForm } from "./usePriceForm";
+import {
+  InputFieldName,
+  InputFields,
+  setPriceInputField,
+} from "../../../store/form/createMonthReportReducer";
+import { useForm } from "../useForm";
 
 const PriceForm = () => {
-  const { data, onChangeHandler } = usePriceForm();
+  const { data, onChangeHandler } = useForm("price", setPriceInputField);
 
   return (
     <div className="form price-form">
       <h2>Цены</h2>
       {Object.keys(data).map((key) => {
         const meterName = key as InputFieldName;
-        const { value, error } = data[meterName];
+        const { value, error } = (data as InputFields)[meterName];
         return (
           <InputElement
             meterName={meterName}

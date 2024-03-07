@@ -16,7 +16,9 @@ const PriceForm = () => {
           <InputElement
             meterName={meterName}
             formName="price"
-            onchange={(event) => onChangeHandler(event.target.value, meterName)}
+            onchange={(value, error) =>
+              onChangeHandler(value, meterName, error)
+            }
             value={value}
             error={error}
             key={`price-form-input-${meterName}`}

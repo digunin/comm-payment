@@ -12,7 +12,8 @@ type returnedUsePriceForm = {
   data: { [key in InputFieldName]: InputField };
   onChangeHandler: (
     inputed: string | number,
-    meterName: InputFieldName
+    meterName: InputFieldName,
+    error: string | null
   ) => void;
 };
 
@@ -24,9 +25,9 @@ export function usePriceForm(): returnedUsePriceForm {
 
   const onChangeHandler = (
     inputed: string | number,
-    meterName: InputFieldName
+    meterName: InputFieldName,
+    error: string | null = null
   ) => {
-    let error = null;
     inputed = String(inputed);
     const opt: CheckErrorOptions = { maxAfterDot: 2 };
 

@@ -9,7 +9,7 @@ type IEProps = {
   value: string | number;
   error: string | null;
   formName: string;
-  onchange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onchange: (value: string, error: string | null) => void;
 };
 
 const InputElement = ({
@@ -28,7 +28,7 @@ const InputElement = ({
             error ? " input-error" : ""
           } ${meterName}`}
           type="text"
-          onChange={onchange}
+          onChange={(e) => onchange(e.target.value, null)}
           value={value}
         />
       </label>

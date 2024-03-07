@@ -13,7 +13,8 @@ type returnedUseMetersForm = {
   data: { [key in PhysicalMeterName]: InputField };
   onChangeHandler: (
     inputed: string | number,
-    meterName: PhysicalMeterName
+    meterName: PhysicalMeterName,
+    error: string | null
   ) => void;
 };
 
@@ -26,9 +27,9 @@ export function useMetersForm(): returnedUseMetersForm {
 
   const onChangeHandler = (
     inputed: string | number,
-    meterName: PhysicalMeterName
+    meterName: PhysicalMeterName,
+    error: string | null = null
   ) => {
-    let error = null;
     const opt: CheckErrorOptions = {
       min: latestReadings[meterName].totalValue,
     };

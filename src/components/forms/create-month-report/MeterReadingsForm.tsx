@@ -16,7 +16,9 @@ const MeterReadingsForm = () => {
           <InputElement
             meterName={meterName}
             formName="meters"
-            onchange={(event) => onChangeHandler(event.target.value, meterName)}
+            onchange={(value, error) =>
+              onChangeHandler(value, meterName, error)
+            }
             value={value}
             error={error}
             key={`meter-readings-form-input-${meterName}`}

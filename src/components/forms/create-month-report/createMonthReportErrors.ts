@@ -4,6 +4,7 @@ import {
   checkIsInteger,
   checkIsNumber,
   InputErrors,
+  Mutator,
 } from "../errors";
 
 export const errorsText = {
@@ -36,4 +37,11 @@ export const priceInputErrors: InputErrors = {
       }),
     text: errorsText.max2digitsAfterDot,
   },
+};
+
+export const priceMutator: Mutator = (inputed) => {
+  if (inputed.endsWith(",") || inputed.startsWith(","))
+    inputed = inputed.replace(",", ".");
+  if (inputed.startsWith(".")) inputed = `0${inputed}`;
+  return inputed;
 };

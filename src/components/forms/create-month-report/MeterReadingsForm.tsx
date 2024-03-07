@@ -5,9 +5,14 @@ import {
   setMetersInputField,
 } from "../../../store/form/createMonthReportReducer";
 import { useForm } from "../useForm";
+import { metersInputErrors } from "./createMonthReportErrors";
 
 const MeterReadingsForm = () => {
-  const { data, onChangeHandler } = useForm("meters", setMetersInputField);
+  const { data, onChangeHandler, latestRecord } = useForm(
+    "meters",
+    setMetersInputField
+  );
+  const { notInteger, lessThanPrevious } = metersInputErrors;
 
   return (
     <div className="form meter-readings-form">
@@ -24,6 +29,8 @@ const MeterReadingsForm = () => {
             }
             value={value}
             error={error}
+            checkers={[notInteger, lessThanPrevious]}
+            checkOptions={{ min: latestRecord[meterName].totalValue }}
             key={`meter-readings-form-input-${meterName}`}
           />
         );

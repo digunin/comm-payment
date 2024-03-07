@@ -4,6 +4,7 @@ import {
   PhysicalMeterName,
 } from "../../../store/form/createMonthReportReducer";
 import WithErrorHandling from "../WithErrorHandlingInput";
+import { CheckErrorOptions, InputChecker, Mutator } from "../errors";
 
 export type IEProps = {
   meterName: PhysicalMeterName | InputFieldName;
@@ -11,6 +12,9 @@ export type IEProps = {
   error: string | null;
   formName: string;
   onchange: (value: string, error: string | null) => void;
+  checkers: Array<InputChecker>;
+  checkOptions: CheckErrorOptions;
+  mutators?: Array<Mutator>;
 };
 
 const InputElement = ({

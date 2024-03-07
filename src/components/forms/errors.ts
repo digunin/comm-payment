@@ -1,11 +1,13 @@
-export type InputError = {
+export type InputChecker = {
   text: string;
   check: (inputed: string | number, options: CheckErrorOptions) => boolean;
 };
 
 export type InputErrors = {
-  [key: string]: InputError;
+  [key: string]: InputChecker;
 };
+
+export type Mutator = (inputed: string) => string;
 
 export type CheckErrorOptions = {
   min?: number;

@@ -6,9 +6,12 @@ import {
   setPriceInputField,
 } from "../../../store/form/createMonthReportReducer";
 import { useForm } from "../useForm";
+import { priceMutator } from "./createMonthReportErrors";
+import { priceInputErrors } from "./createMonthReportErrors";
 
 const PriceForm = () => {
   const { data, onChangeHandler } = useForm("price", setPriceInputField);
+  const { notNumber, max2digitsAfterDot } = priceInputErrors;
 
   return (
     <div className="form price-form">
@@ -25,6 +28,9 @@ const PriceForm = () => {
             }
             value={value}
             error={error}
+            mutators={[priceMutator]}
+            checkers={[notNumber, max2digitsAfterDot]}
+            checkOptions={{ maxAfterDot: 2 }}
             key={`price-form-input-${meterName}`}
           />
         );

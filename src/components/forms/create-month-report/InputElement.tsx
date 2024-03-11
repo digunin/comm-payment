@@ -1,33 +1,33 @@
 import React from "react";
-import {
-  InputFieldName,
-  PhysicalMeterName,
-} from "../../../store/form/createMonthReportReducer";
 import WithErrorHandling from "../WithErrorHandlingInput";
 
 export type IEProps = {
-  meterName: PhysicalMeterName | InputFieldName;
+  wrapperClassName: string;
+  inputClassName: string;
+  errorClassName: string;
+  title: string;
   value: string | number;
   error: string | null;
-  formName: string;
   onchange: (value: string, error: string | null) => void;
 };
 
 const InputElement = ({
-  formName,
-  meterName,
+  wrapperClassName,
+  inputClassName,
+  errorClassName,
+  title,
   value,
   error,
   onchange,
 }: IEProps) => {
   return (
-    <div className={`input-wrapper ${formName}-input-wrapper`}>
+    <div className={`input-wrapper ${wrapperClassName}-input-wrapper`}>
       <label>
-        <p>{meterName}</p>
+        <p>{title}</p>
         <input
-          className={`input-element ${formName}-input-element${
+          className={`input-element ${inputClassName}${
             error ? " input-error" : ""
-          } ${meterName}`}
+          }`}
           type="text"
           onChange={(e) => onchange(e.target.value, null)}
           value={value}
@@ -35,7 +35,7 @@ const InputElement = ({
       </label>
 
       {error && (
-        <p className={`${formName}-${meterName}-error-message error-message`}>
+        <p className={`${errorClassName}-error-message error-message`}>
           {error}
         </p>
       )}

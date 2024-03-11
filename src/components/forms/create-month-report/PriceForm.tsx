@@ -18,10 +18,16 @@ const PriceForm = () => {
       {Object.keys(data).map((key) => {
         const meterName = key as InputFieldName;
         const { value, error } = (data as InputFields)[meterName];
+        const formName = "price";
+        const wrapperClassName = formName;
+        const inputClassName = `${formName}-input-element ${meterName}`;
+        const errorClassName = `${formName}-${meterName}`;
         return (
           <InputElement
-            meterName={meterName}
-            formName="price"
+            wrapperClassName={wrapperClassName}
+            inputClassName={inputClassName}
+            errorClassName={errorClassName}
+            title={meterName}
             onchange={(value, error) =>
               onChangeHandler(value, meterName, error)
             }

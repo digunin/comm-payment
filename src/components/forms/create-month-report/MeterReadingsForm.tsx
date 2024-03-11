@@ -19,10 +19,16 @@ const MeterReadingsForm = () => {
       {Object.keys(data).map((key) => {
         const meterName = key as PhysicalMeterName;
         const { value, error } = data[meterName];
+        const formName = "meters";
+        const wrapperClassName = formName;
+        const inputClassName = `${formName}-input-element ${meterName}`;
+        const errorClassName = `${formName}-${meterName}`;
         return (
           <InputElement
-            meterName={meterName}
-            formName="meters"
+            wrapperClassName={wrapperClassName}
+            inputClassName={inputClassName}
+            errorClassName={errorClassName}
+            title={meterName}
             onchange={(value, error) =>
               onChangeHandler(value, meterName, error)
             }

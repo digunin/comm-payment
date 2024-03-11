@@ -37,6 +37,16 @@ const App = () => {
           electricity: { value: 5.05, error: null },
           waterWaste: { value: 52.2, error: null },
         },
+        monthAndYearInputFields: {
+          month: {
+            value: 0,
+            error: null,
+          },
+          year: {
+            value: 2025,
+            error: null,
+          },
+        },
       })
     );
   };

@@ -1,6 +1,7 @@
 import React from "react";
 import InputElement from "./InputElement";
 import {
+  InputFields,
   PhysicalMeterName,
   setMetersInputField,
 } from "../../../store/form/createMonthReportReducer";
@@ -18,7 +19,7 @@ const MeterReadingsForm = () => {
       <h2>Показания счетчиков</h2>
       {Object.keys(data).map((key) => {
         const meterName = key as PhysicalMeterName;
-        const { value, error } = data[meterName];
+        const { value, error } = (data as InputFields)[meterName];
         const formName = "meters";
         const wrapperClassName = formName;
         const inputClassName = `${formName}-input-element ${meterName}`;

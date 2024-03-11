@@ -15,6 +15,10 @@ type CreateMonthReportState = {
   createMode: boolean;
   metersInputFields: Omit<InputFields, "waterWaste">;
   priceInputFields: InputFields;
+  monthAndYearInputFields: {
+    month: InputField;
+    year: InputField;
+  };
 };
 
 export type MonthReportFormData = Omit<CreateMonthReportState, "createMode">;
@@ -50,6 +54,16 @@ const initialState: CreateMonthReportState = {
     },
     waterWaste: {
       value: 0,
+      error: null,
+    },
+  },
+  monthAndYearInputFields: {
+    month: {
+      value: -1,
+      error: null,
+    },
+    year: {
+      value: -1,
       error: null,
     },
   },
@@ -89,6 +103,13 @@ const CreateMonthReportSlice = createSlice({
         ...action.payload.inputField,
       };
     },
+    setMonthAndYearInputFields: (
+      state,
+      action: PayloadAction<{ name: "month" | "year"; inputField: InputField }>
+    ) => {
+      state.monthAndYearInputFields[action.payload.name] =
+        action.payload.inputField;
+    },
     setInitialValues: (state, action: PayloadAction<MonthReportFormData>) => {
       return { createMode: state.createMode, ...action.payload };
     },
@@ -112,6 +133,7 @@ export const {
   toggleCreateMode,
   setMetersInputField,
   setPriceInputField,
+  setMonthAndYearInputFields,
   setInitialValues,
 } = CreateMonthReportSlice.actions;
 

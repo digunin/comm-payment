@@ -30,6 +30,16 @@ const AddRecordButton = () => {
           electricity: { value: price.electricity, error: null },
           waterWaste: { value: price.waterWaste, error: null },
         },
+        monthAndYearInputFields: {
+          month: {
+            value: 0,
+            error: null,
+          },
+          year: {
+            value: 2025,
+            error: null,
+          },
+        },
       })
     );
   };

@@ -5,7 +5,7 @@ import { InputField } from "../../store/form/createMonthReportReducer";
 import { selectLatestRecord } from "../../store/payment/paymentReducer";
 
 export const useForm = <T>(
-  formName: "price" | "meters",
+  formName: "price" | "meters" | "monthAndYear",
   reducer: ActionCreatorWithPayload<{ name: T; inputField: InputField }>
 ) => {
   const data = useSelector(
@@ -15,12 +15,12 @@ export const useForm = <T>(
   const dispatch = useDispatch<AppDispatch>();
   const onChangeHandler = (
     value: string | number,
-    meterName: T,
+    fieldName: T,
     error: string | null = null
   ) => {
     dispatch(
       reducer({
-        name: meterName,
+        name: fieldName,
         inputField: { value, error },
       })
     );

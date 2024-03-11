@@ -7,6 +7,7 @@ import {
 import MeterReadingsForm from "./MeterReadingsForm";
 import SubmitBlock from "./SubmitBlock";
 import PriceForm from "./PriceForm";
+import MonthAndYearForm from "./MonthAndYearForm";
 
 const CreateMonthReport = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const CreateMonthReport = () => {
   return (
     <div className="create-month-report">
       <h1>Добавить новую запись</h1>
+      <MonthAndYearForm />
       <MeterReadingsForm />
       <PriceForm />
       <SubmitBlock

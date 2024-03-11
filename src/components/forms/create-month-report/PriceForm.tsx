@@ -7,11 +7,10 @@ import {
 } from "../../../store/form/createMonthReportReducer";
 import { useForm } from "../useForm";
 import { priceMutator } from "./createMonthReportErrors";
-import { priceInputErrors } from "./createMonthReportErrors";
+import { notNumber, max2digitsAfterDot } from "./createMonthReportErrors";
 
 const PriceForm = () => {
   const { data, onChangeHandler } = useForm("price", setPriceInputField);
-  const { notNumber, max2digitsAfterDot } = priceInputErrors;
 
   return (
     <div className="form price-form">

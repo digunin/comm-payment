@@ -3,7 +3,7 @@ import {
   CheckErrorOptions,
   checkIsInteger,
   checkIsNumber,
-  InputErrors,
+  InputChecker,
   Mutator,
 } from "../errors";
 
@@ -15,28 +15,27 @@ export const errorsText = {
     "Количество копеек должно выражаться максимум двумя цифрами после точки",
 };
 
-export const metersInputErrors: InputErrors = {
-  notInteger: {
-    check: checkIsInteger,
-    text: errorsText.notInteger,
-  },
-  lessThanPrevious: {
-    check: checkDiapason,
-    text: errorsText.lessThanPrevious,
-  },
+export const notInteger: InputChecker = {
+  check: checkIsInteger,
+  text: errorsText.notInteger,
 };
-export const priceInputErrors: InputErrors = {
-  notNumber: {
-    check: checkIsNumber,
-    text: errorsText.notNumber,
-  },
-  max2digitsAfterDot: {
-    check: (inputed: string | number, options: CheckErrorOptions) =>
-      checkDiapason(String(inputed).split(".")[1]?.length || 0, {
-        max: options.maxAfterDot,
-      }),
-    text: errorsText.max2digitsAfterDot,
-  },
+
+export const lessThanPrevious: InputChecker = {
+  check: checkDiapason,
+  text: errorsText.lessThanPrevious,
+};
+
+export const notNumber: InputChecker = {
+  check: checkIsNumber,
+  text: errorsText.notNumber,
+};
+
+export const max2digitsAfterDot: InputChecker = {
+  check: (inputed: string | number, options: CheckErrorOptions) =>
+    checkDiapason(String(inputed).split(".")[1]?.length || 0, {
+      max: options.maxAfterDot,
+    }),
+  text: errorsText.max2digitsAfterDot,
 };
 
 export const priceMutator: Mutator = (inputed) => {

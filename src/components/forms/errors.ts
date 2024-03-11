@@ -3,10 +3,6 @@ export type InputChecker = {
   check: (inputed: string | number, options: CheckErrorOptions) => boolean;
 };
 
-export type InputErrors = {
-  [key: string]: InputChecker;
-};
-
 export type Mutator = (inputed: string) => string;
 
 export type CheckErrorOptions = {

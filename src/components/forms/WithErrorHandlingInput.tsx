@@ -1,7 +1,14 @@
 import React from "react";
+import { CheckErrorOptions, InputChecker, Mutator } from "./errors";
 import { IEProps } from "./create-month-report/InputElement";
 
-const WithErrorHandling = <T extends IEProps>(
+interface NewProps extends IEProps {
+  checkers: Array<InputChecker>;
+  checkOptions: CheckErrorOptions;
+  mutators?: Array<Mutator>;
+}
+
+const WithErrorHandling = <T extends NewProps>(
   Child: React.ComponentType<T>
 ) => {
   return (props: T) => {

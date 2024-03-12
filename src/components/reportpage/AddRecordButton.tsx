@@ -5,15 +5,15 @@ import {
 } from "../../store/form/createMonthReportReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
-import { selectLatestRecord } from "../../store/payment/paymentReducer";
 import { selectActualPrice } from "../../store/price/priceReducer";
+import { useLastRecord } from "../forms/useLastRecord";
 
 const AddRecordButton = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const latestReadings = useSelector(selectLatestRecord);
+  const { latestRecord, newYear, newMonth } = useLastRecord();
   const price = useSelector(selectActualPrice);
 
-  const { cold, hot, electricity } = latestReadings;
+  const { cold, hot, electricity } = latestRecord;
 
   const onAddButtonClick = () => {
     dispatch(toggleCreateMode());
@@ -32,11 +32,11 @@ const AddRecordButton = () => {
         },
         monthAndYearInputFields: {
           month: {
-            value: 0,
+            value: newMonth,
             error: null,
           },
           year: {
-            value: 2025,
+            value: newYear,
             error: null,
           },
         },

@@ -3,7 +3,10 @@ import "@testing-library/jest-dom";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { AppDispatch, store } from "../../../store";
 import CreateMonthReport from "./CreateMonthReport";
-import { testTotalReport } from "../../../store/payment/paymentReducer.utils";
+import {
+  Months,
+  testTotalReport,
+} from "../../../store/payment/paymentReducer.utils";
 import { fireEvent, render } from "@testing-library/react";
 import { Price, setPriceState } from "../../../store/price/priceReducer";
 import { oldPrices } from "../../../store/price/priceReducer.spec";
@@ -39,11 +42,11 @@ const App = () => {
         },
         monthAndYearInputFields: {
           month: {
-            value: 0,
+            value: Months.nov,
             error: null,
           },
           year: {
-            value: 2025,
+            value: 2021,
             error: null,
           },
         },
@@ -116,7 +119,7 @@ test("create month report render", () => {
     0
   );
   fireEvent.click(getByTestId("btn-setstate"));
-  expect(container.getElementsByClassName("input-element").length).toBe(7);
+  expect(container.getElementsByClassName("input-element").length).toBe(9);
 });
 
 test("check meters form input value", () => {
@@ -257,6 +260,9 @@ test("check price form input value and errors", () => {
   chekEnteredText("electricity", "price", container, "5.05");
   chekEnteredText("waterWaste", "price", container, "52.2");
 
+  const buttonOK = getByTestId("btn-ok");
+  expect(buttonOK).not.toBeDisabled();
+
   enterText("cold", "price", container, "2233");
   chekEnteredText("cold", "price", container, "2233");
   enterText("hot", "price", container, ".5");
@@ -266,6 +272,7 @@ test("check price form input value and errors", () => {
   enterText("waterWaste", "price", container, ",788");
   chekEnteredText("waterWaste", "price", container, "0.788");
   expect(errorInputQuantity(container)).toBe(1);
+  expect(buttonOK).toBeDisabled();
   expect(getError("cold", "price", container)).toBe(errorNotFound);
   expect(getError("hot", "price", container)).toBe(errorNotFound);
   expect(getError("electricity", "price", container)).toBe(errorNotFound);
@@ -274,6 +281,7 @@ test("check price form input value and errors", () => {
   enterText("hot", "price", container, "767n.5654");
   chekEnteredText("hot", "price", container, "767n.5654");
   expect(errorInputQuantity(container)).toBe(2);
+  expect(buttonOK).toBeDisabled();
   expect(getError("cold", "price", container)).toBe(errorNotFound);
   expect(getError("hot", "price", container)).toBe(notNumber);
   expect(getError("electricity", "price", container)).toBe(errorNotFound);
@@ -282,6 +290,7 @@ test("check price form input value and errors", () => {
   enterText("electricity", "price", container, "74.5h67");
   chekEnteredText("electricity", "price", container, "74.5h67");
   expect(errorInputQuantity(container)).toBe(3);
+  expect(buttonOK).toBeDisabled();
   expect(getError("cold", "price", container)).toBe(errorNotFound);
   expect(getError("hot", "price", container)).toBe(notNumber);
   expect(getError("electricity", "price", container)).toBe(notNumber);

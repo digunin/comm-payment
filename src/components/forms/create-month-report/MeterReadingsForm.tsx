@@ -7,12 +7,11 @@ import {
 } from "../../../store/form/createMonthReportReducer";
 import { useForm } from "../useForm";
 import { notInteger, lessThanPrevious } from "./createMonthReportErrors";
+import { useLastRecord } from "../useLastRecord";
 
 const MeterReadingsForm = () => {
-  const { data, onChangeHandler, latestRecord } = useForm(
-    "meters",
-    setMetersInputField
-  );
+  const { data, onChangeHandler } = useForm("meters", setMetersInputField);
+  const { latestRecord } = useLastRecord();
 
   return (
     <div className="form meter-readings-form">

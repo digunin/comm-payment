@@ -21,10 +21,10 @@ export const checkDiapason = (
   if (isNaN(inputed)) return false;
   let correct = true;
   const { max, min, moreThan, lessThan } = options;
-  if (max) correct = inputed <= max;
-  if (min) correct = inputed >= min;
-  if (moreThan) correct = inputed > moreThan;
-  if (lessThan) correct = inputed < lessThan;
+  if (max && correct) correct = inputed <= max;
+  if (min && correct) correct = inputed >= min;
+  if (moreThan && correct) correct = inputed > moreThan;
+  if (lessThan && correct) correct = inputed < lessThan;
   return correct;
 };
 

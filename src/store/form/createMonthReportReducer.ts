@@ -122,8 +122,13 @@ export const selectIsValidForm = (state: RootState) => {
     if (meterFields[key as PhysicalMeterName].error) return false;
   }
   const priceFields = state.createMonthReportState.priceInputFields;
-  for (const key of Object(priceFields)) {
+  for (const key of Object.keys(priceFields)) {
     if (priceFields[key as InputFieldName].error) return false;
+  }
+  const monthAndYearFields =
+    state.createMonthReportState.monthAndYearInputFields;
+  for (const key of Object.keys(monthAndYearFields)) {
+    if (monthAndYearFields[key as "month" | "year"].error) return false;
   }
   return true;
 };

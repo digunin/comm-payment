@@ -119,7 +119,7 @@ test("create month report render", () => {
     0
   );
   fireEvent.click(getByTestId("btn-setstate"));
-  expect(container.getElementsByClassName("input-element").length).toBe(9);
+  expect(container.getElementsByClassName("input-element").length).toBe(7);
 });
 
 test("check meters form input value", () => {

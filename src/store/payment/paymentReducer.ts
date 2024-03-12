@@ -7,6 +7,7 @@ import {
   getPreviousYearsDesc,
 } from "./paymentReducer.utils";
 import { RootState } from "..";
+import { Price } from "../price/priceReducer";
 
 interface Selected {
   selectedYear: number | null;
@@ -19,6 +20,13 @@ export interface PaymentsState {
   selected: Selected;
 }
 
+type AddRecordPayload = {
+  year: number;
+  month: Months;
+  readings: { [key in keyof MeterReadings]: number };
+  price: Price;
+};
+
 const initialState: PaymentsState = {
   startReadings: null,
   selected: { selectedYear: null, selectedMonth: null },
@@ -30,6 +38,32 @@ const paymentSlice = createSlice({
   reducers: {
     addStartReadings: (state, action: PayloadAction<MeterReadings>) => {
       state.startReadings = action.payload;
+    },
+    addNewRecord: (state, action: PayloadAction<AddRecordPayload>) => {
+      const { year, month, readings, price } = action.payload;
+      const { latestReadings } = getLatestMeterReadings(state);
+      let newReadings: MeterReadings = {
+        cold: {
+          totalValue: readings.cold,
+          monthValue: readings.cold - latestReadings.cold.totalValue,
+        },
+        hot: {
+          totalValue: readings.hot,
+          monthValue: readings.hot - latestReadings.hot.totalValue,
+        },
+        electricity: {
+          totalValue: readings.electricity,
+          monthValue:
+            readings.electricity - latestReadings.electricity.totalValue,
+        },
+        waterWaste: {
+          totalValue: readings.cold + readings.hot,
+          monthValue:
+            readings.cold + readings.hot - latestReadings.waterWaste.totalValue,
+        },
+      };
+      if (!state[year]) state[year] = {};
+      state[year][month] = { meterReadings: newReadings };
     },
     setPaymentsState: (state, action: PayloadAction<PaymentsState>) => {
       return action.payload;
@@ -59,7 +93,7 @@ export const selectDateOfLatestRecord = (
   return { latestYear, latestMonth };
 };
 
-export const { addStartReadings, setPaymentsState, setSelected } =
+export const { addStartReadings, setPaymentsState, setSelected, addNewRecord } =
   paymentSlice.actions;
 
 export default paymentSlice.reducer;

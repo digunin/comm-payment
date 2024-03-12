@@ -9,7 +9,9 @@ export function useLastRecord() {
   const latestRecord = useSelector(selectLatestRecord);
   const { latestYear, latestMonth } = useSelector(selectDateOfLatestRecord);
   const [newMonth, newYear] =
-    latestMonth === Months.dec
+    latestMonth === -1
+      ? [-1, -1]
+      : latestMonth === Months.dec
       ? [Months.jan, latestYear + 1]
       : [latestMonth + 1, latestYear];
   return { latestRecord, latestYear, latestMonth, newYear, newMonth };

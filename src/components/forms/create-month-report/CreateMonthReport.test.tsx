@@ -296,3 +296,15 @@ test("check price form input value and errors", () => {
   expect(getError("electricity", "price", container)).toBe(notNumber);
   expect(getError("waterWaste", "price", container)).toBe(max2digitsAfterDot);
 });
+
+test("calendar", () => {
+  const { getByTestId } = render(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
+  const calendar = getByTestId("calendar");
+  expect(calendar.getAttribute("value")).toEqual("2021-11-01");
+  fireEvent.change(calendar, { target: { value: "2023-05-05" } });
+  expect(calendar.getAttribute("value")).toEqual("2023-05-01");
+});

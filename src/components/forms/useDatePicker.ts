@@ -6,8 +6,7 @@ export const useDatePicker = (
   onchange: (year: number, month: Months) => void
 ) => {
   const onPickDate = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const [year, month, day] = event.target.value.split("-");
-    console.log(year, month, day);
+    const [year, month, _] = event.target.value.split("-");
     onchange(Number(year), Number(month) - 1);
   };
   const minDate =

@@ -1,13 +1,13 @@
 import React from "react";
 import "@testing-library/jest-dom";
-import { Provider, useDispatch, useSelector } from "react-redux";
-import { AppDispatch, store } from "../../../store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../../../store";
 import CreateMonthReport from "./CreateMonthReport";
 import {
   Months,
   testTotalReport,
 } from "../../../store/payment/paymentReducer.utils";
-import { fireEvent, render } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import { Price, setPriceState } from "../../../store/price/priceReducer";
 import { oldPrices } from "../../../store/price/priceReducer.spec";
 import {
@@ -19,6 +19,7 @@ import {
   setInitialValues,
 } from "../../../store/form/createMonthReportReducer";
 import { errorsText } from "./createMonthReportErrors";
+import { renderWithProvider } from "../../../utils";
 
 const App = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -109,11 +110,7 @@ const getError = (
 };
 
 test("create month report render", () => {
-  const { container, getByTestId } = render(
-    <Provider store={store}>
-      <App />
-    </Provider>
-  );
+  const { container, getByTestId } = renderWithProvider(<App />);
   expect(getByTestId("btn-setstate")).toBeInTheDocument();
   expect(container.getElementsByClassName("create-month-report").length).toBe(
     0
@@ -123,11 +120,8 @@ test("create month report render", () => {
 });
 
 test("check meters form input value", () => {
-  const { container } = render(
-    <Provider store={store}>
-      <App />
-    </Provider>
-  );
+  const { container, getByTestId } = renderWithProvider(<App />);
+  fireEvent.click(getByTestId("btn-setstate"));
   chekEnteredText("cold", "meters", container, "211000");
   chekEnteredText("hot", "meters", container, "211001");
   chekEnteredText("electricity", "meters", container, "211002");
@@ -170,11 +164,7 @@ test("check meters form input value", () => {
 });
 
 test("errors meters form", () => {
-  const { container, getByTestId } = render(
-    <Provider store={store}>
-      <App />
-    </Provider>
-  );
+  const { container, getByTestId } = renderWithProvider(<App />);
   fireEvent.click(getByTestId("btn-setstate"));
   chekEnteredText("cold", "meters", container, "211000");
   chekEnteredText("hot", "meters", container, "211001");
@@ -249,11 +239,7 @@ test("errors meters form", () => {
 });
 
 test("check price form input value and errors", () => {
-  const { container, getByTestId } = render(
-    <Provider store={store}>
-      <App />
-    </Provider>
-  );
+  const { container, getByTestId } = renderWithProvider(<App />);
   fireEvent.click(getByTestId("btn-setstate"));
   chekEnteredText("cold", "price", container, "24.04");
   chekEnteredText("hot", "price", container, "167.93");
@@ -298,11 +284,8 @@ test("check price form input value and errors", () => {
 });
 
 test("calendar", () => {
-  const { getByTestId } = render(
-    <Provider store={store}>
-      <App />
-    </Provider>
-  );
+  const { getByTestId } = renderWithProvider(<App />);
+  fireEvent.click(getByTestId("btn-setstate"));
   const calendar = getByTestId("calendar");
   expect(calendar.getAttribute("value")).toEqual("2021-11-01");
   fireEvent.change(calendar, { target: { value: "2023-05-05" } });

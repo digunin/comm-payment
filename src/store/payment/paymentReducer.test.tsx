@@ -1,8 +1,9 @@
 import React from "react";
-import { render, fireEvent } from "@testing-library/react";
-import { Provider, useDispatch, useSelector } from "react-redux";
-import { AppDispatch, store } from "../index";
+import { fireEvent } from "@testing-library/react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../index";
 import { selectStartReadings, addStartReadings } from "./paymentReducer";
+import { renderWithProvider } from "../../utils";
 
 const App = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -43,11 +44,7 @@ const App = () => {
 };
 
 test("app render and startReadings adding", () => {
-  const { getByTestId } = render(
-    <Provider store={store}>
-      <App />
-    </Provider>
-  );
+  const { getByTestId } = renderWithProvider(<App />);
   const div_hot = getByTestId("test-div-hot");
   const div_cold = getByTestId("test-div-cold");
   const div_el = getByTestId("test-div-el");

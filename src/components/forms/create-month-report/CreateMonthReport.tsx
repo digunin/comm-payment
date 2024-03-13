@@ -8,36 +8,19 @@ import MeterReadingsForm from "./MeterReadingsForm";
 import SubmitBlock from "./SubmitBlock";
 import PriceForm from "./PriceForm";
 import MonthAndYearForm from "./MonthAndYearForm";
-import { RootState } from "../../../store";
 import { addNewRecord } from "../../../store/payment/paymentReducer";
-import { Months } from "../../../store/payment/paymentReducer.utils";
+import { useFormPayload } from "../useFormPayload";
+import { setPrice } from "../../../store/price/priceReducer";
 
 const CreateMonthReport = () => {
   const dispatch = useDispatch();
   const isValidForm = useSelector(selectIsValidForm);
-
-  const { metersInputFields, priceInputFields, monthAndYearInputFields } =
-    useSelector((state: RootState) => state.createMonthReportState);
-
-  const payload = {
-    year: Number(monthAndYearInputFields.year.value),
-    month: Number(monthAndYearInputFields.month.value) as Months,
-    readings: {
-      cold: Number(metersInputFields.cold.value),
-      hot: Number(metersInputFields.hot.value),
-      electricity: Number(metersInputFields.electricity.value),
-      waterWaste: 0,
-    },
-    price: {
-      cold: Number(priceInputFields.cold.value),
-      hot: Number(priceInputFields.hot.value),
-      electricity: Number(priceInputFields.electricity.value),
-      waterWaste: Number(priceInputFields.waterWaste.value),
-    },
-  };
+  const payload = useFormPayload();
 
   const onSubmit = () => {
+    if (!isValidForm) return;
     dispatch(addNewRecord(payload));
+    dispatch(setPrice(payload.price));
     dispatch(toggleCreateMode());
   };
 

@@ -66,6 +66,7 @@ const priceSlice = createSlice({
     setPrice: (state, action: PayloadAction<Price>) => {
       if (
         isNonzeroPrice(state.actualPrice) &&
+        isDifferentPrices(state.actualPrice, action.payload) &&
         !isPriceInArray(state.oldPrices, action.payload)
       )
         state.oldPrices.push(state.actualPrice);

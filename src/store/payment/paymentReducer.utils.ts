@@ -202,7 +202,7 @@ export const testTotalReport: PaymentsState = {
         cold: { monthValue: 211000, totalValue: 211000 },
         hot: { monthValue: 211001, totalValue: 211001 },
         electricity: { monthValue: 211002, totalValue: 211002 },
-        waterWaste: { monthValue: 0, totalValue: 0 },
+        waterWaste: { monthValue: 0, totalValue: 422001 },
       },
     },
   },

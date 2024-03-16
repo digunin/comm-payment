@@ -61,6 +61,6 @@ describe("paymentReducer utility function testing", () => {
     expect(result.latestReadings.cold.totalValue).toBe(211000);
     expect(result.latestReadings.hot.totalValue).toBe(211001);
     expect(result.latestReadings.electricity.totalValue).toBe(211002);
-    expect(result.latestReadings.waterWaste.totalValue).toBe(0);
+    expect(result.latestReadings.waterWaste.totalValue).toBe(422001);
   });
 });

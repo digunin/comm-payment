@@ -1,73 +1,26 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { MeterReadings } from "../payment/paymentReducer.utils";
 import { RootState } from "..";
+import pricePartial from "./partials/priceForm";
+import metersPartial from "./partials/metersForm";
+import monthAndYearPartial from "./partials/monthAndYearForm";
+import { FormInputData, InputField } from "./types";
 
-export type InputField = {
-  value: number | string;
-  error: string | null;
-};
+// type CreateMonthReportState = {
+//   createMode: boolean;
+//   metersInputFields: typeof metersPartial.initialState;
+//   priceInputFields: typeof pricePartial.initialState;
+//   monthAndYearInputFields: typeof monthAndYearPartial.initialState;
+// };
 
-export type InputFieldName = keyof MeterReadings;
-export type PhysicalMeterName = Exclude<InputFieldName, "waterWaste">;
-export type InputFields = { [key in InputFieldName]: InputField };
-
-type CreateMonthReportState = {
-  createMode: boolean;
-  metersInputFields: Omit<InputFields, "waterWaste">;
-  priceInputFields: InputFields;
-  monthAndYearInputFields: {
-    month: InputField;
-    year: InputField;
-  };
-};
-
-export type MonthReportFormData = Omit<CreateMonthReportState, "createMode">;
-
-const initialState: CreateMonthReportState = {
+const initialState = {
   createMode: false,
-  metersInputFields: {
-    cold: {
-      value: 0,
-      error: null,
-    },
-    hot: {
-      value: 0,
-      error: null,
-    },
-    electricity: {
-      value: 0,
-      error: null,
-    },
-  },
-  priceInputFields: {
-    cold: {
-      value: 0,
-      error: null,
-    },
-    hot: {
-      value: 0,
-      error: null,
-    },
-    electricity: {
-      value: 0,
-      error: null,
-    },
-    waterWaste: {
-      value: 0,
-      error: null,
-    },
-  },
-  monthAndYearInputFields: {
-    month: {
-      value: -1,
-      error: null,
-    },
-    year: {
-      value: -1,
-      error: null,
-    },
-  },
+  metersInputFields: metersPartial.initialState,
+  priceInputFields: pricePartial.initialState,
+  monthAndYearInputFields: monthAndYearPartial.initialState,
 };
+
+type CreateMonthReportState = typeof initialState;
+type CreateMonthReportFormData = FormInputData<CreateMonthReportState>;
 
 const CreateMonthReportSlice = createSlice({
   name: "form/createMonthReport",
@@ -79,58 +32,41 @@ const CreateMonthReportSlice = createSlice({
     toggleCreateMode: (state) => {
       state.createMode = !state.createMode;
     },
-    setMetersInputField: (
+    setMetersInputField: metersPartial.setter,
+    setPriceInputField: pricePartial.setter,
+    setMonthAndYearInputFields: monthAndYearPartial.setter,
+    setInitialValues: (
       state,
-      action: PayloadAction<{
-        name: PhysicalMeterName;
-        inputField: InputField;
-      }>
+      action: PayloadAction<CreateMonthReportFormData>
     ) => {
-      state.metersInputFields[action.payload.name] = {
-        ...state.metersInputFields[action.payload.name],
-        ...action.payload.inputField,
-      };
-    },
-    setPriceInputField: (
-      state,
-      action: PayloadAction<{
-        name: InputFieldName;
-        inputField: InputField;
-      }>
-    ) => {
-      state.priceInputFields[action.payload.name] = {
-        ...state.priceInputFields[action.payload.name],
-        ...action.payload.inputField,
-      };
-    },
-    setMonthAndYearInputFields: (
-      state,
-      action: PayloadAction<{ name: "month" | "year"; inputField: InputField }>
-    ) => {
-      state.monthAndYearInputFields[action.payload.name] =
-        action.payload.inputField;
-    },
-    setInitialValues: (state, action: PayloadAction<MonthReportFormData>) => {
       return { createMode: state.createMode, ...action.payload };
     },
   },
 });
 
-export const selectIsValidForm = (state: RootState) => {
-  const meterFields = state.createMonthReportState.metersInputFields;
-  for (const key of Object.keys(meterFields)) {
-    if (meterFields[key as PhysicalMeterName].error) return false;
+const haveError = <T extends { [key in keyof T]: InputField }>(
+  partOfState: T
+): boolean => {
+  console.log(Object.keys(partOfState));
+
+  for (const key of Object.keys(partOfState)) {
+    if (partOfState[key as keyof T].error) return true;
   }
-  const priceFields = state.createMonthReportState.priceInputFields;
-  for (const key of Object.keys(priceFields)) {
-    if (priceFields[key as InputFieldName].error) return false;
-  }
-  const monthAndYearFields =
-    state.createMonthReportState.monthAndYearInputFields;
-  for (const key of Object.keys(monthAndYearFields)) {
-    if (monthAndYearFields[key as "month" | "year"].error) return false;
+  return false;
+};
+
+const isValidForm = (form: CreateMonthReportFormData): boolean => {
+  for (const key of Object.keys(form)) {
+    if (key === "createMode") continue;
+    if (haveError(form[key as keyof CreateMonthReportFormData])) {
+      return false;
+    }
   }
   return true;
+};
+
+export const selectIsValidForm = (state: RootState) => {
+  return isValidForm(<CreateMonthReportFormData>state.createMonthReportState);
 };
 
 export const {

@@ -1,13 +1,10 @@
 import React from "react";
 import InputElement from "./InputElement";
-import {
-  InputFields,
-  PhysicalMeterName,
-  setMetersInputField,
-} from "../../../store/form/createMonthReportReducer";
+import { setMetersInputField } from "../../../store/form/createMonthReportReducer";
 import { useForm } from "../useForm";
 import { notInteger, lessThanPrevious } from "./createMonthReportErrors";
 import { useLastRecord } from "../useLastRecord";
+import { InputFields, PhysicalMeterName } from "../../../store/form/types";
 
 const MeterReadingsForm = () => {
   const { data, onChangeHandler } = useForm("meters", setMetersInputField);

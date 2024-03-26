@@ -14,12 +14,10 @@ import {
   selectStartReadings,
   setPaymentsState,
 } from "../../../store/payment/paymentReducer";
-import {
-  InputFieldName,
-  setInitialValues,
-} from "../../../store/form/createMonthReportReducer";
+import { setInitialValues } from "../../../store/form/createMonthReportReducer";
 import { errorsText } from "./createMonthReportErrors";
 import { renderWithProvider } from "../../../utils";
+import { InputFieldName } from "../../../store/form/types";
 
 const App = () => {
   const dispatch = useDispatch<AppDispatch>();

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
-import { InputField } from "../../store/form/createMonthReportReducer";
+import { InputField } from "../../store/form/types";
 
 export const useForm = <T>(
   formName: "price" | "meters" | "monthAndYear",

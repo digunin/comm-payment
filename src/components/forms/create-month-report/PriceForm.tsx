@@ -1,13 +1,10 @@
 import React from "react";
 import InputElement from "./InputElement";
-import {
-  InputFieldName,
-  InputFields,
-  setPriceInputField,
-} from "../../../store/form/createMonthReportReducer";
+import { setPriceInputField } from "../../../store/form/createMonthReportReducer";
 import { useForm } from "../useForm";
 import { priceMutator } from "./createMonthReportErrors";
 import { notNumber, max2digitsAfterDot } from "./createMonthReportErrors";
+import { InputFieldName, InputFields } from "../../../store/form/types";
 
 const PriceForm = () => {
   const { data, onChangeHandler } = useForm("price", setPriceInputField);

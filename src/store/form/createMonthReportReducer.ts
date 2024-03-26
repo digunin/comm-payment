@@ -29,9 +29,6 @@ const CreateMonthReportSlice = createSlice({
     setCreateMode: (state, action: PayloadAction<boolean>) => {
       state.createMode = action.payload;
     },
-    toggleCreateMode: (state) => {
-      state.createMode = !state.createMode;
-    },
     setMetersInputField: metersPartial.setter,
     setPriceInputField: pricePartial.setter,
     setMonthAndYearInputFields: monthAndYearPartial.setter,
@@ -71,7 +68,6 @@ export const selectIsValidForm = (state: RootState) => {
 
 export const {
   setCreateMode,
-  toggleCreateMode,
   setMetersInputField,
   setPriceInputField,
   setMonthAndYearInputFields,

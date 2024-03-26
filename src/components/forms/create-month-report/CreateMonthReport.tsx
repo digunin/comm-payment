@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectIsValidForm,
-  toggleCreateMode,
+  setCreateMode,
 } from "../../../store/form/createMonthReportReducer";
 import MeterReadingsForm from "./MeterReadingsForm";
 import SubmitBlock from "./SubmitBlock";
@@ -21,7 +21,7 @@ const CreateMonthReport = () => {
     if (!isValidForm) return;
     dispatch(addNewRecord(payload));
     dispatch(setPrice(payload.price));
-    dispatch(toggleCreateMode());
+    dispatch(setCreateMode(false));
   };
 
   return (
@@ -33,7 +33,7 @@ const CreateMonthReport = () => {
       <SubmitBlock
         isValidForm={isValidForm}
         onSubmit={onSubmit}
-        onCancel={() => dispatch(toggleCreateMode())}
+        onCancel={() => dispatch(setCreateMode(false))}
       />
     </div>
   );

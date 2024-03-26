@@ -64,6 +64,7 @@ const paymentSlice = createSlice({
       };
       if (!state[year]) state[year] = {};
       state[year][month] = { meterReadings: newReadings };
+      state.selected = { selectedMonth: month, selectedYear: year };
     },
     setPaymentsState: (state, action: PayloadAction<PaymentsState>) => {
       return action.payload;

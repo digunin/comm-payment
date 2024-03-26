@@ -156,4 +156,59 @@ test("create new record", () => {
   );
   expect(checkEnteredText("waterWaste", "price", container, "52.2")).toBe(true);
   expect(getByTestId("btn-ok")).not.toBeDisabled();
+
+  fireEvent.click(getByTestId("btn-ok"));
+
+  expect(container.getElementsByClassName("create-month-report").length).toBe(
+    0
+  );
+  expect(container.getElementsByClassName("global-report").length).toBe(1);
+
+  fireEvent.click(container.getElementsByClassName("year-2021")[0]);
+  expect(container.getElementsByClassName("year-button").length).toBe(3);
+  expect(container.getElementsByClassName("month-button").length).toBe(11);
+  expect(container.getElementsByClassName("add-button").length).toBe(2);
+
+  fireEvent.click(container.getElementsByClassName("month-nov")[0]);
+
+  let paragraphs = container
+    .getElementsByClassName("month-details")[0]
+    .getElementsByTagName("p");
+  expect(paragraphs[1].innerHTML).toBe("0");
+  expect(paragraphs[3].innerHTML).toBe("0");
+  expect(paragraphs[5].innerHTML).toBe("0");
+  expect(paragraphs[7].innerHTML).toBe("0");
+
+  fireEvent.click(container.getElementsByClassName("add-button")[0]);
+  fireEvent.change(getByTestId("calendar"), {
+    target: { value: "2022-02-01" },
+  });
+  enterText("cold", "meters", container, "211003");
+  enterText("hot", "meters", container, "211002");
+  enterText("electricity", "meters", container, "211099");
+  expect(getByTestId("btn-ok")).not.toBeDisabled();
+
+  fireEvent.click(getByTestId("btn-ok"));
+
+  expect(container.getElementsByClassName("year-button").length).toBe(4);
+
+  expect(container.getElementsByClassName("month-button").length).toBe(2);
+  expect(container.getElementsByClassName("month-button disabled").length).toBe(
+    1
+  );
+
+  paragraphs = container
+    .getElementsByClassName("month-details")[0]
+    .getElementsByTagName("p");
+  expect(paragraphs[1].innerHTML).toBe("3");
+  expect(paragraphs[3].innerHTML).toBe("1");
+  expect(paragraphs[5].innerHTML).toBe("97");
+  expect(paragraphs[7].innerHTML).toBe("4");
+
+  fireEvent.click(container.getElementsByClassName("year-2021")[0]);
+
+  expect(container.getElementsByClassName("month-button").length).toBe(11);
+  expect(container.getElementsByClassName("month-button disabled").length).toBe(
+    6
+  );
 });

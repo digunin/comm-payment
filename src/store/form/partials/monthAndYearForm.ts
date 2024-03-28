@@ -1,15 +1,14 @@
 import { PayloadAction } from "@reduxjs/toolkit";
-import { InputField } from "../types";
+import { InputField, WithInputField } from "../types";
 
 type MonthAndYearFormState = {
   month: InputField;
   year: InputField;
 };
 
-export type MonthAndYearPayload = {
+export interface MonthAndYearPayload extends WithInputField {
   name: keyof MonthAndYearFormState;
-  inputField: InputField;
-};
+}
 
 const initialState = {
   month: {

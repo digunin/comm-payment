@@ -8,6 +8,15 @@ export type InputFieldName = keyof MeterReadings;
 export type PhysicalMeterName = Exclude<InputFieldName, "waterWaste">;
 export type InputFields = { [key in InputFieldName]: InputField };
 
+export type SetterNames =
+  | "setMetersInputField"
+  | "setPriceInputField"
+  | "setMonthAndYearInputFields";
+
+export interface WithInputField {
+  inputField: InputField;
+}
+
 export type FormInputData<T extends { createMode: boolean }> = Omit<
   T,
   "createMode"

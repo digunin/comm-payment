@@ -1,14 +1,13 @@
 import { PayloadAction } from "@reduxjs/toolkit";
-import { PhysicalMeterName, InputField, InputFields } from "./../types";
+import { PhysicalMeterName, InputField, WithInputField } from "./../types";
 
 type MetersFormState = {
   [key in PhysicalMeterName]: InputField;
 };
 
-export type MetersFormPayload = {
+export interface MetersFormPayload extends WithInputField {
   name: PhysicalMeterName;
-  inputField: InputField;
-};
+}
 
 const initialState: MetersFormState = {
   cold: {

@@ -1,14 +1,13 @@
 import { PayloadAction } from "@reduxjs/toolkit";
-import { InputField, InputFieldName } from "../types";
+import { InputField, InputFieldName, WithInputField } from "../types";
 
 type PriceFormState = {
   [key in InputFieldName]: InputField;
 };
 
-export type PriceFormPayload = {
+export interface PriceFormPayload extends WithInputField {
   name: InputFieldName;
-  inputField: InputField;
-};
+}
 
 const initialState: PriceFormState = {
   cold: {

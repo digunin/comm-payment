@@ -1,3 +1,4 @@
+import { PayloadAction } from "@reduxjs/toolkit";
 import { MeterReadings } from "../payment/paymentReducer.utils";
 
 export type InputField = {
@@ -15,7 +16,13 @@ export type SetterNames =
 
 export interface WithInputField {
   inputField: InputField;
+  name: any;
 }
+
+export type Setter<S, P extends WithInputField> = (
+  state: S,
+  action: PayloadAction<P>
+) => void;
 
 export type FormInputData<T extends { createMode: boolean }> = Omit<
   T,

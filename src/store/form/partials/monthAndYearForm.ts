@@ -1,5 +1,5 @@
 import { PayloadAction } from "@reduxjs/toolkit";
-import { InputField, WithInputField } from "../types";
+import { InputField, Setter, WithInputField } from "../types";
 
 type MonthAndYearFormState = {
   month: InputField;
@@ -21,10 +21,10 @@ const initialState = {
   },
 };
 
-const setter = <T extends { monthAndYearInputFields: MonthAndYearFormState }>(
-  state: T,
-  action: PayloadAction<MonthAndYearPayload>
-) => {
+const setter: Setter<
+  { monthAndYearInputFields: MonthAndYearFormState },
+  MonthAndYearPayload
+> = (state, action) => {
   state.monthAndYearInputFields[action.payload.name] =
     action.payload.inputField;
 };

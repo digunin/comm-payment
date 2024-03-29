@@ -10,10 +10,6 @@ type MetersFormState = {
   [key in PhysicalMeterName]: InputField;
 };
 
-export interface MetersFormPayload extends WithInputField {
-  name: PhysicalMeterName;
-}
-
 const initialState: MetersFormState = {
   cold: {
     value: 0,
@@ -31,7 +27,7 @@ const initialState: MetersFormState = {
 
 const setter: Setter<
   { metersInputFields: MetersFormState },
-  MetersFormPayload
+  PhysicalMeterName
 > = (state, action) => {
   state.metersInputFields[action.payload.name] = action.payload.inputField;
 };

@@ -1,11 +1,17 @@
 import { PayloadAction } from "@reduxjs/toolkit";
-import { FormInputData, Setter, SetterNames, WithInputField } from "./types";
+import {
+  FormInputData,
+  InputFieldName,
+  Setter,
+  SetterNames,
+  WithInputField,
+} from "./types";
 
 export const createForm = <S extends { createMode: boolean }>(
   name: string,
   initialState: S,
   setters: {
-    [key in SetterNames]: Setter<S, WithInputField>;
+    [key in SetterNames]: Setter<S, any>;
   }
 ) => {
   return {

@@ -1,13 +1,9 @@
 import { PayloadAction } from "@reduxjs/toolkit";
-import { InputField, InputFieldName, Setter, WithInputField } from "../types";
+import { InputField, PriceFieldName, Setter, WithInputField } from "../types";
 
 type PriceFormState = {
-  [key in InputFieldName]: InputField;
+  [key in PriceFieldName]: InputField;
 };
-
-export interface PriceFormPayload extends WithInputField {
-  name: InputFieldName;
-}
 
 const initialState: PriceFormState = {
   cold: {
@@ -27,7 +23,7 @@ const initialState: PriceFormState = {
     error: null,
   },
 };
-const setter: Setter<{ priceInputFields: PriceFormState }, PriceFormPayload> = (
+const setter: Setter<{ priceInputFields: PriceFormState }, PriceFieldName> = (
   state,
   action
 ) => {

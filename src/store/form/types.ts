@@ -5,8 +5,10 @@ export type InputField = {
   value: number | string;
   error: string | null;
 };
-export type InputFieldName = keyof MeterReadings;
-export type PhysicalMeterName = Exclude<InputFieldName, "waterWaste">;
+export type PriceFieldName = keyof MeterReadings;
+export type MonthAndYearFieldName = "year" | "month";
+export type PhysicalMeterName = Exclude<PriceFieldName, "waterWaste">;
+export type InputFieldName = PriceFieldName | MonthAndYearFieldName;
 export type InputFields = { [key in InputFieldName]: InputField };
 
 export type SetterNames =
@@ -14,14 +16,14 @@ export type SetterNames =
   | "setPriceInputField"
   | "setMonthAndYearInputFields";
 
-export interface WithInputField {
+export interface WithInputField<N> {
   inputField: InputField;
-  name: any;
+  name: N;
 }
 
-export type Setter<S, P extends WithInputField> = (
+export type Setter<S, N> = (
   state: S,
-  action: PayloadAction<P>
+  action: PayloadAction<WithInputField<N>>
 ) => void;
 
 export type FormInputData<T extends { createMode: boolean }> = Omit<

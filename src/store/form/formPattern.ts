@@ -1,5 +1,10 @@
 import { PayloadAction } from "@reduxjs/toolkit";
-import { FormInputData, SetterNames, WithInputField } from "./types";
+import {
+  FormInputData,
+  InputField,
+  SetterNames,
+  WithInputField,
+} from "./types";
 
 export const createForm = <S extends { createMode: boolean }>(
   name: string,
@@ -24,4 +29,13 @@ export const createForm = <S extends { createMode: boolean }>(
       ...setters,
     },
   };
+};
+
+export const haveError = <T extends { [key in keyof T]: InputField }>(
+  partOfState: T
+): boolean => {
+  for (const key of Object.keys(partOfState)) {
+    if (partOfState[key as keyof T].error) return true;
+  }
+  return false;
 };

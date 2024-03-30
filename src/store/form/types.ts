@@ -8,7 +8,10 @@ export type InputField = {
 export type PriceFieldName = keyof MeterReadings;
 export type MonthAndYearFieldName = "year" | "month";
 export type PhysicalMeterName = Exclude<PriceFieldName, "waterWaste">;
-export type InputFieldName = PriceFieldName | MonthAndYearFieldName;
+export type InputFieldName =
+  | PriceFieldName
+  | MonthAndYearFieldName
+  | PhysicalMeterName;
 export type InputFields = { [key in InputFieldName]: InputField };
 
 export type SetterNames =
@@ -21,12 +24,17 @@ export interface WithInputField<N> {
   name: N;
 }
 
-export type Setter<S, N> = (
-  state: S,
-  action: PayloadAction<WithInputField<N>>
-) => void;
-
 export type FormInputData<T extends { createMode: boolean }> = Omit<
   T,
   "createMode"
 >;
+
+export type PartialData<S> = S extends { [key: string]: infer R }
+  ? {
+      initialState: R;
+      setter: (
+        state: S,
+        action: PayloadAction<WithInputField<keyof R>>
+      ) => void;
+    }
+  : never;

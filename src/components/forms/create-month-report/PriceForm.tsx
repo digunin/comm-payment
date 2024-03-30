@@ -4,7 +4,7 @@ import { setPriceInputField } from "../../../store/form/createMonthReportReducer
 import { useForm } from "../useForm";
 import { priceMutator } from "./createMonthReportErrors";
 import { notNumber, max2digitsAfterDot } from "./createMonthReportErrors";
-import { InputFieldName, InputFields } from "../../../store/form/types";
+import { InputFields, PriceFieldName } from "../../../store/form/types";
 
 const PriceForm = () => {
   const { data, onChangeHandler } = useForm("price", setPriceInputField);
@@ -13,7 +13,7 @@ const PriceForm = () => {
     <div className="form price-form">
       <h2>Цены</h2>
       {Object.keys(data).map((key) => {
-        const meterName = key as InputFieldName;
+        const meterName = key as PriceFieldName;
         const { value, error } = (data as InputFields)[meterName];
         const formName = "price";
         const wrapperClassName = formName;

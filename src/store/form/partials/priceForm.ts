@@ -1,5 +1,4 @@
-import { PayloadAction } from "@reduxjs/toolkit";
-import { InputField, PriceFieldName, Setter, WithInputField } from "../types";
+import { InputField, PartialData, PriceFieldName } from "../types";
 
 type PriceFormState = {
   [key in PriceFieldName]: InputField;
@@ -23,14 +22,14 @@ const initialState: PriceFormState = {
     error: null,
   },
 };
-const setter: Setter<{ priceInputFields: PriceFormState }, PriceFieldName> = (
-  state,
-  action
-) => {
-  state.priceInputFields[action.payload.name] = action.payload.inputField;
+
+const partialData: PartialData<{
+  priceInputFields: PriceFormState;
+}> = {
+  initialState,
+  setter: (state, action) => {
+    state.priceInputFields[action.payload.name] = action.payload.inputField;
+  },
 };
 
-export default {
-  initialState,
-  setter,
-};
+export default partialData;

@@ -17,7 +17,7 @@ import {
 import { setInitialValues } from "../../../store/form/createMonthReportReducer";
 import { errorsText } from "./createMonthReportErrors";
 import { renderWithProvider } from "../../../utils";
-import { InputFieldName } from "../../../store/form/types";
+import { PriceFieldName } from "../../../store/form/types";
 
 const App = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -67,7 +67,7 @@ const { lessThanPrevious, notInteger, notNumber, max2digitsAfterDot } =
 const errorNotFound = "error-not-found";
 
 export const enterText = (
-  meterName: InputFieldName,
+  meterName: PriceFieldName,
   formName: FormName,
   container: HTMLElement,
   text: string
@@ -81,7 +81,7 @@ export const enterText = (
 };
 
 export const checkEnteredText = (
-  meterName: InputFieldName,
+  meterName: PriceFieldName,
   formName: FormName,
   container: HTMLElement,
   text: string
@@ -97,7 +97,7 @@ export const errorInputQuantity = (container: HTMLElement) => {
 };
 
 export const getError = (
-  meterName: InputFieldName,
+  meterName: PriceFieldName,
   formName: FormName,
   container: HTMLElement
 ) => {

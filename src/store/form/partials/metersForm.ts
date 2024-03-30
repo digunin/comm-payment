@@ -1,10 +1,4 @@
-import { PayloadAction } from "@reduxjs/toolkit";
-import {
-  PhysicalMeterName,
-  InputField,
-  WithInputField,
-  Setter,
-} from "./../types";
+import { PhysicalMeterName, InputField, PartialData } from "./../types";
 
 type MetersFormState = {
   [key in PhysicalMeterName]: InputField;
@@ -25,14 +19,13 @@ const initialState: MetersFormState = {
   },
 };
 
-const setter: Setter<
-  { metersInputFields: MetersFormState },
-  PhysicalMeterName
-> = (state, action) => {
-  state.metersInputFields[action.payload.name] = action.payload.inputField;
+const partialData: PartialData<{
+  metersInputFields: MetersFormState;
+}> = {
+  initialState,
+  setter: (state, action) => {
+    state.metersInputFields[action.payload.name] = action.payload.inputField;
+  },
 };
 
-export default {
-  initialState,
-  setter,
-};
+export default partialData;

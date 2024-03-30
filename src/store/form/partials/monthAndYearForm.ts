@@ -1,10 +1,4 @@
-import { PayloadAction } from "@reduxjs/toolkit";
-import {
-  InputField,
-  MonthAndYearFieldName,
-  Setter,
-  WithInputField,
-} from "../types";
+import { InputField, MonthAndYearFieldName, PartialData } from "../types";
 
 type MonthAndYearFormState = {
   [key in MonthAndYearFieldName]: InputField;
@@ -21,15 +15,14 @@ const initialState: MonthAndYearFormState = {
   },
 };
 
-const setter: Setter<
-  { monthAndYearInputFields: MonthAndYearFormState },
-  MonthAndYearFieldName
-> = (state, action) => {
-  state.monthAndYearInputFields[action.payload.name] =
-    action.payload.inputField;
+const partialData: PartialData<{
+  monthAndYearInputFields: MonthAndYearFormState;
+}> = {
+  initialState,
+  setter: (state, action) => {
+    state.monthAndYearInputFields[action.payload.name] =
+      action.payload.inputField;
+  },
 };
 
-export default {
-  initialState,
-  setter,
-};
+export default partialData;

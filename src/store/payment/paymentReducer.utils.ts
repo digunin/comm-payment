@@ -1,5 +1,5 @@
+import { Price } from "./../price/priceReducer";
 import { PaymentsState } from "./paymentReducer";
-import { Price } from "../price/priceReducer";
 
 export enum Months {
   jan = 0,
@@ -25,8 +25,8 @@ export type MeterReadings = {
   waterWaste: MeterReading;
 };
 
-interface Payment extends Price {
-  date: Date;
+export interface Payment extends Price {
+  date: string;
   total: number;
 }
 
@@ -96,6 +96,30 @@ export function getCurrentDate(): { year: number; month: Months } {
   return { year: date.getFullYear(), month: date.getMonth() };
 }
 
+export function calcPayment(
+  readings: MeterReadings,
+  price: Price
+): Omit<Payment, "date"> {
+  let payment = {
+    cold: fixFractionPart(readings.cold.monthValue * price.cold),
+    hot: fixFractionPart(readings.hot.monthValue * price.hot),
+    electricity: fixFractionPart(
+      readings.electricity.monthValue * price.electricity
+    ),
+    waterWaste: fixFractionPart(
+      readings.waterWaste.monthValue * price.waterWaste
+    ),
+  };
+  return {
+    ...payment,
+    total: Object.values(payment).reduce((acc, value) => acc + value),
+  };
+}
+
+function fixFractionPart(n: number): number {
+  return Math.ceil(Number(n * 100)) / 100;
+}
+
 export const testTotalReport: PaymentsState = {
   startReadings: {
     cold: { monthValue: 0, totalValue: 101 },
@@ -112,6 +136,14 @@ export const testTotalReport: PaymentsState = {
         electricity: { monthValue: 140402, totalValue: 140402 },
         waterWaste: { monthValue: 0, totalValue: 0 },
       },
+      payment: {
+        date: "",
+        cold: 0,
+        hot: 0,
+        electricity: 0,
+        waterWaste: 0,
+        total: 0,
+      },
     },
     [Months.jul]: {
       meterReadings: {
@@ -119,6 +151,14 @@ export const testTotalReport: PaymentsState = {
         hot: { monthValue: 140701, totalValue: 140701 },
         electricity: { monthValue: 140702, totalValue: 140702 },
         waterWaste: { monthValue: 0, totalValue: 0 },
+      },
+      payment: {
+        date: "",
+        cold: 0,
+        hot: 0,
+        electricity: 0,
+        waterWaste: 0,
+        total: 0,
       },
     },
     [Months.nov]: {
@@ -128,6 +168,14 @@ export const testTotalReport: PaymentsState = {
         electricity: { monthValue: 141102, totalValue: 141102 },
         waterWaste: { monthValue: 0, totalValue: 0 },
       },
+      payment: {
+        date: "",
+        cold: 0,
+        hot: 0,
+        electricity: 0,
+        waterWaste: 0,
+        total: 0,
+      },
     },
     [Months.dec]: {
       meterReadings: {
@@ -135,6 +183,14 @@ export const testTotalReport: PaymentsState = {
         hot: { monthValue: 141201, totalValue: 141201 },
         electricity: { monthValue: 141202, totalValue: 141202 },
         waterWaste: { monthValue: 0, totalValue: 0 },
+      },
+      payment: {
+        date: "",
+        cold: 0,
+        hot: 0,
+        electricity: 0,
+        waterWaste: 0,
+        total: 0,
       },
     },
   },
@@ -146,6 +202,14 @@ export const testTotalReport: PaymentsState = {
         electricity: { monthValue: 160102, totalValue: 160102 },
         waterWaste: { monthValue: 0, totalValue: 0 },
       },
+      payment: {
+        date: "",
+        cold: 0,
+        hot: 0,
+        electricity: 0,
+        waterWaste: 0,
+        total: 0,
+      },
     },
     [Months.may]: {
       meterReadings: {
@@ -153,6 +217,14 @@ export const testTotalReport: PaymentsState = {
         hot: { monthValue: 160501, totalValue: 160501 },
         electricity: { monthValue: 160502, totalValue: 160502 },
         waterWaste: { monthValue: 0, totalValue: 0 },
+      },
+      payment: {
+        date: "",
+        cold: 0,
+        hot: 0,
+        electricity: 0,
+        waterWaste: 0,
+        total: 0,
       },
     },
     [Months.aug]: {
@@ -162,6 +234,14 @@ export const testTotalReport: PaymentsState = {
         electricity: { monthValue: 160802, totalValue: 160802 },
         waterWaste: { monthValue: 0, totalValue: 0 },
       },
+      payment: {
+        date: "",
+        cold: 0,
+        hot: 0,
+        electricity: 0,
+        waterWaste: 0,
+        total: 0,
+      },
     },
     [Months.sep]: {
       meterReadings: {
@@ -169,6 +249,14 @@ export const testTotalReport: PaymentsState = {
         hot: { monthValue: 160901, totalValue: 160901 },
         electricity: { monthValue: 160902, totalValue: 0 },
         waterWaste: { monthValue: 0, totalValue: 0 },
+      },
+      payment: {
+        date: "",
+        cold: 0,
+        hot: 0,
+        electricity: 0,
+        waterWaste: 0,
+        total: 0,
       },
     },
   },
@@ -180,6 +268,14 @@ export const testTotalReport: PaymentsState = {
         electricity: { monthValue: 210502, totalValue: 210502 },
         waterWaste: { monthValue: 0, totalValue: 0 },
       },
+      payment: {
+        date: "",
+        cold: 0,
+        hot: 0,
+        electricity: 0,
+        waterWaste: 0,
+        total: 0,
+      },
     },
     [Months.jun]: {
       meterReadings: {
@@ -187,6 +283,14 @@ export const testTotalReport: PaymentsState = {
         hot: { monthValue: 210601, totalValue: 210601 },
         electricity: { monthValue: 210602, totalValue: 210602 },
         waterWaste: { monthValue: 0, totalValue: 0 },
+      },
+      payment: {
+        date: "",
+        cold: 0,
+        hot: 0,
+        electricity: 0,
+        waterWaste: 0,
+        total: 0,
       },
     },
     [Months.aug]: {
@@ -196,6 +300,14 @@ export const testTotalReport: PaymentsState = {
         electricity: { monthValue: 210802, totalValue: 210802 },
         waterWaste: { monthValue: 0, totalValue: 0 },
       },
+      payment: {
+        date: "",
+        cold: 0,
+        hot: 0,
+        electricity: 0,
+        waterWaste: 0,
+        total: 0,
+      },
     },
     [Months.oct]: {
       meterReadings: {
@@ -203,6 +315,14 @@ export const testTotalReport: PaymentsState = {
         hot: { monthValue: 211001, totalValue: 211001 },
         electricity: { monthValue: 211002, totalValue: 211002 },
         waterWaste: { monthValue: 0, totalValue: 422001 },
+      },
+      payment: {
+        date: "",
+        cold: 0,
+        hot: 0,
+        electricity: 0,
+        waterWaste: 0,
+        total: 0,
       },
     },
   },

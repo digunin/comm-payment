@@ -2,7 +2,9 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import {
   MeterReadings,
   Months,
+  Payment,
   YearReport,
+  calcPayment,
   getLatestMeterReadings,
   getPreviousYearsDesc,
 } from "./paymentReducer.utils";
@@ -62,8 +64,12 @@ const paymentSlice = createSlice({
             readings.cold + readings.hot - latestReadings.waterWaste.totalValue,
         },
       };
+      const newPayment: Payment = {
+        date: new Date().toLocaleDateString(),
+        ...calcPayment(newReadings, price),
+      };
       if (!state[year]) state[year] = {};
-      state[year][month] = { meterReadings: newReadings };
+      state[year][month] = { meterReadings: newReadings, payment: newPayment };
       state.selected = { selectedMonth: month, selectedYear: year };
     },
     setPaymentsState: (state, action: PayloadAction<PaymentsState>) => {

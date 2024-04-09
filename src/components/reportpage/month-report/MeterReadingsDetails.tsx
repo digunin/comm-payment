@@ -27,7 +27,10 @@ const MeterReadingsDetails = () => {
           />
         );
       })}
-      <div className="toal">{payment.total}</div>
+      <div className="total">
+        <p>total:</p>
+        <p>{payment.total}</p>
+      </div>
     </div>
   );
 };

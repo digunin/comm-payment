@@ -9,6 +9,13 @@
     padding: 1px
     .meter
         display: flex
-        justify-content: space-between
+        justify-content: space-around
         p
             flex-basis: 33%
+            text-align: right
+            &:first-of-type
+                text-align: left
+    .month-details
+        .total
+            display: flex
+            justify-content: space-between

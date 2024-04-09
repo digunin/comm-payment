@@ -65,11 +65,16 @@ const paymentSlice = createSlice({
         },
       };
       const newPayment: Payment = {
-        date: new Date().toLocaleDateString(),
+        date: new Date().getTime(),
         ...calcPayment(newReadings, price),
       };
       if (!state[year]) state[year] = {};
-      state[year][month] = { meterReadings: newReadings, payment: newPayment };
+      state[year][month] = {
+        meterReadings: newReadings,
+        payment: newPayment,
+        price,
+        previousPayments: [],
+      };
       state.selected = { selectedMonth: month, selectedYear: year };
     },
     setPaymentsState: (state, action: PayloadAction<PaymentsState>) => {

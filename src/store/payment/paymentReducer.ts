@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import {
   MeterReadings,
+  MonthReport,
   Months,
   Payment,
   YearReport,
@@ -82,6 +83,21 @@ const paymentSlice = createSlice({
     },
     setSelected: (state, action: PayloadAction<Selected>) => {
       state.selected = action.payload;
+    },
+    recalcPayment: (
+      state,
+      acttion: PayloadAction<Omit<AddRecordPayload, "readings">>
+    ) => {
+      const { month, year, price } = acttion.payload;
+      const { payment, meterReadings, previousPayments } = state[year][
+        month
+      ] as MonthReport;
+      state[year][month] = {
+        meterReadings,
+        previousPayments: [...previousPayments, payment],
+        price,
+        payment: { ...payment, ...calcPayment(meterReadings, price) },
+      };
     },
   },
 });

@@ -10,6 +10,7 @@ import {
   testTotalReport,
 } from "../store/payment/paymentReducer.utils";
 import { setPriceState } from "../store/price/priceReducer";
+import { setMode } from "../store/app-mode/appModeReducer";
 
 export function StartPage() {
   const dispatch = useDispatch<AppDispatch>();
@@ -21,11 +22,12 @@ export function StartPage() {
       <button
         className="btn-add-starting"
         data-testid="btn-add-starting"
-        onClick={() =>
+        onClick={() => {
           dispatch(
             addStartReadings(testTotalReport.startReadings as MeterReadings)
-          )
-        }
+          );
+          dispatch(setMode("show-report"));
+        }}
       >
         Добавить только стартовые показания счетчиков
       </button>
@@ -45,6 +47,7 @@ export function StartPage() {
               oldPrices: [],
             })
           );
+          dispatch(setMode("show-report"));
         }}
       >
         Добавить тестовый totalReport

@@ -24,11 +24,6 @@ export interface WithInputField<N> {
   name: N;
 }
 
-export type FormInputData<T extends { createMode: boolean }> = Omit<
-  T,
-  "createMode"
->;
-
 export type PartialData<S> = S extends { [key: string]: infer R }
   ? {
       initialState: R;

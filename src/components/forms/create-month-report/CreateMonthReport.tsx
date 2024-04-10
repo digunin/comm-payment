@@ -1,9 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectIsValidForm,
-  setCreateMode,
-} from "../../../store/form/createMonthReportReducer";
+import { selectIsValidForm } from "../../../store/form/createMonthReportReducer";
 import MeterReadingsForm from "./MeterReadingsForm";
 import SubmitBlock from "./SubmitBlock";
 import PriceForm from "./PriceForm";
@@ -11,6 +8,7 @@ import MonthAndYearForm from "./MonthAndYearForm";
 import { addNewRecord } from "../../../store/payment/paymentReducer";
 import { useFormPayload } from "../useFormPayload";
 import { setPrice } from "../../../store/price/priceReducer";
+import { setMode } from "../../../store/app-mode/appModeReducer";
 
 const CreateMonthReport = () => {
   const dispatch = useDispatch();
@@ -21,7 +19,7 @@ const CreateMonthReport = () => {
     if (!isValidForm) return;
     dispatch(addNewRecord(payload));
     dispatch(setPrice(payload.price));
-    dispatch(setCreateMode(false));
+    dispatch(setMode("show-report"));
   };
 
   return (
@@ -33,7 +31,7 @@ const CreateMonthReport = () => {
       <SubmitBlock
         isValidForm={isValidForm}
         onSubmit={onSubmit}
-        onCancel={() => dispatch(setCreateMode(false))}
+        onCancel={() => dispatch(setMode("show-report"))}
       />
     </div>
   );

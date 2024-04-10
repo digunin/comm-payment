@@ -6,7 +6,6 @@ import monthAndYearPartial from "./partials/monthAndYearForm";
 import { createForm, haveError } from "./formPattern";
 
 const initialState = {
-  createMode: false,
   metersInputFields: metersPartial.initialState,
   priceInputFields: pricePartial.initialState,
   monthAndYearInputFields: monthAndYearPartial.initialState,
@@ -29,7 +28,6 @@ export const selectIsValidForm = (state: RootState) => {
 };
 
 export const {
-  setCreateMode,
   setMetersInputField,
   setPriceInputField,
   setMonthAndYearInputFields,

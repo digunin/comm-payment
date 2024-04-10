@@ -7,5 +7,5 @@ export default {
   priceState: pricerReducer,
   paymentState: paymentsReducer,
   ...formReducer,
-  appModeReducer,
+  appModeState: appModeReducer,
 };

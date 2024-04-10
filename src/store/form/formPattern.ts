@@ -1,12 +1,7 @@
 import { PayloadAction } from "@reduxjs/toolkit";
-import {
-  FormInputData,
-  InputField,
-  SetterNames,
-  WithInputField,
-} from "./types";
+import { InputField, SetterNames, WithInputField } from "./types";
 
-export const createForm = <S extends { createMode: boolean }>(
+export const createForm = <S>(
   name: string,
   initialState: S,
   setters: {
@@ -20,11 +15,8 @@ export const createForm = <S extends { createMode: boolean }>(
     name: `form/${name}`,
     initialState,
     reducers: {
-      setCreateMode: (state: S, action: PayloadAction<boolean>) => {
-        state.createMode = action.payload;
-      },
-      setInitialValues: (state: S, action: PayloadAction<FormInputData<S>>) => {
-        return { createMode: state.createMode, ...action.payload };
+      setInitialValues: (state: S, action: PayloadAction<S>) => {
+        return action.payload;
       },
       ...setters,
     },

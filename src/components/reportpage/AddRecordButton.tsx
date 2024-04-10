@@ -1,12 +1,10 @@
 import React from "react";
-import {
-  setInitialValues,
-  setCreateMode,
-} from "../../store/form/createMonthReportReducer";
+import { setInitialValues } from "../../store/form/createMonthReportReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
 import { selectActualPrice } from "../../store/price/priceReducer";
 import { useLastRecord } from "../forms/useLastRecord";
+import { setMode } from "../../store/app-mode/appModeReducer";
 
 const AddRecordButton = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -16,7 +14,7 @@ const AddRecordButton = () => {
   const { cold, hot, electricity } = latestRecord;
 
   const onAddButtonClick = () => {
-    dispatch(setCreateMode(true));
+    dispatch(setMode("create-month-report"));
     dispatch(
       setInitialValues({
         metersInputFields: {

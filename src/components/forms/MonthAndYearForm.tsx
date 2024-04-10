@@ -1,16 +1,12 @@
 import React from "react";
-import { useForm } from "../useForm";
-import { setMonthAndYearInputFields } from "../../../store/form/createMonthReportReducer";
-import { useLastRecord } from "../useLastRecord";
+import { FormType, useForm } from "./useForm";
+import { useLastRecord } from "./useLastRecord";
 import DatePicker from "./DatePicker";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../store";
+import { RootState } from "../../store";
 
-const MonthAndYearForm = () => {
-  const { onChangeHandler } = useForm(
-    "monthAndYear",
-    setMonthAndYearInputFields
-  );
+const MonthAndYearForm: FormType = ({ reducer }) => {
+  const { onChangeHandler } = useForm("monthAndYear", reducer);
   const { newYear, newMonth } = useLastRecord();
   const { year, month } = useSelector(
     (state: RootState) => state.createMonthReportState.monthAndYearInputFields

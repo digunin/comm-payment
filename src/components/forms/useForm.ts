@@ -1,7 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
-import { InputField } from "../../store/form/types";
+import { FormFieldSetter, InputField } from "../../store/form/types";
+
+export type FormProps = {
+  reducer: FormFieldSetter;
+};
+
+export type FormType = ({
+  reducer,
+}: {
+  reducer: FormFieldSetter;
+}) => React.JSX.Element;
 
 export const useForm = <T>(
   formName: "price" | "meters" | "monthAndYear",

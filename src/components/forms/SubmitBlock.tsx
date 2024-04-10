@@ -8,7 +8,7 @@ type SBProps = {
 
 const SubmitBlock = ({ onSubmit, onCancel, isValidForm }: SBProps) => {
   return (
-    <div className="create-month-report submit-block">
+    <div className="submit-block">
       <button
         data-testid="btn-ok"
         disabled={!isValidForm}

@@ -1,13 +1,15 @@
 import React from "react";
 import InputElement from "./InputElement";
-import { setMetersInputField } from "../../../store/form/createMonthReportReducer";
-import { useForm } from "../useForm";
-import { notInteger, lessThanPrevious } from "./createMonthReportErrors";
-import { useLastRecord } from "../useLastRecord";
-import { InputFields, PhysicalMeterName } from "../../../store/form/types";
+import { FormType, useForm } from "./useForm";
+import {
+  notInteger,
+  lessThanPrevious,
+} from "./create-month-report/createMonthReportErrors";
+import { useLastRecord } from "./useLastRecord";
+import { InputFields, PhysicalMeterName } from "../../store/form/types";
 
-const MeterReadingsForm = () => {
-  const { data, onChangeHandler } = useForm("meters", setMetersInputField);
+const MeterReadingsForm: FormType = ({ reducer }) => {
+  const { data, onChangeHandler } = useForm("meters", reducer);
   const { latestRecord } = useLastRecord();
 
   return (

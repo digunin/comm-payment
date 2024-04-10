@@ -1,10 +1,12 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { MeterReadings } from "../payment/paymentReducer.utils";
+import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 
 export type InputField = {
   value: number | string;
   error: string | null;
 };
+
 export type PriceFieldName = keyof MeterReadings;
 export type MonthAndYearFieldName = "year" | "month";
 export type PhysicalMeterName = Exclude<PriceFieldName, "waterWaste">;
@@ -23,6 +25,10 @@ export interface WithInputField<N> {
   inputField: InputField;
   name: N;
 }
+
+export type FormFieldSetter = ActionCreatorWithPayload<
+  WithInputField<InputFieldName>
+>;
 
 export type PartialData<S> = S extends { [key: string]: infer R }
   ? {

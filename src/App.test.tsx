@@ -174,10 +174,10 @@ test("create new record", () => {
   let paragraphs = container
     .getElementsByClassName("month-details")[0]
     .getElementsByTagName("p");
-  expect(paragraphs[1].innerHTML).toBe("0");
-  expect(paragraphs[4].innerHTML).toBe("0");
-  expect(paragraphs[7].innerHTML).toBe("0");
-  expect(paragraphs[10].innerHTML).toBe("0");
+  expect(paragraphs[2].innerHTML).toBe("0");
+  expect(paragraphs[5].innerHTML).toBe("0");
+  expect(paragraphs[8].innerHTML).toBe("0");
+  expect(paragraphs[11].innerHTML).toBe("0");
 
   fireEvent.click(container.getElementsByClassName("add-button")[0]);
   fireEvent.change(getByTestId("calendar"), {
@@ -200,10 +200,10 @@ test("create new record", () => {
   paragraphs = container
     .getElementsByClassName("month-details")[0]
     .getElementsByTagName("p");
-  expect(paragraphs[1].innerHTML).toBe("3");
-  expect(paragraphs[4].innerHTML).toBe("1");
-  expect(paragraphs[7].innerHTML).toBe("97");
-  expect(paragraphs[10].innerHTML).toBe("4");
+  expect(paragraphs[2].innerHTML).toBe("3");
+  expect(paragraphs[5].innerHTML).toBe("1");
+  expect(paragraphs[8].innerHTML).toBe("97");
+  expect(paragraphs[11].innerHTML).toBe("4");
 
   fireEvent.click(container.getElementsByClassName("year-2021")[0]);
 

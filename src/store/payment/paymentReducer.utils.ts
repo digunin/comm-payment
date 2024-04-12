@@ -120,11 +120,37 @@ function fixFractionPart(n: number): number {
   return Math.ceil(Number(n * 100)) / 100;
 }
 
+export function calcNewReadings(
+  readings: { [key in keyof MeterReadings]: number },
+  previousReadings: MeterReadings
+): MeterReadings {
+  return {
+    cold: {
+      totalValue: readings.cold,
+      monthValue: readings.cold - previousReadings.cold.totalValue,
+    },
+    hot: {
+      totalValue: readings.hot,
+      monthValue: readings.hot - previousReadings.hot.totalValue,
+    },
+    electricity: {
+      totalValue: readings.electricity,
+      monthValue:
+        readings.electricity - previousReadings.electricity.totalValue,
+    },
+    waterWaste: {
+      totalValue: readings.cold + readings.hot,
+      monthValue:
+        readings.cold + readings.hot - previousReadings.waterWaste.totalValue,
+    },
+  };
+}
+
 const price: Price = {
-  cold: 2404,
-  hot: 16793,
-  electricity: 505,
-  waterWaste: 5220,
+  cold: 24.04,
+  hot: 167.93,
+  electricity: 5.05,
+  waterWaste: 52.2,
 };
 
 export const testTotalReport: PaymentsState = {

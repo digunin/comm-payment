@@ -5,6 +5,7 @@ import {
   Months,
   Payment,
   YearReport,
+  calcNewReadings,
   calcPayment,
   getLatestMeterReadings,
   getPreviousYearsDesc,
@@ -45,26 +46,10 @@ const paymentSlice = createSlice({
     addNewRecord: (state, action: PayloadAction<AddRecordPayload>) => {
       const { year, month, readings, price } = action.payload;
       const { latestReadings } = getLatestMeterReadings(state);
-      let newReadings: MeterReadings = {
-        cold: {
-          totalValue: readings.cold,
-          monthValue: readings.cold - latestReadings.cold.totalValue,
-        },
-        hot: {
-          totalValue: readings.hot,
-          monthValue: readings.hot - latestReadings.hot.totalValue,
-        },
-        electricity: {
-          totalValue: readings.electricity,
-          monthValue:
-            readings.electricity - latestReadings.electricity.totalValue,
-        },
-        waterWaste: {
-          totalValue: readings.cold + readings.hot,
-          monthValue:
-            readings.cold + readings.hot - latestReadings.waterWaste.totalValue,
-        },
-      };
+      let newReadings: MeterReadings = calcNewReadings(
+        readings,
+        latestReadings
+      );
       const newPayment: Payment = {
         date: new Date().getTime(),
         ...calcPayment(newReadings, price),
@@ -84,19 +69,16 @@ const paymentSlice = createSlice({
     setSelected: (state, action: PayloadAction<Selected>) => {
       state.selected = action.payload;
     },
-    recalcPayment: (
-      state,
-      acttion: PayloadAction<Omit<AddRecordPayload, "readings">>
-    ) => {
-      const { month, year, price } = acttion.payload;
-      const { payment, meterReadings, previousPayments } = state[year][
-        month
-      ] as MonthReport;
+    recalcPayment: (state, acttion: PayloadAction<AddRecordPayload>) => {
+      const { month, year, price, readings } = acttion.payload;
+      const { latestReadings } = getLatestMeterReadings(state);
+      const { payment, previousPayments } = state[year][month] as MonthReport;
+      const newReadings = calcNewReadings(readings, latestReadings);
       state[year][month] = {
-        meterReadings,
+        meterReadings: newReadings,
         previousPayments: [...previousPayments, payment],
         price,
-        payment: { ...payment, ...calcPayment(meterReadings, price) },
+        payment: { ...payment, ...calcPayment(newReadings, price) },
       };
     },
   },

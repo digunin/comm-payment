@@ -39,14 +39,19 @@ export interface MonthReport {
 
 export type YearReport = { [key in Months]?: MonthReport };
 
-export function getLatestMeterReadings(totalReport: PaymentsState): {
+export function getLatestMeterReadings(
+  totalReport: PaymentsState,
+  month?: Months
+): {
   latestYear: number;
   latestMonth: Months | -1;
   latestReadings: MeterReadings;
 } {
   const years = getPreviousYearsDesc(totalReport);
+
   for (const year of years) {
-    const result = getLatestMeterReadingsInYear(totalReport[year]);
+    month = years.indexOf(year) === 0 ? month : undefined;
+    const result = getLatestMeterReadingsInYear(totalReport[year], month);
     if (result) {
       return {
         latestYear: year,
@@ -112,7 +117,9 @@ export function calcPayment(
   };
   return {
     ...payment,
-    total: Object.values(payment).reduce((acc, value) => acc + value),
+    total: fixFractionPart(
+      Object.values(payment).reduce((acc, value) => acc + value)
+    ),
   };
 }
 

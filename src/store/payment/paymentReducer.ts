@@ -71,7 +71,7 @@ const paymentSlice = createSlice({
     },
     recalcPayment: (state, acttion: PayloadAction<AddRecordPayload>) => {
       const { month, year, price, readings } = acttion.payload;
-      const { latestReadings } = getLatestMeterReadings(state);
+      const { latestReadings } = getLatestMeterReadings(state, month);
       const { payment, previousPayments } = state[year][month] as MonthReport;
       const newReadings = calcNewReadings(readings, latestReadings);
       state[year][month] = {
@@ -90,8 +90,11 @@ export const selectStartReadings = (state: RootState) =>
 export const selectYearsDesc = (state: RootState) =>
   getPreviousYearsDesc(state.paymentState);
 
-export const selectLatestRecord = (state: RootState): MeterReadings => {
-  return getLatestMeterReadings(state.paymentState).latestReadings;
+export const selectLatestRecord = (
+  state: RootState,
+  month?: Months
+): MeterReadings => {
+  return getLatestMeterReadings(state.paymentState, month).latestReadings;
 };
 
 export const selectDateOfLatestRecord = (
@@ -103,7 +106,12 @@ export const selectDateOfLatestRecord = (
   return { latestYear, latestMonth };
 };
 
-export const { addStartReadings, setPaymentsState, setSelected, addNewRecord } =
-  paymentSlice.actions;
+export const {
+  addStartReadings,
+  setPaymentsState,
+  setSelected,
+  addNewRecord,
+  recalcPayment,
+} = paymentSlice.actions;
 
 export default paymentSlice.reducer;

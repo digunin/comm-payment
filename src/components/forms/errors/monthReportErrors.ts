@@ -5,7 +5,7 @@ import {
   checkIsNumber,
   InputChecker,
   Mutator,
-} from "../errors";
+} from "./errors";
 
 export const errorsText = {
   notInteger: "Показания счетчика должно быть целым положительным числом",

@@ -6,7 +6,7 @@ export type AppMode =
   | "show-report"
   | "create-month-report"
   | "show-payments"
-  | "change-month-price";
+  | "change-month-report";
 
 export interface AppModeState {
   mode: AppMode;

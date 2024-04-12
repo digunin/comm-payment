@@ -1,17 +1,48 @@
 import React from "react";
 import { useSelected } from "../reportPageHooks/useSelected";
-import { Months } from "../../../store/payment/paymentReducer.utils";
+import {
+  MeterReadings,
+  Months,
+} from "../../../store/payment/paymentReducer.utils";
 import MeterReadingsDetails from "./MeterReadingsDetails";
+import { createInitialValue } from "../../../utils";
+import { Price } from "../../../store/price/priceReducer";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../store";
+import { setMode } from "../../../store/app-mode/appModeReducer";
+import { setInitialValues } from "../../../store/form/createMonthReportReducer";
 
 const MonthReport = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const { selectedMonth, selectedYear, selectedReport } = useSelected();
   const showPaymentsDisabled = selectedReport?.previousPayments.length === 0;
+  const initialValue = createInitialValue(
+    selectedMonth as Months,
+    selectedYear as number,
+    selectedReport?.price as Price,
+    selectedReport?.meterReadings as MeterReadings
+  );
+
+  const onEditButtonClick = () => {
+    dispatch(setMode("change-month-report"));
+    dispatch(setInitialValues(initialValue));
+  };
+
   return (
     <>
       <div className="details month-details">
         <div className="month-details-header">
           <p>{`${Months[selectedMonth as Months]} ${selectedYear} details`}</p>
-          <button className="show-all-payments" disabled={showPaymentsDisabled}>
+          <button
+            className="action-button edit-month-report"
+            onClick={onEditButtonClick}
+          >
+            Edit
+          </button>
+          <button
+            className="action-button show-all-payments"
+            disabled={showPaymentsDisabled}
+          >
             All payments
           </button>
         </div>

@@ -7,5 +7,6 @@ export function useAppMode() {
     isMonthReportCreate: appMode === "create-month-report",
     isStartingPage: appMode === "starting-page",
     isReportShow: appMode === "show-report",
+    isMonthReportChange: appMode === "change-month-report",
   };
 }

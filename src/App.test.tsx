@@ -212,3 +212,160 @@ test("create new record", () => {
     6
   );
 });
+
+test("edit record", () => {
+  const { container, getByTestId, getByText } = renderWithProvider(<App />);
+
+  fireEvent.click(getByTestId("btn-add-testTotalReport"));
+
+  fireEvent.click(container.getElementsByClassName("year-2014")[0]);
+  fireEvent.click(container.getElementsByClassName("month-nov")[0]);
+  fireEvent.click(container.getElementsByClassName("edit-month-report")[0]);
+  expect(container.getElementsByClassName("price-form").length).toBe(1);
+  expect(container.getElementsByClassName("meter-readings-form").length).toBe(
+    0
+  );
+
+  fireEvent.click(getByTestId("btn-cancel"));
+
+  fireEvent.click(container.getElementsByClassName("year-2014")[0]);
+  fireEvent.click(container.getElementsByClassName("month-dec")[0]);
+  fireEvent.click(container.getElementsByClassName("edit-month-report")[0]);
+  expect(container.getElementsByClassName("price-form").length).toBe(1);
+  expect(container.getElementsByClassName("meter-readings-form").length).toBe(
+    0
+  );
+
+  fireEvent.click(getByTestId("btn-cancel"));
+
+  fireEvent.click(container.getElementsByClassName("year-2016")[0]);
+  fireEvent.click(container.getElementsByClassName("month-jan")[0]);
+  fireEvent.click(container.getElementsByClassName("edit-month-report")[0]);
+  expect(container.getElementsByClassName("price-form").length).toBe(1);
+  expect(container.getElementsByClassName("meter-readings-form").length).toBe(
+    0
+  );
+
+  fireEvent.click(getByTestId("btn-cancel"));
+
+  fireEvent.click(container.getElementsByClassName("year-2016")[0]);
+  fireEvent.click(container.getElementsByClassName("month-sep")[0]);
+  fireEvent.click(container.getElementsByClassName("edit-month-report")[0]);
+  expect(container.getElementsByClassName("price-form").length).toBe(1);
+  expect(container.getElementsByClassName("meter-readings-form").length).toBe(
+    0
+  );
+
+  fireEvent.click(getByTestId("btn-cancel"));
+
+  fireEvent.click(container.getElementsByClassName("year-2021")[0]);
+  fireEvent.click(container.getElementsByClassName("month-aug")[0]);
+  fireEvent.click(container.getElementsByClassName("edit-month-report")[0]);
+  expect(container.getElementsByClassName("price-form").length).toBe(1);
+  expect(container.getElementsByClassName("meter-readings-form").length).toBe(
+    0
+  );
+
+  fireEvent.click(getByTestId("btn-cancel"));
+
+  fireEvent.click(container.getElementsByClassName("year-2021")[0]);
+  fireEvent.click(container.getElementsByClassName("month-oct")[0]);
+  fireEvent.click(container.getElementsByClassName("edit-month-report")[0]);
+  expect(container.getElementsByClassName("price-form").length).toBe(1);
+  expect(container.getElementsByClassName("meter-readings-form").length).toBe(
+    1
+  );
+  expect(errorInputQuantity(container)).toBe(0);
+  enterText("cold", "meters", container, "210900");
+  enterText("hot", "meters", container, "210900");
+  enterText("electricity", "meters", container, "210900");
+  expect(errorInputQuantity(container)).toBe(0);
+  enterText("cold", "meters", container, "210800");
+  enterText("hot", "meters", container, "210801");
+  enterText("electricity", "meters", container, "210802");
+  expect(errorInputQuantity(container)).toBe(0);
+  enterText("cold", "meters", container, "210799");
+  enterText("hot", "meters", container, "210800");
+  enterText("electricity", "meters", container, "210801");
+  expect(errorInputQuantity(container)).toBe(3);
+  expect(getError("cold", "meters", container)).toBe(
+    errorsText.lessThanPrevious
+  );
+  expect(getError("hot", "meters", container)).toBe(
+    errorsText.lessThanPrevious
+  );
+  expect(getError("electricity", "meters", container)).toBe(
+    errorsText.lessThanPrevious
+  );
+
+  fireEvent.click(getByTestId("btn-cancel"));
+  fireEvent.click(container.getElementsByClassName("add-button")[0]);
+  fireEvent.click(getByTestId("btn-ok"));
+
+  fireEvent.click(container.getElementsByClassName("add-button")[0]);
+  fireEvent.change(getByTestId("calendar"), {
+    target: { value: "2022-02-01" },
+  });
+  enterText("cold", "meters", container, "211005");
+  enterText("hot", "meters", container, "211004");
+  enterText("electricity", "meters", container, "211053");
+  fireEvent.click(getByTestId("btn-ok"));
+  let paragraphs = container
+    .getElementsByClassName("month-details")[0]
+    .getElementsByTagName("p");
+  expect(paragraphs[2].innerHTML).toBe("5");
+  expect(paragraphs[5].innerHTML).toBe("3");
+  expect(paragraphs[8].innerHTML).toBe("51");
+  expect(paragraphs[11].innerHTML).toBe("8");
+
+  expect(paragraphs[3].innerHTML).toBe("120.2");
+  expect(paragraphs[6].innerHTML).toBe("503.79");
+  expect(paragraphs[9].innerHTML).toBe("257.55");
+  expect(paragraphs[12].innerHTML).toBe("417.6");
+  expect(paragraphs[14].innerHTML).toBe("1299.14");
+  expect(
+    container.getElementsByClassName("show-all-payments")[0]
+  ).toBeDisabled();
+
+  fireEvent.click(container.getElementsByClassName("edit-month-report")[0]);
+  enterText("cold", "meters", container, "211003");
+  enterText("hot", "meters", container, "211003");
+
+  enterText("hot", "price", container, "168.93");
+  enterText("electricity", "price", container, "5.09");
+  enterText("waterWaste", "price", container, "53.03");
+
+  fireEvent.click(getByTestId("btn-ok"));
+
+  paragraphs = container
+    .getElementsByClassName("month-details")[0]
+    .getElementsByTagName("p");
+  expect(paragraphs[2].innerHTML).toBe("3");
+  expect(paragraphs[5].innerHTML).toBe("2");
+  expect(paragraphs[8].innerHTML).toBe("51");
+  expect(paragraphs[11].innerHTML).toBe("5");
+
+  expect(paragraphs[3].innerHTML).toBe("72.12");
+  expect(paragraphs[6].innerHTML).toBe("337.86");
+  expect(paragraphs[9].innerHTML).toBe("259.59");
+  expect(paragraphs[12].innerHTML).toBe("265.15");
+  expect(paragraphs[14].innerHTML).toBe("934.72");
+
+  fireEvent.click(container.getElementsByClassName("edit-month-report")[0]);
+  expect(checkEnteredText("cold", "price", container, "24.04"));
+  expect(checkEnteredText("hot", "price", container, "168.93"));
+  expect(checkEnteredText("electricity", "price", container, "5.09"));
+  expect(checkEnteredText("waterWaste", "price", container, "53.03"));
+
+  expect(checkEnteredText("cold", "meters", container, "211003"));
+  expect(checkEnteredText("hot", "meters", container, "211003"));
+  expect(checkEnteredText("electricity", "meters", container, "211053"));
+
+  fireEvent.click(getByTestId("btn-cancel"));
+
+  fireEvent.click(container.getElementsByClassName("add-button")[0]);
+  expect(checkEnteredText("cold", "price", container, "24.04"));
+  expect(checkEnteredText("hot", "price", container, "168.93"));
+  expect(checkEnteredText("electricity", "price", container, "5.09"));
+  expect(checkEnteredText("waterWaste", "price", container, "53.03"));
+});

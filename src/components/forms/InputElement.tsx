@@ -1,5 +1,5 @@
 import React from "react";
-import WithErrorHandling from "./WithErrorHandlingInput";
+import WithErrorHandling from "./errors/WithErrorHandlingInput";
 
 export type IEProps = {
   wrapperClassName: string;

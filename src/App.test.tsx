@@ -7,7 +7,9 @@ import {
   enterText,
   checkEnteredText,
   errorInputQuantity,
+  getError,
 } from "./components/forms/create-month-report/CreateMonthReport.test";
+import { errorsText } from "./components/forms/errors/monthReportErrors";
 
 test("renders starting page", () => {
   const { container, getByTestId } = renderWithProvider(<App />);

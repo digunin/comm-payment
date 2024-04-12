@@ -15,7 +15,7 @@ import {
   setPaymentsState,
 } from "../../../store/payment/paymentReducer";
 import { setInitialValues } from "../../../store/form/createMonthReportReducer";
-import { errorsText } from "./createMonthReportErrors";
+import { errorsText } from "../errors/monthReportErrors";
 import { renderWithProvider } from "../../../utils";
 import { PriceFieldName } from "../../../store/form/types";
 

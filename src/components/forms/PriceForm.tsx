@@ -1,11 +1,8 @@
 import React from "react";
 import InputElement from "./InputElement";
 import { FormType, useForm } from "./useForm";
-import { priceMutator } from "./create-month-report/createMonthReportErrors";
-import {
-  notNumber,
-  max2digitsAfterDot,
-} from "./create-month-report/createMonthReportErrors";
+import { priceMutator } from "./errors/monthReportErrors";
+import { notNumber, max2digitsAfterDot } from "./errors/monthReportErrors";
 import { InputFields, PriceFieldName } from "../../store/form/types";
 
 const PriceForm: FormType = ({ reducer }) => {

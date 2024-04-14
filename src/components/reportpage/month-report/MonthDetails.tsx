@@ -15,7 +15,6 @@ import { setInitialValues } from "../../../store/form/createMonthReportReducer";
 const MonthReport = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { selectedMonth, selectedYear, selectedReport } = useSelected();
-  const showPaymentsDisabled = selectedReport?.previousPayments.length === 0;
   const initialValue = createInitialValue(
     selectedMonth as Months,
     selectedYear as number,
@@ -38,12 +37,6 @@ const MonthReport = () => {
             onClick={onEditButtonClick}
           >
             Edit
-          </button>
-          <button
-            className="action-button show-all-payments"
-            disabled={showPaymentsDisabled}
-          >
-            All payments
           </button>
         </div>
         <MeterReadingsDetails />

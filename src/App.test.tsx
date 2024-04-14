@@ -323,9 +323,6 @@ test("edit record", () => {
   expect(paragraphs[9].innerHTML).toBe("257.55");
   expect(paragraphs[12].innerHTML).toBe("417.6");
   expect(paragraphs[14].innerHTML).toBe("1299.14");
-  expect(
-    container.getElementsByClassName("show-all-payments")[0]
-  ).toBeDisabled();
 
   fireEvent.click(container.getElementsByClassName("edit-month-report")[0]);
   enterText("cold", "meters", container, "211003");

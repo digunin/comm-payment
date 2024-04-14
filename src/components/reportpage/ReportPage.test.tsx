@@ -86,27 +86,15 @@ test("renders report page", () => {
   expect(container.getElementsByClassName("month-dec").length).toBe(0);
 
   fireEvent.click(container.getElementsByClassName("month-may")[0]);
-  expect(
-    container.getElementsByClassName("show-all-payments")[0]
-  ).toBeDisabled();
   expect(container.getElementsByClassName("year-details").length).toBe(0);
   expect(container.getElementsByClassName("month-details").length).toBe(1);
   fireEvent.click(container.getElementsByClassName("month-jan")[0]);
-  expect(
-    container.getElementsByClassName("show-all-payments")[0]
-  ).toBeDisabled();
   expect(container.getElementsByClassName("year-details").length).toBe(0);
   expect(container.getElementsByClassName("month-details").length).toBe(1);
   fireEvent.click(container.getElementsByClassName("month-aug")[0]);
-  expect(
-    container.getElementsByClassName("show-all-payments")[0]
-  ).toBeDisabled();
   expect(container.getElementsByClassName("year-details").length).toBe(0);
   expect(container.getElementsByClassName("month-details").length).toBe(1);
   fireEvent.click(container.getElementsByClassName("month-sep")[0]);
-  expect(
-    container.getElementsByClassName("show-all-payments")[0]
-  ).toBeDisabled();
   expect(container.getElementsByClassName("year-details").length).toBe(0);
   expect(container.getElementsByClassName("month-details").length).toBe(1);
 
@@ -154,27 +142,15 @@ test("renders report page", () => {
   );
 
   fireEvent.click(container.getElementsByClassName("month-apr")[0]);
-  expect(
-    container.getElementsByClassName("show-all-payments")[0]
-  ).toBeDisabled();
   expect(container.getElementsByClassName("year-details").length).toBe(0);
   expect(container.getElementsByClassName("month-details").length).toBe(1);
   fireEvent.click(container.getElementsByClassName("month-jul")[0]);
-  expect(
-    container.getElementsByClassName("show-all-payments")[0]
-  ).toBeDisabled();
   expect(container.getElementsByClassName("year-details").length).toBe(0);
   expect(container.getElementsByClassName("month-details").length).toBe(1);
   fireEvent.click(container.getElementsByClassName("month-nov")[0]);
-  expect(
-    container.getElementsByClassName("show-all-payments")[0]
-  ).toBeDisabled();
   expect(container.getElementsByClassName("year-details").length).toBe(0);
   expect(container.getElementsByClassName("month-details").length).toBe(1);
   fireEvent.click(container.getElementsByClassName("month-dec")[0]);
-  expect(
-    container.getElementsByClassName("show-all-payments")[0]
-  ).toBeDisabled();
   expect(container.getElementsByClassName("year-details").length).toBe(0);
   expect(container.getElementsByClassName("month-details").length).toBe(1);
 
@@ -222,27 +198,15 @@ test("renders report page", () => {
   expect(container.getElementsByClassName("month-dec").length).toBe(0);
 
   fireEvent.click(container.getElementsByClassName("month-may")[0]);
-  expect(
-    container.getElementsByClassName("show-all-payments")[0]
-  ).toBeDisabled();
   expect(container.getElementsByClassName("year-details").length).toBe(0);
   expect(container.getElementsByClassName("month-details").length).toBe(1);
   fireEvent.click(container.getElementsByClassName("month-jun")[0]);
-  expect(
-    container.getElementsByClassName("show-all-payments")[0]
-  ).toBeDisabled();
   expect(container.getElementsByClassName("year-details").length).toBe(0);
   expect(container.getElementsByClassName("month-details").length).toBe(1);
   fireEvent.click(container.getElementsByClassName("month-aug")[0]);
-  expect(
-    container.getElementsByClassName("show-all-payments")[0]
-  ).toBeDisabled();
   expect(container.getElementsByClassName("year-details").length).toBe(0);
   expect(container.getElementsByClassName("month-details").length).toBe(1);
   fireEvent.click(container.getElementsByClassName("month-oct")[0]);
-  expect(
-    container.getElementsByClassName("show-all-payments")[0]
-  ).toBeDisabled();
   expect(container.getElementsByClassName("year-details").length).toBe(0);
   expect(container.getElementsByClassName("month-details").length).toBe(1);
 });

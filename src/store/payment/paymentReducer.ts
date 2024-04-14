@@ -3,10 +3,9 @@ import {
   MeterReadings,
   MonthReport,
   Months,
-  Payment,
   YearReport,
   calcNewReadings,
-  calcPayment,
+  calcPayAmount,
   getLatestMeterReadings,
   getPreviousYearsDesc,
 } from "./paymentReducer.utils";
@@ -50,15 +49,14 @@ const paymentSlice = createSlice({
         readings,
         latestReadings
       );
-      const newPayment: Payment = {
-        date: new Date().getTime(),
-        ...calcPayment(newReadings, price),
-      };
       if (!state[year]) state[year] = {};
       state[year][month] = {
-        meterReadings: newReadings,
-        payment: newPayment,
-        price,
+        lastPayment: {
+          date: new Date().getTime(),
+          meterReadings: newReadings,
+          payAmount: { ...calcPayAmount(newReadings, price) },
+          price,
+        },
         previousPayments: [],
       };
       state.selected = { selectedMonth: month, selectedYear: year };
@@ -72,13 +70,18 @@ const paymentSlice = createSlice({
     recalcPayment: (state, acttion: PayloadAction<AddRecordPayload>) => {
       const { month, year, price, readings } = acttion.payload;
       const { latestReadings } = getLatestMeterReadings(state, month);
-      const { payment, previousPayments } = state[year][month] as MonthReport;
+      const { lastPayment, previousPayments } = state[year][
+        month
+      ] as MonthReport;
       const newReadings = calcNewReadings(readings, latestReadings);
       state[year][month] = {
-        meterReadings: newReadings,
-        previousPayments: [...previousPayments, payment],
-        price,
-        payment: { ...payment, ...calcPayment(newReadings, price) },
+        lastPayment: {
+          date: new Date().getTime(),
+          meterReadings: newReadings,
+          price,
+          payAmount: { ...calcPayAmount(newReadings, price) },
+        },
+        previousPayments: [...previousPayments, lastPayment],
       };
     },
   },

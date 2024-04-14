@@ -18,8 +18,8 @@ const MonthReport = () => {
   const initialValue = createInitialValue(
     selectedMonth as Months,
     selectedYear as number,
-    selectedReport?.price as Price,
-    selectedReport?.meterReadings as MeterReadings
+    selectedReport?.lastPayment.price as Price,
+    selectedReport?.lastPayment.meterReadings as MeterReadings
   );
 
   const onEditButtonClick = () => {

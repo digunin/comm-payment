@@ -51,6 +51,7 @@ const paymentSlice = createSlice({
       );
       if (!state[year]) state[year] = {};
       state[year][month] = {
+        showAllPayments: false,
         lastPayment: {
           date: new Date().getTime(),
           meterReadings: newReadings,
@@ -75,6 +76,7 @@ const paymentSlice = createSlice({
       ] as MonthReport;
       const newReadings = calcNewReadings(readings, latestReadings);
       state[year][month] = {
+        showAllPayments: false,
         lastPayment: {
           date: new Date().getTime(),
           meterReadings: newReadings,
@@ -83,6 +85,16 @@ const paymentSlice = createSlice({
         },
         previousPayments: [...previousPayments, lastPayment],
       };
+    },
+    toggleAllPaymentsShow: (
+      state,
+      action: PayloadAction<{ month: Months; year: number }>
+    ) => {
+      const { month, year } = action.payload;
+      if (state[year][month] !== undefined) {
+        (state[year][month] as MonthReport).showAllPayments =
+          !state[year][month]?.showAllPayments;
+      }
     },
   },
 });
@@ -115,6 +127,7 @@ export const {
   setSelected,
   addNewRecord,
   recalcPayment,
+  toggleAllPaymentsShow,
 } = paymentSlice.actions;
 
 export default paymentSlice.reducer;

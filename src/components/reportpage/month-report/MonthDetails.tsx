@@ -3,8 +3,9 @@ import { useSelected } from "../reportPageHooks/useSelected";
 import {
   MeterReadings,
   Months,
+  Payment,
 } from "../../../store/payment/paymentReducer.utils";
-import MeterReadingsDetails from "./MeterReadingsDetails";
+import PaymentDetails from "./PaymentDetails";
 import { createInitialValue } from "../../../utils";
 import { Price } from "../../../store/price/priceReducer";
 import { useDispatch } from "react-redux";
@@ -23,6 +24,9 @@ const MonthReport = () => {
     selectedReport?.lastPayment.price as Price,
     selectedReport?.lastPayment.meterReadings as MeterReadings
   );
+  const payments = selectedReport?.showAllPayments
+    ? [...selectedReport.previousPayments, selectedReport.lastPayment]
+    : [selectedReport?.lastPayment];
 
   const onEditButtonClick = () => {
     dispatch(setMode("change-month-report"));
@@ -55,7 +59,9 @@ const MonthReport = () => {
             •••
           </button>
         </div>
-        <MeterReadingsDetails />
+        {payments.map((payment) => (
+          <PaymentDetails payment={payment as Payment} />
+        ))}
       </div>
     </>
   );

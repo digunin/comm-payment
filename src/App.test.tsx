@@ -220,6 +220,9 @@ test("edit record", () => {
 
   fireEvent.click(container.getElementsByClassName("year-2014")[0]);
   fireEvent.click(container.getElementsByClassName("month-nov")[0]);
+  expect(
+    container.getElementsByClassName("show-all-payments")[0]
+  ).toBeDisabled();
   fireEvent.click(container.getElementsByClassName("edit-month-report")[0]);
   expect(container.getElementsByClassName("price-form").length).toBe(1);
   expect(container.getElementsByClassName("meter-readings-form").length).toBe(
@@ -230,6 +233,9 @@ test("edit record", () => {
 
   fireEvent.click(container.getElementsByClassName("year-2014")[0]);
   fireEvent.click(container.getElementsByClassName("month-dec")[0]);
+  expect(
+    container.getElementsByClassName("show-all-payments")[0]
+  ).toBeDisabled();
   fireEvent.click(container.getElementsByClassName("edit-month-report")[0]);
   expect(container.getElementsByClassName("price-form").length).toBe(1);
   expect(container.getElementsByClassName("meter-readings-form").length).toBe(
@@ -240,6 +246,9 @@ test("edit record", () => {
 
   fireEvent.click(container.getElementsByClassName("year-2016")[0]);
   fireEvent.click(container.getElementsByClassName("month-jan")[0]);
+  expect(
+    container.getElementsByClassName("show-all-payments")[0]
+  ).toBeDisabled();
   fireEvent.click(container.getElementsByClassName("edit-month-report")[0]);
   expect(container.getElementsByClassName("price-form").length).toBe(1);
   expect(container.getElementsByClassName("meter-readings-form").length).toBe(
@@ -250,6 +259,9 @@ test("edit record", () => {
 
   fireEvent.click(container.getElementsByClassName("year-2016")[0]);
   fireEvent.click(container.getElementsByClassName("month-sep")[0]);
+  expect(
+    container.getElementsByClassName("show-all-payments")[0]
+  ).toBeDisabled();
   fireEvent.click(container.getElementsByClassName("edit-month-report")[0]);
   expect(container.getElementsByClassName("price-form").length).toBe(1);
   expect(container.getElementsByClassName("meter-readings-form").length).toBe(
@@ -260,6 +272,9 @@ test("edit record", () => {
 
   fireEvent.click(container.getElementsByClassName("year-2021")[0]);
   fireEvent.click(container.getElementsByClassName("month-aug")[0]);
+  expect(
+    container.getElementsByClassName("show-all-payments")[0]
+  ).toBeDisabled();
   fireEvent.click(container.getElementsByClassName("edit-month-report")[0]);
   expect(container.getElementsByClassName("price-form").length).toBe(1);
   expect(container.getElementsByClassName("meter-readings-form").length).toBe(
@@ -270,6 +285,9 @@ test("edit record", () => {
 
   fireEvent.click(container.getElementsByClassName("year-2021")[0]);
   fireEvent.click(container.getElementsByClassName("month-oct")[0]);
+  expect(
+    container.getElementsByClassName("show-all-payments")[0]
+  ).toBeDisabled();
   fireEvent.click(container.getElementsByClassName("edit-month-report")[0]);
   expect(container.getElementsByClassName("price-form").length).toBe(1);
   expect(container.getElementsByClassName("meter-readings-form").length).toBe(
@@ -310,6 +328,9 @@ test("edit record", () => {
   enterText("hot", "meters", container, "211004");
   enterText("electricity", "meters", container, "211053");
   fireEvent.click(getByTestId("btn-ok"));
+  expect(
+    container.getElementsByClassName("show-all-payments")[0]
+  ).toBeDisabled();
   let paragraphs = container
     .getElementsByClassName("month-details")[0]
     .getElementsByTagName("p");
@@ -333,6 +354,15 @@ test("edit record", () => {
   enterText("waterWaste", "price", container, "53.03");
 
   fireEvent.click(getByTestId("btn-ok"));
+  expect(
+    container.getElementsByClassName("show-all-payments")[0]
+  ).not.toBeDisabled();
+
+  expect(container.getElementsByClassName("payment").length).toBe(1);
+  fireEvent.click(container.getElementsByClassName("show-all-payments")[0]);
+  expect(container.getElementsByClassName("payment").length).toBe(2);
+  fireEvent.click(container.getElementsByClassName("show-all-payments")[0]);
+  expect(container.getElementsByClassName("payment").length).toBe(1);
 
   paragraphs = container
     .getElementsByClassName("month-details")[0]

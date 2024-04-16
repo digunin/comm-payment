@@ -6,7 +6,7 @@ type MRProps = {
   paySum: number;
 };
 
-const MeterReadingDetails = ({ name, monthValue, paySum }: MRProps) => {
+const PaymentRow = ({ name, monthValue, paySum }: MRProps) => {
   return (
     <div className={`meter ${name}-meter`}>
       <p>{name}</p>
@@ -16,4 +16,4 @@ const MeterReadingDetails = ({ name, monthValue, paySum }: MRProps) => {
   );
 };
 
-export default MeterReadingDetails;
+export default PaymentRow;

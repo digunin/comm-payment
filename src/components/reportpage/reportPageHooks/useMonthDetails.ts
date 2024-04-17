@@ -10,7 +10,10 @@ import {
 import { Price } from "../../../store/price/priceReducer";
 import { setMode } from "../../../store/app-mode/appModeReducer";
 import { setInitialValues } from "../../../store/form/createMonthReportReducer";
-import { toggleAllPaymentsShow } from "../../../store/payment/paymentReducer";
+import {
+  setSelectedPayment,
+  toggleAllPaymentsShow,
+} from "../../../store/payment/paymentReducer";
 
 export const useMonthDetails = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -39,12 +42,25 @@ export const useMonthDetails = () => {
       })
     );
 
+  const onPaymentClick = (date: number) => {
+    if (date === selectedReport?.lastPayment.date) return;
+    dispatch(
+      setSelectedPayment({
+        month: selectedMonth as Months,
+        year: selectedYear as number,
+        date,
+      })
+    );
+  };
+
   return {
     selectedMonth: selectedMonth as Months,
     selectedYear: selectedYear as number,
-    onEditButtonClick,
-    onShowAllPaymentsClick,
     payments: payments as Array<Payment>,
     showPaymentsDisabled,
+    selectedPaymentDate: selectedReport?.selected as number,
+    onEditButtonClick,
+    onShowAllPaymentsClick,
+    onPaymentClick,
   };
 };

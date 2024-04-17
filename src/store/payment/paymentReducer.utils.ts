@@ -40,6 +40,7 @@ export type MonthReport = {
   showAllPayments: boolean;
   lastPayment: Payment;
   previousPayments: Array<Payment>;
+  selected: number;
 };
 
 export type YearReport = { [key in Months]?: MonthReport };
@@ -175,6 +176,7 @@ export const testTotalReport: PaymentsState = {
   selected: { selectedYear: null, selectedMonth: null },
   2014: {
     [Months.apr]: {
+      selected: -1,
       showAllPayments: false,
       previousPayments: [],
       lastPayment: {
@@ -196,6 +198,7 @@ export const testTotalReport: PaymentsState = {
       },
     },
     [Months.jul]: {
+      selected: -1,
       showAllPayments: false,
       previousPayments: [],
       lastPayment: {
@@ -217,6 +220,7 @@ export const testTotalReport: PaymentsState = {
       },
     },
     [Months.nov]: {
+      selected: -1,
       showAllPayments: false,
       previousPayments: [],
       lastPayment: {
@@ -238,6 +242,7 @@ export const testTotalReport: PaymentsState = {
       },
     },
     [Months.dec]: {
+      selected: -1,
       showAllPayments: false,
       previousPayments: [],
       lastPayment: {
@@ -261,6 +266,7 @@ export const testTotalReport: PaymentsState = {
   },
   2016: {
     [Months.jan]: {
+      selected: -1,
       showAllPayments: false,
       previousPayments: [],
       lastPayment: {
@@ -282,6 +288,7 @@ export const testTotalReport: PaymentsState = {
       },
     },
     [Months.may]: {
+      selected: -1,
       showAllPayments: false,
       previousPayments: [],
       lastPayment: {
@@ -303,6 +310,7 @@ export const testTotalReport: PaymentsState = {
       },
     },
     [Months.aug]: {
+      selected: -1,
       showAllPayments: false,
       previousPayments: [],
       lastPayment: {
@@ -324,6 +332,7 @@ export const testTotalReport: PaymentsState = {
       },
     },
     [Months.sep]: {
+      selected: -1,
       showAllPayments: false,
       previousPayments: [],
       lastPayment: {
@@ -347,6 +356,7 @@ export const testTotalReport: PaymentsState = {
   },
   2021: {
     [Months.may]: {
+      selected: -1,
       showAllPayments: false,
       previousPayments: [],
       lastPayment: {
@@ -368,6 +378,7 @@ export const testTotalReport: PaymentsState = {
       },
     },
     [Months.jun]: {
+      selected: -1,
       showAllPayments: false,
       previousPayments: [],
       lastPayment: {
@@ -389,6 +400,7 @@ export const testTotalReport: PaymentsState = {
       },
     },
     [Months.aug]: {
+      selected: -1,
       showAllPayments: false,
       previousPayments: [],
       lastPayment: {
@@ -410,6 +422,7 @@ export const testTotalReport: PaymentsState = {
       },
     },
     [Months.oct]: {
+      selected: -1,
       showAllPayments: false,
       previousPayments: [],
       lastPayment: {

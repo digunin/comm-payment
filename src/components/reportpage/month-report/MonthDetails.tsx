@@ -9,8 +9,10 @@ const MonthReport = () => {
     selectedMonth,
     selectedYear,
     showPaymentsDisabled,
+    selectedPaymentDate,
     onEditButtonClick,
     onShowAllPaymentsClick,
+    onPaymentClick,
   } = useMonthDetails();
 
   return (
@@ -32,9 +34,16 @@ const MonthReport = () => {
             •••
           </button>
         </div>
-        {payments.map((payment) => (
-          <PaymentDetails payment={payment as Payment} />
-        ))}
+        {payments.map((payment) => {
+          const selected = selectedPaymentDate === payment.date;
+          return (
+            <PaymentDetails
+              onclick={onPaymentClick}
+              payment={payment as Payment}
+              selected={selected}
+            />
+          );
+        })}
       </div>
     </>
   );

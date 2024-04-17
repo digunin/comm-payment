@@ -5,11 +5,18 @@ import {
 } from "../../../store/payment/paymentReducer.utils";
 import PaymentRow from "./PaymentRow";
 
-const PaymentDetails = ({ payment }: { payment: Payment }) => {
+type PDProps = {
+  payment: Payment;
+  selected: boolean;
+  onclick: (date: number) => void;
+};
+
+const PaymentDetails = ({ payment, selected, onclick }: PDProps) => {
   const { meterReadings, payAmount } = payment;
+  const classname = `payment${selected ? " selected" : ""}`;
 
   return (
-    <div className="payment">
+    <div className={classname} onClick={() => onclick(payment.date)}>
       <h2>
         <span>Дата платежа: </span>
         <span>{new Date(payment.date).toLocaleString()}</span>

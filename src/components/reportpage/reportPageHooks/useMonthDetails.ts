@@ -1,3 +1,7 @@
+import {
+  MonthReport,
+  fixFractionPart,
+} from "./../../../store/payment/paymentReducer.utils";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../store";
 import { useSelected } from "./useSelected";
@@ -29,6 +33,18 @@ export const useMonthDetails = () => {
     ? [...selectedReport.previousPayments, selectedReport.lastPayment]
     : [selectedReport?.lastPayment];
 
+  const totalValueDiff =
+    (selectedReport as MonthReport).previousPayments.length > 0
+      ? fixFractionPart(
+          (selectedReport as MonthReport).lastPayment.payAmount.total -
+            (selectedReport as MonthReport).previousPayments
+              .filter((payment) => payment.date === selectedReport?.selected)
+              .reduce((payment) => payment).payAmount.total
+        )
+      : 0;
+
+  const isCompareBarShow = selectedReport?.showAllPayments;
+
   const onEditButtonClick = () => {
     dispatch(setMode("change-month-report"));
     dispatch(setInitialValues(initialValue));
@@ -59,6 +75,8 @@ export const useMonthDetails = () => {
     payments: payments as Array<Payment>,
     showPaymentsDisabled,
     selectedPaymentDate: selectedReport?.selected as number,
+    totalValueDiff,
+    isCompareBarShow,
     onEditButtonClick,
     onShowAllPaymentsClick,
     onPaymentClick,

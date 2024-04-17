@@ -2,14 +2,17 @@ import React from "react";
 import { Months, Payment } from "../../../store/payment/paymentReducer.utils";
 import PaymentDetails from "./PaymentDetails";
 import { useMonthDetails } from "../reportPageHooks/useMonthDetails";
+import CompareBar from "./CompareBar";
 
-const MonthReport = () => {
+const MonthDetails = () => {
   const {
     payments,
     selectedMonth,
     selectedYear,
     showPaymentsDisabled,
     selectedPaymentDate,
+    totalValueDiff,
+    isCompareBarShow,
     onEditButtonClick,
     onShowAllPaymentsClick,
     onPaymentClick,
@@ -38,15 +41,17 @@ const MonthReport = () => {
           const selected = selectedPaymentDate === payment.date;
           return (
             <PaymentDetails
+              key={payment.date}
               onclick={onPaymentClick}
               payment={payment as Payment}
               selected={selected}
             />
           );
         })}
+        {isCompareBarShow && <CompareBar diff={totalValueDiff} />}
       </div>
     </>
   );
 };
 
-export default MonthReport;
+export default MonthDetails;

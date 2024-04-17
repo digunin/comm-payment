@@ -361,6 +361,10 @@ test("edit record", () => {
   expect(container.getElementsByClassName("payment").length).toBe(1);
   fireEvent.click(container.getElementsByClassName("show-all-payments")[0]);
   expect(container.getElementsByClassName("payment").length).toBe(2);
+  expect(container.getElementsByClassName("pos")[0]).toBeInTheDocument();
+  expect(container.getElementsByClassName("pos")[0].innerHTML).toBe(
+    "вы переплатили: 364.42"
+  );
   fireEvent.click(container.getElementsByClassName("show-all-payments")[0]);
   expect(container.getElementsByClassName("payment").length).toBe(1);
 
@@ -378,6 +382,8 @@ test("edit record", () => {
   expect(paragraphs[12].innerHTML).toBe("265.15");
   expect(paragraphs[14].innerHTML).toBe("934.72");
 
+  fireEvent.click(container.getElementsByClassName("show-all-payments")[0]);
+
   fireEvent.click(container.getElementsByClassName("edit-month-report")[0]);
   expect(checkEnteredText("cold", "price", container, "24.04"));
   expect(checkEnteredText("hot", "price", container, "168.93"));
@@ -389,10 +395,30 @@ test("edit record", () => {
   expect(checkEnteredText("electricity", "meters", container, "211053"));
 
   fireEvent.click(getByTestId("btn-cancel"));
+  expect(container.getElementsByClassName("payment").length).toBe(2);
 
   fireEvent.click(container.getElementsByClassName("add-button")[0]);
   expect(checkEnteredText("cold", "price", container, "24.04"));
   expect(checkEnteredText("hot", "price", container, "168.93"));
   expect(checkEnteredText("electricity", "price", container, "5.09"));
   expect(checkEnteredText("waterWaste", "price", container, "53.03"));
+
+  fireEvent.click(getByTestId("btn-cancel"));
+  expect(container.getElementsByClassName("payment").length).toBe(2);
+
+  fireEvent.click(container.getElementsByClassName("edit-month-report")[0]);
+  enterText("waterWaste", "price", container, "55");
+  fireEvent.click(getByTestId("btn-ok"));
+  expect(container.getElementsByClassName("payment").length).toBe(3);
+
+  expect(container.getElementsByClassName("neg")[0]).toBeInTheDocument();
+  expect(container.getElementsByClassName("neg")[0].innerHTML).toBe(
+    "нужно доплатить: 9.85"
+  );
+
+  fireEvent.click(container.getElementsByClassName("payment")[0]);
+  expect(container.getElementsByClassName("pos")[0]).toBeInTheDocument();
+  expect(container.getElementsByClassName("pos")[0].innerHTML).toBe(
+    "вы переплатили: 354.57"
+  );
 });

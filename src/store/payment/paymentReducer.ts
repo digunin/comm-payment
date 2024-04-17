@@ -72,13 +72,13 @@ const paymentSlice = createSlice({
     recalcPayment: (state, acttion: PayloadAction<AddRecordPayload>) => {
       const { month, year, price, readings } = acttion.payload;
       const { latestReadings } = getLatestMeterReadings(state, month);
-      const { lastPayment, previousPayments } = state[year][
+      const { lastPayment, previousPayments, showAllPayments } = state[year][
         month
       ] as MonthReport;
       const newReadings = calcNewReadings(readings, latestReadings);
       state[year][month] = {
         selected: lastPayment.date,
-        showAllPayments: false,
+        showAllPayments,
         lastPayment: {
           date: new Date().getTime(),
           meterReadings: newReadings,

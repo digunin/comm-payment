@@ -129,8 +129,8 @@ export function calcPayAmount(
   };
 }
 
-function fixFractionPart(n: number): number {
-  return Math.ceil(Number(n * 100)) / 100;
+export function fixFractionPart(n: number): number {
+  return Math.round(Number(n * 100)) / 100;
 }
 
 export function calcNewReadings(

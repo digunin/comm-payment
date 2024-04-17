@@ -9,12 +9,17 @@
     padding: 1px
     .meter
         display: flex
-        justify-content: space-around
+        justify-content: space-between
+        &:nth-child(even)
+            background-color: rgb(225, 225, 225)
         p
-            flex-basis: 33%
             text-align: right
             &:first-of-type
                 text-align: left
+            &:nth-child(n+1)
+                flex-basis: 19%
+            &:nth-child(1)
+                flex-basis: 24%
     .month-details
         &-header
             display: flex

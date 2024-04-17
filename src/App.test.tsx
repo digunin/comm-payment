@@ -28,7 +28,9 @@ test("renders starting page", () => {
 });
 
 test("report-blocks render", () => {
-  const { container, getByTestId, getByText } = renderWithProvider(<App />);
+  const { container, getByTestId, queryAllByText } = renderWithProvider(
+    <App />
+  );
   expect(container.getElementsByClassName("start-page").length).toBe(1);
   fireEvent.click(getByTestId("btn-add-testTotalReport"));
   expect(container.getElementsByClassName("start-page").length).toBe(0);
@@ -88,10 +90,10 @@ test("report-blocks render", () => {
   expect(container.getElementsByClassName("month-button selected").length).toBe(
     1
   );
-  expect(container.getElementsByClassName("meter").length).toBe(4);
-  expect(getByText("211000")).toBeInTheDocument();
-  expect(getByText("211001")).toBeInTheDocument();
-  expect(getByText("211002")).toBeInTheDocument();
+  expect(container.getElementsByClassName("meter").length).toBe(5);
+  expect(queryAllByText("211000").length).toBe(2);
+  expect(queryAllByText("211001").length).toBe(2);
+  expect(queryAllByText("211002").length).toBe(2);
 
   fireEvent.click(container.getElementsByClassName("month-aug")[0]);
 
@@ -107,14 +109,14 @@ test("report-blocks render", () => {
   expect(container.getElementsByClassName("month-button selected").length).toBe(
     1
   );
-  expect(container.getElementsByClassName("meter").length).toBe(4);
-  expect(getByText("210800")).toBeInTheDocument();
-  expect(getByText("210801")).toBeInTheDocument();
-  expect(getByText("210802")).toBeInTheDocument();
+  expect(container.getElementsByClassName("meter").length).toBe(5);
+  expect(queryAllByText("210800").length).toBe(2);
+  expect(queryAllByText("210801").length).toBe(2);
+  expect(queryAllByText("210802").length).toBe(2);
 });
 
 test("create new record", () => {
-  const { container, getByTestId, getByText } = renderWithProvider(<App />);
+  const { container, getByTestId } = renderWithProvider(<App />);
 
   fireEvent.click(getByTestId("btn-add-testTotalReport"));
 
@@ -174,10 +176,10 @@ test("create new record", () => {
   let paragraphs = container
     .getElementsByClassName("month-details")[0]
     .getElementsByTagName("p");
-  expect(paragraphs[2].innerHTML).toBe("0");
-  expect(paragraphs[5].innerHTML).toBe("0");
   expect(paragraphs[8].innerHTML).toBe("0");
-  expect(paragraphs[11].innerHTML).toBe("0");
+  expect(paragraphs[13].innerHTML).toBe("0");
+  expect(paragraphs[18].innerHTML).toBe("0");
+  expect(paragraphs[23].innerHTML).toBe("0");
 
   fireEvent.click(container.getElementsByClassName("add-button")[0]);
   fireEvent.change(getByTestId("calendar"), {
@@ -200,10 +202,10 @@ test("create new record", () => {
   paragraphs = container
     .getElementsByClassName("month-details")[0]
     .getElementsByTagName("p");
-  expect(paragraphs[2].innerHTML).toBe("3");
-  expect(paragraphs[5].innerHTML).toBe("1");
-  expect(paragraphs[8].innerHTML).toBe("97");
-  expect(paragraphs[11].innerHTML).toBe("4");
+  expect(paragraphs[8].innerHTML).toBe("3");
+  expect(paragraphs[13].innerHTML).toBe("1");
+  expect(paragraphs[18].innerHTML).toBe("97");
+  expect(paragraphs[23].innerHTML).toBe("4");
 
   fireEvent.click(container.getElementsByClassName("year-2021")[0]);
 
@@ -334,16 +336,16 @@ test("edit record", () => {
   let paragraphs = container
     .getElementsByClassName("month-details")[0]
     .getElementsByTagName("p");
-  expect(paragraphs[2].innerHTML).toBe("5");
-  expect(paragraphs[5].innerHTML).toBe("3");
-  expect(paragraphs[8].innerHTML).toBe("51");
-  expect(paragraphs[11].innerHTML).toBe("8");
+  expect(paragraphs[8].innerHTML).toBe("5");
+  expect(paragraphs[13].innerHTML).toBe("3");
+  expect(paragraphs[18].innerHTML).toBe("51");
+  expect(paragraphs[23].innerHTML).toBe("8");
 
-  expect(paragraphs[3].innerHTML).toBe("120.2");
-  expect(paragraphs[6].innerHTML).toBe("503.79");
-  expect(paragraphs[9].innerHTML).toBe("257.55");
-  expect(paragraphs[12].innerHTML).toBe("417.6");
-  expect(paragraphs[14].innerHTML).toBe("1299.14");
+  expect(paragraphs[10].innerHTML).toBe("120.2");
+  expect(paragraphs[15].innerHTML).toBe("503.79");
+  expect(paragraphs[20].innerHTML).toBe("257.55");
+  expect(paragraphs[25].innerHTML).toBe("417.6");
+  expect(paragraphs[27].innerHTML).toBe("1299.14");
 
   fireEvent.click(container.getElementsByClassName("edit-month-report")[0]);
   enterText("cold", "meters", container, "211003");
@@ -371,16 +373,16 @@ test("edit record", () => {
   paragraphs = container
     .getElementsByClassName("month-details")[0]
     .getElementsByTagName("p");
-  expect(paragraphs[2].innerHTML).toBe("3");
-  expect(paragraphs[5].innerHTML).toBe("2");
-  expect(paragraphs[8].innerHTML).toBe("51");
-  expect(paragraphs[11].innerHTML).toBe("5");
+  expect(paragraphs[8].innerHTML).toBe("3");
+  expect(paragraphs[13].innerHTML).toBe("2");
+  expect(paragraphs[18].innerHTML).toBe("51");
+  expect(paragraphs[23].innerHTML).toBe("5");
 
-  expect(paragraphs[3].innerHTML).toBe("72.12");
-  expect(paragraphs[6].innerHTML).toBe("337.86");
-  expect(paragraphs[9].innerHTML).toBe("259.59");
-  expect(paragraphs[12].innerHTML).toBe("265.15");
-  expect(paragraphs[14].innerHTML).toBe("934.72");
+  expect(paragraphs[10].innerHTML).toBe("72.12");
+  expect(paragraphs[15].innerHTML).toBe("337.86");
+  expect(paragraphs[20].innerHTML).toBe("259.59");
+  expect(paragraphs[25].innerHTML).toBe("265.15");
+  expect(paragraphs[27].innerHTML).toBe("934.72");
 
   fireEvent.click(container.getElementsByClassName("show-all-payments")[0]);
 

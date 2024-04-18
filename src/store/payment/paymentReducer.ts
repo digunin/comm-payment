@@ -114,7 +114,7 @@ export const selectStartReadings = (state: RootState) =>
   state.paymentState.startReadings;
 
 export const selectYearsDesc = (state: RootState) =>
-  getPreviousYearsDesc(state.paymentState);
+  getPreviousYearsDesc(state.paymentState).join(",");
 
 export const selectLatestRecord = (
   state: RootState,
@@ -123,13 +123,12 @@ export const selectLatestRecord = (
   return getLatestMeterReadings(state.paymentState, month).latestReadings;
 };
 
-export const selectDateOfLatestRecord = (
-  state: RootState
-): { latestYear: number; latestMonth: Months | -1 } => {
-  const { latestMonth, latestYear } = getLatestMeterReadings(
-    state.paymentState
-  );
-  return { latestYear, latestMonth };
+export const selectYearOfLatestRecord = (state: RootState) => {
+  return getLatestMeterReadings(state.paymentState).latestYear;
+};
+
+export const selectMonthOfLatestRecord = (state: RootState) => {
+  return getLatestMeterReadings(state.paymentState).latestMonth;
 };
 
 export const {

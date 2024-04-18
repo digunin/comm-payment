@@ -5,14 +5,15 @@ import {
   YearReport,
 } from "../../../store/payment/paymentReducer.utils";
 import {
-  selectDateOfLatestRecord,
+  selectYearOfLatestRecord,
+  selectMonthOfLatestRecord,
   setSelected,
 } from "../../../store/payment/paymentReducer";
 import { useSelected } from "./useSelected";
 
 type returnedFromUseMonthsList = {
   fullYear: Array<number>;
-  recordedMonths: Array<number>;
+  recordedMonths: Array<Months>;
   onMonthButtonClick: (month: Months) => void;
   selectedMonth: Months | null;
   selectedYear: number | null;
@@ -23,16 +24,13 @@ export function useMonthsList(): returnedFromUseMonthsList {
   const dispatch = useDispatch<AppDispatch>();
   const { selectedYear, selectedMonth } = useSelected();
 
+  const emptyReport = {};
   const yearReport: YearReport = useSelector((state: RootState) =>
-    selectedYear === null ? {} : state.paymentState[selectedYear]
+    selectedYear === null ? emptyReport : state.paymentState[selectedYear]
   );
 
-  const latestYear = useSelector(
-    (state: RootState) => selectDateOfLatestRecord(state).latestYear
-  );
-  const latestMonth = useSelector(
-    (state: RootState) => selectDateOfLatestRecord(state).latestMonth
-  );
+  const latestYear = useSelector(selectYearOfLatestRecord);
+  const latestMonth = useSelector(selectMonthOfLatestRecord);
   let isAddButtonNeed = false;
   if (latestYear === selectedYear && latestMonth < Months.dec)
     isAddButtonNeed = true;

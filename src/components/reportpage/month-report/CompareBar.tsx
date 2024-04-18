@@ -8,7 +8,7 @@ const CompareBar = ({ diff }: { diff: number }) => {
       <strong>Разница с выбранным платежом:</strong>
       <p className={classname}>
         {message}
-        {Math.abs(diff)}
+        {Math.abs(diff) / 100}
       </p>
     </div>
   );

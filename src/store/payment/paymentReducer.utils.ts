@@ -112,25 +112,15 @@ export function calcPayAmount(
   price: Price
 ): Omit<PayAmount, "date"> {
   let payment = {
-    cold: fixFractionPart(readings.cold.monthValue * price.cold),
-    hot: fixFractionPart(readings.hot.monthValue * price.hot),
-    electricity: fixFractionPart(
-      readings.electricity.monthValue * price.electricity
-    ),
-    waterWaste: fixFractionPart(
-      readings.waterWaste.monthValue * price.waterWaste
-    ),
+    cold: readings.cold.monthValue * price.cold,
+    hot: readings.hot.monthValue * price.hot,
+    electricity: readings.electricity.monthValue * price.electricity,
+    waterWaste: readings.waterWaste.monthValue * price.waterWaste,
   };
   return {
     ...payment,
-    total: fixFractionPart(
-      Object.values(payment).reduce((acc, value) => acc + value)
-    ),
+    total: Object.values(payment).reduce((acc, value) => acc + value),
   };
-}
-
-export function fixFractionPart(n: number): number {
-  return Math.round(Number(n * 100)) / 100;
 }
 
 export function calcNewReadings(
@@ -159,11 +149,11 @@ export function calcNewReadings(
   };
 }
 
-const price: Price = {
-  cold: 24.04,
-  hot: 167.93,
-  electricity: 5.05,
-  waterWaste: 52.2,
+export const price: Price = {
+  cold: 2404,
+  hot: 16793,
+  electricity: 505,
+  waterWaste: 5220,
 };
 
 export const testTotalReport: PaymentsState = {

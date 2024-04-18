@@ -1,11 +1,8 @@
-import {
-  MonthReport,
-  fixFractionPart,
-} from "./../../../store/payment/paymentReducer.utils";
+import { MonthReport } from "./../../../store/payment/paymentReducer.utils";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../store";
 import { useSelected } from "./useSelected";
-import { createInitialValue } from "../../../utils";
+import { createFormInitialValue } from "../../../utils";
 import {
   MeterReadings,
   Months,
@@ -23,7 +20,7 @@ export const useMonthDetails = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { selectedMonth, selectedYear, selectedReport } = useSelected();
   const showPaymentsDisabled = selectedReport?.previousPayments.length === 0;
-  const initialValue = createInitialValue(
+  const initialValue = createFormInitialValue(
     selectedMonth as Months,
     selectedYear as number,
     selectedReport?.lastPayment.price as Price,
@@ -35,12 +32,10 @@ export const useMonthDetails = () => {
 
   const totalValueDiff =
     (selectedReport as MonthReport).previousPayments.length > 0
-      ? fixFractionPart(
-          (selectedReport as MonthReport).lastPayment.payAmount.total -
-            (selectedReport as MonthReport).previousPayments
-              .filter((payment) => payment.date === selectedReport?.selected)
-              .reduce((payment) => payment).payAmount.total
-        )
+      ? (selectedReport as MonthReport).lastPayment.payAmount.total -
+        (selectedReport as MonthReport).previousPayments
+          .filter((payment) => payment.date === selectedReport?.selected)
+          .reduce((payment) => payment).payAmount.total
       : 0;
 
   const isCompareBarShow = selectedReport?.showAllPayments;

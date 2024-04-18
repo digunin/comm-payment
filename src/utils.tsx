@@ -16,7 +16,7 @@ export const renderWithProvider = (element: React.ReactElement) => {
   return render(element, { wrapper });
 };
 
-export function createInitialValue(
+export function createFormInitialValue(
   month: Months,
   year: number,
   price: Price,
@@ -29,10 +29,10 @@ export function createInitialValue(
       electricity: { value: readings.electricity.totalValue, error: null },
     },
     priceInputFields: {
-      cold: { value: price.cold, error: null },
-      hot: { value: price.hot, error: null },
-      electricity: { value: price.electricity, error: null },
-      waterWaste: { value: price.waterWaste, error: null },
+      cold: { value: price.cold / 100, error: null },
+      hot: { value: price.hot / 100, error: null },
+      electricity: { value: price.electricity / 100, error: null },
+      waterWaste: { value: price.waterWaste / 100, error: null },
     },
     monthAndYearInputFields: {
       month: {

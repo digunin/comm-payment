@@ -46,7 +46,7 @@ const PaymentDetails = ({ payment, selected, onclick }: PDProps) => {
       })}
       <div className="total">
         <p>total:</p>
-        <p>{payAmount.total}</p>
+        <p>{payAmount.total / 100}</p>
       </div>
     </div>
   );

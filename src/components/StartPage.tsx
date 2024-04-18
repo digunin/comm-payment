@@ -8,6 +8,7 @@ import { AppDispatch } from "../store";
 import {
   MeterReadings,
   testTotalReport,
+  price,
 } from "../store/payment/paymentReducer.utils";
 import { setPriceState } from "../store/price/priceReducer";
 import { setMode } from "../store/app-mode/appModeReducer";
@@ -38,12 +39,7 @@ export function StartPage() {
           dispatch(setPaymentsState(testTotalReport));
           dispatch(
             setPriceState({
-              actualPrice: {
-                cold: 24.04,
-                hot: 167.93,
-                electricity: 5.05,
-                waterWaste: 52.2,
-              },
+              actualPrice: price,
               oldPrices: [],
             })
           );

@@ -16,10 +16,10 @@ export const useFormPayload = () => {
       waterWaste: 0,
     },
     price: {
-      cold: Number(priceInputFields.cold.value),
-      hot: Number(priceInputFields.hot.value),
-      electricity: Number(priceInputFields.electricity.value),
-      waterWaste: Number(priceInputFields.waterWaste.value),
+      cold: Number(priceInputFields.cold.value) * 100,
+      hot: Number(priceInputFields.hot.value) * 100,
+      electricity: Number(priceInputFields.electricity.value) * 100,
+      waterWaste: Number(priceInputFields.waterWaste.value) * 100,
     },
   };
   return payload;

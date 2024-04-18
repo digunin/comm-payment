@@ -20,8 +20,8 @@ const PaymentRow = ({
       <p>{name}</p>
       <p>{totalValue}</p>
       <p>{monthValue}</p>
-      <p>{price}</p>
-      <p>{paySum}</p>
+      <p>{typeof price === "number" ? price / 100 : price}</p>
+      <p>{typeof paySum === "number" ? paySum / 100 : paySum}</p>
     </div>
   );
 };

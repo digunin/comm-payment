@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "..";
-import pricePartial from "./partials/priceForm";
-import metersPartial from "./partials/metersForm";
-import monthAndYearPartial from "./partials/monthAndYearForm";
+import pricePartial from "./partials/pricePartial";
+import metersPartial from "./partials/metersPartial";
+import monthAndYearPartial from "./partials/monthAndYearPartial";
 import { createForm, haveError } from "./formPattern";
 
 const initialState = {

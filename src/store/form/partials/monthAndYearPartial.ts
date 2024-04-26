@@ -1,8 +1,11 @@
-import { InputField, MonthAndYearFieldName, PartialData } from "../types";
+import {
+  InputField,
+  MonthAndYearFieldName,
+  PartialData,
+  PartialState,
+} from "../types";
 
-type MonthAndYearFormState = {
-  [key in MonthAndYearFieldName]: InputField;
-};
+type MonthAndYearFormState = PartialState<MonthAndYearFieldName>;
 
 const initialState: MonthAndYearFormState = {
   month: {

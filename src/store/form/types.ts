@@ -14,6 +14,10 @@ export type InputFieldName =
   | PriceFieldName
   | MonthAndYearFieldName
   | PhysicalMeterName;
+
+export type PartialState<N extends InputFieldName> = {
+  [key in N]: InputField;
+};
 export type InputFields = { [key in InputFieldName]: InputField };
 
 export type SetterNames =

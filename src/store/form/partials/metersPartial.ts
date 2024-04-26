@@ -1,8 +1,11 @@
-import { PhysicalMeterName, InputField, PartialData } from "./../types";
+import {
+  PhysicalMeterName,
+  InputField,
+  PartialData,
+  PartialState,
+} from "../types";
 
-type MetersFormState = {
-  [key in PhysicalMeterName]: InputField;
-};
+type MetersFormState = PartialState<PhysicalMeterName>;
 
 const initialState: MetersFormState = {
   cold: {

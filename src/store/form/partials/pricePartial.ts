@@ -1,8 +1,11 @@
-import { InputField, PartialData, PriceFieldName } from "../types";
+import {
+  InputField,
+  PartialData,
+  PartialState,
+  PriceFieldName,
+} from "../types";
 
-type PriceFormState = {
-  [key in PriceFieldName]: InputField;
-};
+type PriceFormState = PartialState<PriceFieldName>;
 
 const initialState: PriceFormState = {
   cold: {

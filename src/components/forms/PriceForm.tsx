@@ -3,17 +3,20 @@ import InputElement from "./InputElement";
 import { FormType, useForm } from "./useForm";
 import { priceMutator } from "./errors/monthReportErrors";
 import { notNumber, max2digitsAfterDot } from "./errors/monthReportErrors";
-import { InputFields, PriceFieldName } from "../../store/form/types";
+import { PriceFieldName } from "../../store/form/types";
 
-const PriceForm: FormType = ({ reducer }) => {
-  const { data, onChangeHandler } = useForm("price", reducer);
+const PriceForm: FormType<PriceFieldName> = ({ reducer }) => {
+  const {
+    data: { priceInputFields },
+    onChangeHandler,
+  } = useForm(reducer);
 
   return (
     <div className="form price-form">
       <h2>Цены</h2>
-      {Object.keys(data).map((key) => {
+      {Object.keys(priceInputFields).map((key) => {
         const meterName = key as PriceFieldName;
-        const { value, error } = (data as InputFields)[meterName];
+        const { value, error } = priceInputFields[meterName];
         const formName = "price";
         const wrapperClassName = formName;
         const inputClassName = `${formName}-input-element ${meterName}`;

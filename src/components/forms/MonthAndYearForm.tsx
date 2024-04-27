@@ -2,15 +2,12 @@ import React from "react";
 import { FormType, useForm } from "./useForm";
 import { useLastRecord } from "./useLastRecord";
 import DatePicker from "./DatePicker";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { MonthAndYearFieldName } from "../../store/form/types";
 
-const MonthAndYearForm: FormType = ({ reducer }) => {
-  const { onChangeHandler } = useForm("monthAndYear", reducer);
+const MonthAndYearForm: FormType<MonthAndYearFieldName> = ({ reducer }) => {
+  const { data, onChangeHandler } = useForm(reducer);
   const { newYear, newMonth } = useLastRecord();
-  const { year, month } = useSelector(
-    (state: RootState) => state.createMonthReportState.monthAndYearInputFields
-  );
+  const { year, month } = data.monthAndYearInputFields;
   return (
     <div className="form month-year-form">
       <DatePicker

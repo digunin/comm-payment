@@ -1,29 +1,28 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
-import { FormFieldSetter, InputField } from "../../store/form/types";
+import { InputField, InputFieldName } from "../../store/form/types";
 
-export type FormProps = {
-  reducer: FormFieldSetter;
-};
-
-export type FormType = ({
+export type FormType<N extends InputFieldName> = ({
   reducer,
 }: {
-  reducer: FormFieldSetter;
+  reducer: ActionCreatorWithPayload<{
+    name: N;
+    inputField: InputField;
+  }>;
 }) => React.JSX.Element;
 
-export const useForm = <T>(
-  formName: "price" | "meters" | "monthAndYear",
-  reducer: ActionCreatorWithPayload<{ name: T; inputField: InputField }>
+export const useForm = <N>(
+  reducer: ActionCreatorWithPayload<{
+    name: N;
+    inputField: InputField;
+  }>
 ) => {
-  const data = useSelector(
-    (state: RootState) => state.createMonthReportState[`${formName}InputFields`]
-  );
+  const data = useSelector((state: RootState) => state.createMonthReportState);
   const dispatch = useDispatch<AppDispatch>();
   const onChangeHandler = (
     value: string | number,
-    fieldName: T,
+    fieldName: N,
     error: string | null = null
   ) => {
     dispatch(

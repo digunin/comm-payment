@@ -1,13 +1,6 @@
-import {
-  InputField,
-  MonthAndYearFieldName,
-  PartialData,
-  PartialState,
-} from "../types";
+import { MonthAndYearFieldName, PartialData, PartialState } from "../types";
 
-type MonthAndYearFormState = PartialState<MonthAndYearFieldName>;
-
-const initialState: MonthAndYearFormState = {
+const initialState: PartialState<MonthAndYearFieldName> = {
   month: {
     value: -1,
     error: null,
@@ -18,13 +11,15 @@ const initialState: MonthAndYearFormState = {
   },
 };
 
-const partialData: PartialData<{
-  monthAndYearInputFields: MonthAndYearFormState;
-}> = {
-  initialState,
-  setter: (state, action) => {
-    state.monthAndYearInputFields[action.payload.name] =
-      action.payload.inputField;
+const partialData: PartialData<"monthAndYear"> = {
+  initialState: {
+    monthAndYearInputFields: initialState,
+  },
+  setter: {
+    setMonthAndYearInputField: (state, action) => {
+      state.monthAndYearInputFields[action.payload.name] =
+        action.payload.inputField;
+    },
   },
 };
 

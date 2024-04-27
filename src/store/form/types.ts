@@ -1,6 +1,5 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { MeterReadings } from "../payment/paymentReducer.utils";
-import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 
 export type InputField = {
   value: number | string;
@@ -15,31 +14,45 @@ export type InputFieldName =
   | MonthAndYearFieldName
   | PhysicalMeterName;
 
+export type PartialName = "price" | "meters" | "monthAndYear";
 export type PartialState<N extends InputFieldName> = {
   [key in N]: InputField;
 };
-export type InputFields = { [key in InputFieldName]: InputField };
 
-export type SetterNames =
-  | "setMetersInputField"
-  | "setPriceInputField"
-  | "setMonthAndYearInputFields";
+type CreatePartialStateName<N> = N extends PartialName
+  ? `${N}InputFields`
+  : never;
+
+type CreateSetterName<N> = N extends PartialName
+  ? `set${Capitalize<N>}InputField`
+  : never;
+
+type TypeOfFieldName<N> = N extends "price"
+  ? PriceFieldName
+  : N extends "meters"
+  ? PhysicalMeterName
+  : N extends "monthAndYear"
+  ? MonthAndYearFieldName
+  : never;
+
+export type SetterNames = CreateSetterName<PartialName>;
+export type PartialStateName = CreatePartialStateName<PartialName>;
 
 export interface WithInputField<N> {
   inputField: InputField;
   name: N;
 }
 
-export type FormFieldSetter = ActionCreatorWithPayload<
-  WithInputField<InputFieldName>
->;
-
-export type PartialData<S> = S extends { [key: string]: infer R }
-  ? {
-      initialState: R;
-      setter: (
-        state: S,
-        action: PayloadAction<WithInputField<keyof R>>
-      ) => void;
-    }
-  : never;
+export type PartialData<N extends PartialName> = {
+  initialState: {
+    [key in CreatePartialStateName<N>]: PartialState<TypeOfFieldName<N>>;
+  };
+  setter: {
+    [key in CreateSetterName<N>]: (
+      state: {
+        [key in CreatePartialStateName<N>]: PartialState<TypeOfFieldName<N>>;
+      },
+      action: PayloadAction<WithInputField<TypeOfFieldName<N>>>
+    ) => void;
+  };
+};

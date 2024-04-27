@@ -1,13 +1,6 @@
-import {
-  InputField,
-  PartialData,
-  PartialState,
-  PriceFieldName,
-} from "../types";
+import { PartialData, PartialState, PriceFieldName } from "../types";
 
-type PriceFormState = PartialState<PriceFieldName>;
-
-const initialState: PriceFormState = {
+const initialState: PartialState<PriceFieldName> = {
   cold: {
     value: 0,
     error: null,
@@ -26,12 +19,14 @@ const initialState: PriceFormState = {
   },
 };
 
-const partialData: PartialData<{
-  priceInputFields: PriceFormState;
-}> = {
-  initialState,
-  setter: (state, action) => {
-    state.priceInputFields[action.payload.name] = action.payload.inputField;
+const partialData: PartialData<"price"> = {
+  initialState: {
+    priceInputFields: initialState,
+  },
+  setter: {
+    setPriceInputField: (state, action) => {
+      state.priceInputFields[action.payload.name] = action.payload.inputField;
+    },
   },
 };
 

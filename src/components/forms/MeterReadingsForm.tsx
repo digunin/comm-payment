@@ -2,18 +2,21 @@ import React from "react";
 import InputElement from "./InputElement";
 import { FormType, useForm } from "./useForm";
 import { notInteger, lessThanPrevious } from "./errors/monthReportErrors";
-import { InputFields, PhysicalMeterName } from "../../store/form/types";
+import { PhysicalMeterName } from "../../store/form/types";
 import { useMinReadings } from "./useMinReadings";
 
-const MeterReadingsForm: FormType = ({ reducer }) => {
-  const { data, onChangeHandler } = useForm("meters", reducer);
+const MeterReadingsForm: FormType<PhysicalMeterName> = ({ reducer }) => {
+  const {
+    data: { metersInputFields },
+    onChangeHandler,
+  } = useForm(reducer);
 
   return (
     <div className="form meter-readings-form">
       <h2>Показания счетчиков</h2>
-      {Object.keys(data).map((key) => {
+      {Object.keys(metersInputFields).map((key) => {
         const meterName = key as PhysicalMeterName;
-        const { value, error } = (data as InputFields)[meterName];
+        const { value, error } = metersInputFields[meterName];
         const formName = "meters";
         const wrapperClassName = formName;
         const inputClassName = `${formName}-input-element ${meterName}`;

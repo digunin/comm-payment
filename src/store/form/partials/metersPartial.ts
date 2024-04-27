@@ -1,13 +1,6 @@
-import {
-  PhysicalMeterName,
-  InputField,
-  PartialData,
-  PartialState,
-} from "../types";
+import { PhysicalMeterName, PartialData, PartialState } from "../types";
 
-type MetersFormState = PartialState<PhysicalMeterName>;
-
-const initialState: MetersFormState = {
+const initialState: PartialState<PhysicalMeterName> = {
   cold: {
     value: 0,
     error: null,
@@ -22,12 +15,14 @@ const initialState: MetersFormState = {
   },
 };
 
-const partialData: PartialData<{
-  metersInputFields: MetersFormState;
-}> = {
-  initialState,
-  setter: (state, action) => {
-    state.metersInputFields[action.payload.name] = action.payload.inputField;
+const partialData: PartialData<"meters"> = {
+  initialState: {
+    metersInputFields: initialState,
+  },
+  setter: {
+    setMetersInputField: (state, action) => {
+      state.metersInputFields[action.payload.name] = action.payload.inputField;
+    },
   },
 };
 

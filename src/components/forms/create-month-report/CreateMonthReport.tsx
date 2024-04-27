@@ -11,7 +11,7 @@ import { setPrice } from "../../../store/price/priceReducer";
 import { setMode } from "../../../store/app-mode/appModeReducer";
 import { setPriceInputField } from "../../../store/form/createMonthReportReducer";
 import { setMetersInputField } from "../../../store/form/createMonthReportReducer";
-import { setMonthAndYearInputFields } from "../../../store/form/createMonthReportReducer";
+import { setMonthAndYearInputField } from "../../../store/form/createMonthReportReducer";
 
 const CreateMonthReport = () => {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const CreateMonthReport = () => {
   return (
     <div className="create-month-report">
       <h1>Добавить новую запись</h1>
-      <MonthAndYearForm reducer={setMonthAndYearInputFields} />
+      <MonthAndYearForm reducer={setMonthAndYearInputField} />
       <MeterReadingsForm reducer={setMetersInputField} />
       <PriceForm reducer={setPriceInputField} />
       <SubmitBlock

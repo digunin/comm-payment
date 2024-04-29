@@ -30,6 +30,13 @@ type AddRecordPayload = {
   price: Price;
 };
 
+type MultipleReacalcPayload = {
+  checked: {
+    [key: number]: Array<Months>;
+  };
+  newPrice: Price;
+};
+
 const initialState: PaymentsState = {
   startReadings: null,
   selected: { selectedYear: null, selectedMonth: null },
@@ -88,6 +95,33 @@ const paymentSlice = createSlice({
         previousPayments: [...previousPayments, lastPayment],
       };
     },
+    multiplePriceFix: (
+      state,
+      action: PayloadAction<MultipleReacalcPayload>
+    ) => {
+      const { checked, newPrice } = action.payload;
+      for (const key of Object.keys(checked)) {
+        const year = Number(key);
+        for (const month of Object.values(checked[year])) {
+          const { lastPayment, previousPayments, showAllPayments } = state[
+            year
+          ][month] as MonthReport;
+          state[year][month] = {
+            selected: lastPayment.date,
+            showAllPayments,
+            lastPayment: {
+              date: new Date().getTime(),
+              meterReadings: lastPayment.meterReadings,
+              price: newPrice,
+              payAmount: {
+                ...calcPayAmount(lastPayment.meterReadings, newPrice),
+              },
+            },
+            previousPayments: [...previousPayments, lastPayment],
+          };
+        }
+      }
+    },
     toggleAllPaymentsShow: (
       state,
       action: PayloadAction<{ month: Months; year: number }>
@@ -131,6 +165,31 @@ export const selectMonthOfLatestRecord = (state: RootState) => {
   return getLatestMeterReadings(state.paymentState).latestMonth;
 };
 
+export const selectListOfReports = (state: RootState) => {
+  const { selectedMonth, selectedYear } = state.paymentState.selected;
+  return JSON.stringify(
+    Object.keys(state.paymentState)
+      .filter((key) => !isNaN(Number(key)))
+      .map((key) => Number(key))
+      .reduce((list, year) => {
+        return {
+          ...list,
+          [year]: Object.keys(state.paymentState[year])
+            .map((month) => Number(month))
+            .reduce((acc, month) => {
+              return {
+                ...acc,
+                [month]:
+                  year === selectedYear && month === selectedMonth
+                    ? true
+                    : false,
+              };
+            }, {}),
+        };
+      }, {})
+  );
+};
+
 export const {
   addStartReadings,
   setPaymentsState,
@@ -139,6 +198,7 @@ export const {
   recalcPayment,
   toggleAllPaymentsShow,
   setSelectedPayment,
+  multiplePriceFix,
 } = paymentSlice.actions;
 
 export default paymentSlice.reducer;

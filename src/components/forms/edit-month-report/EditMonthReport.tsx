@@ -12,21 +12,36 @@ import { setMetersInputField } from "../../../store/form/createMonthReportReduce
 import { useSelected } from "../../reportpage/reportPageHooks/useSelected";
 import { useLastRecord } from "../useLastRecord";
 import { Months } from "../../../store/payment/paymentReducer.utils";
-import { recalcPayment } from "../../../store/payment/paymentReducer";
+import {
+  multiplePriceFix,
+  recalcPayment,
+} from "../../../store/payment/paymentReducer";
+import { useMultipleFix } from "../useMultipleFix";
+import CheckBoxBlock from "./CheckBoxBlock";
 
 const EditMonthReport = () => {
   const dispatch = useDispatch();
   const isValidForm = useSelector(selectIsValidForm);
   const payload = useFormPayload();
+  const { checkboxList, isMultiChoice, onCheckBox, listOfChecked } =
+    useMultipleFix();
 
   const { selectedMonth, selectedYear } = useSelected();
   const { latestMonth, latestYear } = useLastRecord();
   const isPossibleChangeReadings =
-    selectedYear === latestYear && selectedMonth === latestMonth;
+    selectedYear === latestYear &&
+    selectedMonth === latestMonth &&
+    !isMultiChoice;
 
   const onSubmit = () => {
     if (!isValidForm) return;
-    dispatch(recalcPayment(payload));
+    if (isMultiChoice) {
+      dispatch(
+        multiplePriceFix({ newPrice: payload.price, checked: listOfChecked })
+      );
+    } else {
+      dispatch(recalcPayment(payload));
+    }
     dispatch(setPrice(payload.price));
     dispatch(setMode("show-report"));
   };
@@ -35,6 +50,7 @@ const EditMonthReport = () => {
     <div className="change-month-report">
       <h1>Изменение записи</h1>
       <h2>{`${Months[selectedMonth as Months]} ${selectedYear}`}</h2>
+      <CheckBoxBlock list={checkboxList} onclick={onCheckBox} />
       {isPossibleChangeReadings && (
         <MeterReadingsForm reducer={setMetersInputField} />
       )}

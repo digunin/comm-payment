@@ -2,7 +2,9 @@ import React from "react";
 
 const CompareBar = ({ diff }: { diff: number }) => {
   const [classname, message] =
-    diff > 0 ? ["neg", "нужно доплатить: "] : ["pos", "вы переплатили: "];
+    diff > 0
+      ? ["negative", "нужно доплатить: "]
+      : ["positive", "вы переплатили: "];
   return (
     <div className="compare-bar">
       <strong>Разница с выбранным платежом:</strong>

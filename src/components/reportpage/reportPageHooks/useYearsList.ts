@@ -10,6 +10,7 @@ export function useYearsList() {
 
   const years = useAppSelector(selectYearsDesc)
     .split(",")
+    .filter((year) => year !== "")
     .map((year) => Number(year));
   const { selectedYear } = useSelected();
 

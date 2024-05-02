@@ -1,15 +1,15 @@
-import { useSelector } from "react-redux";
 import {
   selectLatestRecord,
   selectYearOfLatestRecord,
   selectMonthOfLatestRecord,
 } from "../../store/payment/paymentReducer";
 import { Months } from "../../store/payment/paymentReducer.utils";
+import { useAppSelector } from "../../AppHooks";
 
 export function useLastRecord() {
-  const latestRecord = useSelector(selectLatestRecord);
-  const latestYear = useSelector(selectYearOfLatestRecord);
-  const latestMonth = useSelector(selectMonthOfLatestRecord);
+  const latestRecord = useAppSelector(selectLatestRecord);
+  const latestYear = useAppSelector(selectYearOfLatestRecord);
+  const latestMonth = useAppSelector(selectMonthOfLatestRecord);
   const [newMonth, newYear] =
     latestMonth === -1
       ? [-1, -1]

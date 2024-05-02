@@ -1,8 +1,7 @@
-import { RootState } from "./store/index";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "./AppHooks";
 
 export function useAppMode() {
-  const appMode = useSelector((state: RootState) => state.appModeState.mode);
+  const appMode = useAppSelector((state) => state.appModeState.mode);
   return {
     isMonthReportCreate: appMode === "create-month-report",
     isStartingPage: appMode === "starting-page",

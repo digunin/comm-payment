@@ -1,16 +1,15 @@
 import React from "react";
 import { setInitialValues } from "../../store/form/createMonthReportReducer";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../../store";
 import { selectActualPrice } from "../../store/price/priceReducer";
 import { useLastRecord } from "../forms/useLastRecord";
 import { setMode } from "../../store/app-mode/appModeReducer";
 import { createFormInitialValue } from "../../utils";
+import { useAppDispatch, useAppSelector } from "../../AppHooks";
 
 const AddRecordButton = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const { latestRecord, newYear, newMonth } = useLastRecord();
-  const price = useSelector(selectActualPrice);
+  const price = useAppSelector(selectActualPrice);
 
   const initialValue = createFormInitialValue(
     newMonth,

@@ -1,8 +1,6 @@
 import React from "react";
 import { fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../../store";
 import ReportPage from "./ReportPage";
 import { testTotalReport } from "../../store/payment/paymentReducer.utils";
 import { oldPrices } from "../../store/price/priceReducer.spec";
@@ -12,10 +10,11 @@ import {
 } from "../../store/payment/paymentReducer";
 import { Price, setPriceState } from "../../store/price/priceReducer";
 import { renderWithProvider } from "../../utils";
+import { useAppDispatch, useAppSelector } from "../../AppHooks";
 
 const App = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const isNewReport = !useSelector(selectStartReadings);
+  const dispatch = useAppDispatch();
+  const isNewReport = !useAppSelector(selectStartReadings);
 
   const actualPrice: Price = oldPrices[4];
   const setState = () => {

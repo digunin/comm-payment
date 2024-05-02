@@ -3,8 +3,6 @@ import {
   addStartReadings,
   setPaymentsState,
 } from "../store/payment/paymentReducer";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../store";
 import {
   MeterReadings,
   testTotalReport,
@@ -12,9 +10,10 @@ import {
 } from "../store/payment/paymentReducer.utils";
 import { setPriceState } from "../store/price/priceReducer";
 import { setMode } from "../store/app-mode/appModeReducer";
+import { useAppDispatch } from "../AppHooks";
 
 export function StartPage() {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   return (
     <div className="start-page">
       <p className="info-text">

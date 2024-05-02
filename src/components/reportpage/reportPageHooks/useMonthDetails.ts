@@ -1,6 +1,4 @@
 import { MonthReport } from "./../../../store/payment/paymentReducer.utils";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../../store";
 import { useSelected } from "./useSelected";
 import { createFormInitialValue } from "../../../utils";
 import {
@@ -15,9 +13,10 @@ import {
   setSelectedPayment,
   toggleAllPaymentsShow,
 } from "../../../store/payment/paymentReducer";
+import { useAppDispatch } from "../../../AppHooks";
 
 export const useMonthDetails = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const { selectedMonth, selectedYear, selectedReport } = useSelected();
   const showPaymentsDisabled = selectedReport?.previousPayments.length === 0;
   const initialValue = createFormInitialValue(

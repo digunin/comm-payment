@@ -1,15 +1,14 @@
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../../../store";
 import {
   selectYearsDesc,
   setSelected,
 } from "../../../store/payment/paymentReducer";
 import { useSelected } from "./useSelected";
+import { useAppDispatch, useAppSelector } from "../../../AppHooks";
 
 export function useYearsList() {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
-  const years = useSelector(selectYearsDesc)
+  const years = useAppSelector(selectYearsDesc)
     .split(",")
     .map((year) => Number(year));
   const { selectedYear } = useSelected();

@@ -1,12 +1,12 @@
-import { useSelector } from "react-redux";
 import { selectListOfReports } from "../../store/payment/paymentReducer";
 import { Months } from "../../store/payment/paymentReducer.utils";
 import { useState } from "react";
+import { useAppSelector } from "../../AppHooks";
 
 export type CHeckBoxList = { [key: number]: { [key in Months]?: boolean } };
 
 export const useMultipleFix = () => {
-  const list: CHeckBoxList = JSON.parse(useSelector(selectListOfReports));
+  const list: CHeckBoxList = JSON.parse(useAppSelector(selectListOfReports));
   const [checkboxList, setCheckboxList] = useState(list);
 
   const onCheckBox = (year: number, month: Months) => {

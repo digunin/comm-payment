@@ -1,10 +1,9 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
 import { Months } from "../../store/payment/paymentReducer.utils";
+import { useAppSelector } from "../../AppHooks";
 
 export const useFormPayload = () => {
   const { metersInputFields, priceInputFields, monthAndYearInputFields } =
-    useSelector((state: RootState) => state.createMonthReportState);
+    useAppSelector((state) => state.createMonthReportState);
 
   const payload = {
     year: Number(monthAndYearInputFields.year.value),

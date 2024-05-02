@@ -1,7 +1,5 @@
 import React from "react";
 import "@testing-library/jest-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../../../store";
 import CreateMonthReport from "./CreateMonthReport";
 import {
   Months,
@@ -18,10 +16,11 @@ import { setInitialValues } from "../../../store/form/createMonthReportReducer";
 import { errorsText } from "../errors/monthReportErrors";
 import { renderWithProvider } from "../../../utils";
 import { PriceFieldName } from "../../../store/form/types";
+import { useAppDispatch, useAppSelector } from "../../../AppHooks";
 
 const App = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const isNewReport = !useSelector(selectStartReadings);
+  const dispatch = useAppDispatch();
+  const isNewReport = !useAppSelector(selectStartReadings);
   const actualPrice: Price = oldPrices[4];
   const setState = () => {
     dispatch(setPaymentsState(testTotalReport));

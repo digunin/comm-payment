@@ -1,5 +1,3 @@
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../store";
 import {
   Months,
   YearReport,
@@ -10,6 +8,7 @@ import {
   setSelected,
 } from "../../../store/payment/paymentReducer";
 import { useSelected } from "./useSelected";
+import { useAppDispatch, useAppSelector } from "../../../AppHooks";
 
 type returnedFromUseMonthsList = {
   fullYear: Array<number>;
@@ -21,16 +20,16 @@ type returnedFromUseMonthsList = {
 };
 
 export function useMonthsList(): returnedFromUseMonthsList {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const { selectedYear, selectedMonth } = useSelected();
 
   const emptyReport = {};
-  const yearReport: YearReport = useSelector((state: RootState) =>
+  const yearReport: YearReport = useAppSelector((state) =>
     selectedYear === null ? emptyReport : state.paymentState[selectedYear]
   );
 
-  const latestYear = useSelector(selectYearOfLatestRecord);
-  const latestMonth = useSelector(selectMonthOfLatestRecord);
+  const latestYear = useAppSelector(selectYearOfLatestRecord);
+  const latestMonth = useAppSelector(selectMonthOfLatestRecord);
   let isAddButtonNeed = false;
   if (latestYear === selectedYear && latestMonth < Months.dec)
     isAddButtonNeed = true;

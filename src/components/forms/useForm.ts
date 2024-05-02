@@ -1,7 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store";
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 import { InputField, InputFieldName } from "../../store/form/types";
+import { useAppDispatch, useAppSelector } from "../../AppHooks";
 
 export type FormType<N extends InputFieldName> = ({
   reducer,
@@ -18,8 +17,8 @@ export const useForm = <N>(
     inputField: InputField;
   }>
 ) => {
-  const data = useSelector((state: RootState) => state.createMonthReportState);
-  const dispatch = useDispatch<AppDispatch>();
+  const data = useAppSelector((state) => state.createMonthReportState);
+  const dispatch = useAppDispatch();
   const onChangeHandler = (
     value: string | number,
     fieldName: N,

@@ -1,14 +1,13 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../../../store";
+import { useAppSelector } from "../../../AppHooks";
 
 export function useSelected() {
-  const selectedMonth = useSelector(
-    (state: RootState) => state.paymentState.selected.selectedMonth
+  const selectedMonth = useAppSelector(
+    (state) => state.paymentState.selected.selectedMonth
   );
-  const selectedYear = useSelector(
-    (state: RootState) => state.paymentState.selected.selectedYear
+  const selectedYear = useAppSelector(
+    (state) => state.paymentState.selected.selectedYear
   );
-  const selectedReport = useSelector((state: RootState) => {
+  const selectedReport = useAppSelector((state) => {
     if (selectedMonth !== null)
       return state.paymentState[selectedYear as number][selectedMonth];
     return null;

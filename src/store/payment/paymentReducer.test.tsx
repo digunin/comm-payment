@@ -1,17 +1,15 @@
 import React from "react";
 import { fireEvent } from "@testing-library/react";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../index";
 import { selectStartReadings, addStartReadings } from "./paymentReducer";
 import { renderWithProvider } from "../../utils";
+import { useAppDispatch, useAppSelector } from "../../AppHooks";
 
 const App = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const startReadings = useSelector(selectStartReadings);
+  const dispatch = useAppDispatch();
+  const startReadings = useAppSelector(selectStartReadings);
 
   return (
     <div className="App">
-      {/* <button onClick={() => dispatch(fetchPrice())}>Загрузить</button> */}
       <button
         data-testid="test-button-id"
         onClick={() =>

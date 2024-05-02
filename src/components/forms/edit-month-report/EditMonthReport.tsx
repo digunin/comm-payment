@@ -1,5 +1,4 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { selectIsValidForm } from "../../../store/form/createMonthReportReducer";
 import MeterReadingsForm from "../MeterReadingsForm";
 import SubmitBlock from "../SubmitBlock";
@@ -18,10 +17,11 @@ import {
 } from "../../../store/payment/paymentReducer";
 import { useMultipleFix } from "../useMultipleFix";
 import CheckBoxBlock from "./CheckBoxBlock";
+import { useAppDispatch, useAppSelector } from "../../../AppHooks";
 
 const EditMonthReport = () => {
-  const dispatch = useDispatch();
-  const isValidForm = useSelector(selectIsValidForm);
+  const dispatch = useAppDispatch();
+  const isValidForm = useAppSelector(selectIsValidForm);
   const payload = useFormPayload();
   const { checkboxList, isMultiChoice, onCheckBox, listOfChecked } =
     useMultipleFix();

@@ -3,8 +3,14 @@ import rootReducer from "./store/rootReducer";
 import { Provider } from "react-redux";
 import { render } from "@testing-library/react";
 import React from "react";
-import { MeterReadings, Months } from "./store/payment/paymentReducer.utils";
+import {
+  MeterReadings,
+  Months,
+  price,
+  testTotalReport,
+} from "./store/payment/paymentReducer.utils";
 import { Price } from "./store/price/priceReducer";
+import { RootState } from "./store";
 
 export const renderWithProvider = (element: React.ReactElement) => {
   const store = configureStore({
@@ -36,13 +42,24 @@ export function createFormInitialValue(
     },
     monthAndYearInputFields: {
       month: {
-        value: month,
+        value: month < 0 ? new Date().getMonth() : month,
         error: null,
       },
       year: {
-        value: year,
+        value: year < 0 ? new Date().getFullYear() : year,
         error: null,
       },
     },
   };
 }
+
+export const testState: Omit<RootState, "createMonthReportState"> = {
+  appModeState: {
+    mode: "show-report",
+  },
+  paymentState: testTotalReport,
+  priceState: {
+    actualPrice: price,
+    oldPrices: [],
+  },
+};

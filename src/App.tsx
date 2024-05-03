@@ -1,17 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StartPage } from "./components/StartPage";
 import ReportPage from "./components/reportpage/ReportPage";
 import CreateMonthReport from "./components/forms/create-month-report/CreateMonthReport";
 import { useAppMode } from "./useAppMode";
 import ChangeMonthReport from "./components/forms/edit-month-report/EditMonthReport";
+import { setPaymentsState } from "./store/payment/paymentReducer";
+import { setPriceState } from "./store/price/priceReducer";
+import { setMode } from "./store/app-mode/appModeReducer";
+import { RootState } from "./store";
+import { useAppDispatch } from "./AppHooks";
 
-function App() {
+function App({
+  testState,
+}: {
+  testState?: Omit<RootState, "createMonthReportState">;
+}) {
+  const dispatch = useAppDispatch();
   const {
     isMonthReportCreate,
     isStartingPage,
     isReportShow,
     isMonthReportChange,
   } = useAppMode();
+  useEffect(() => {
+    if (testState) {
+      dispatch(setPaymentsState(testState.paymentState));
+      dispatch(setPriceState(testState.priceState));
+      dispatch(setMode(testState.appModeState.mode));
+    }
+  }, []);
   return (
     <div className="App">
       {isMonthReportCreate && <CreateMonthReport />}

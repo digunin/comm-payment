@@ -2,7 +2,7 @@ import React from "react";
 import { fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import App from "./App";
-import { renderWithProvider } from "./utils";
+import { renderWithProvider, testState } from "./utils";
 import {
   enterText,
   checkEnteredText,
@@ -38,10 +38,8 @@ test("renders starting page", () => {
 
 test("report-blocks render", () => {
   const { container, getByTestId, queryAllByText } = renderWithProvider(
-    <App />
+    <App testState={testState} />
   );
-  expect(container.getElementsByClassName("start-page").length).toBe(1);
-  fireEvent.click(getByTestId("btn-add-testTotalReport"));
   expect(container.getElementsByClassName("start-page").length).toBe(0);
   expect(container.getElementsByClassName("global-report").length).toBe(1);
   expect(container.getElementsByClassName("report-block").length).toBe(3);
@@ -125,9 +123,9 @@ test("report-blocks render", () => {
 });
 
 test("create new record", () => {
-  const { container, getByTestId } = renderWithProvider(<App />);
-
-  fireEvent.click(getByTestId("btn-add-testTotalReport"));
+  const { container, getByTestId } = renderWithProvider(
+    <App testState={testState} />
+  );
 
   expect(container.getElementsByClassName("add-button")[0]).toBeInTheDocument();
 
@@ -225,9 +223,9 @@ test("create new record", () => {
 });
 
 test("edit record", () => {
-  const { container, getByTestId, getByText } = renderWithProvider(<App />);
-
-  fireEvent.click(getByTestId("btn-add-testTotalReport"));
+  const { container, getByTestId, getByText } = renderWithProvider(
+    <App testState={testState} />
+  );
 
   fireEvent.click(container.getElementsByClassName("year-2014")[0]);
   fireEvent.click(container.getElementsByClassName("month-nov")[0]);
@@ -503,9 +501,9 @@ test("edit record", () => {
 });
 
 test("multiple price edit", () => {
-  const { container, getByTestId, getByText } = renderWithProvider(<App />);
-
-  fireEvent.click(getByTestId("btn-add-testTotalReport"));
+  const { container, getByTestId, getByText } = renderWithProvider(
+    <App testState={testState} />
+  );
 
   fireEvent.click(container.getElementsByClassName("add-button")[0]);
   fireEvent.click(getByTestId("btn-ok"));

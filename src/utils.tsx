@@ -10,7 +10,7 @@ import {
   testTotalReport,
 } from "./store/payment/paymentReducer.utils";
 import { Price } from "./store/price/priceReducer";
-import { RootState } from "./store";
+import { SerializedState } from "./store/app-storage";
 
 export const renderWithProvider = (element: React.ReactElement) => {
   const store = configureStore({
@@ -53,7 +53,7 @@ export function createFormInitialValue(
   };
 }
 
-export const testState: Omit<RootState, "createMonthReportState"> = {
+export const testState: SerializedState = {
   appModeState: {
     mode: "show-report",
   },

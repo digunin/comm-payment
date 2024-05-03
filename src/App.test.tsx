@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent } from "@testing-library/react";
+import { fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import App from "./App";
 import { renderWithProvider, testState } from "./utils";
@@ -37,7 +37,7 @@ test("renders starting page", () => {
 });
 
 test("report-blocks render", () => {
-  const { container, getByTestId, queryAllByText } = renderWithProvider(
+  const { container, queryAllByText } = renderWithProvider(
     <App testState={testState} />
   );
   expect(container.getElementsByClassName("start-page").length).toBe(0);
@@ -223,7 +223,7 @@ test("create new record", () => {
 });
 
 test("edit record", () => {
-  const { container, getByTestId, getByText } = renderWithProvider(
+  const { container, getByTestId } = renderWithProvider(
     <App testState={testState} />
   );
 
@@ -501,7 +501,7 @@ test("edit record", () => {
 });
 
 test("multiple price edit", () => {
-  const { container, getByTestId, getByText } = renderWithProvider(
+  const { container, getByTestId } = renderWithProvider(
     <App testState={testState} />
   );
 
@@ -669,4 +669,19 @@ test("multiple price edit", () => {
   expect(container.getElementsByClassName("negative")[0].innerHTML).toBe(
     "нужно доплатить: 400.86"
   );
+});
+
+test("loadState", async () => {
+  const { container, getByText } = renderWithProvider(<App />);
+  expect(
+    getByText("Для начала нужно установить начальные значения счетчиков")
+  ).toBeInTheDocument();
+  expect(container.getElementsByClassName("add-button").length).toBe(0);
+  await waitFor(() =>
+    expect(
+      container.getElementsByClassName("global-report")[0]
+    ).toBeInTheDocument()
+  );
+  expect(container.getElementsByClassName("start-page").length).toBe(0);
+  expect(container.getElementsByClassName("add-button").length).not.toBe(0);
 });

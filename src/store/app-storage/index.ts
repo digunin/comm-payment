@@ -1,10 +1,7 @@
 import { RootState } from "..";
 import mockStorage from "./mockStorage";
 
-export type SerializedState = Pick<
-  RootState,
-  "paymentState" | "priceState" | "appModeState"
->;
+export type SerializedState = Pick<RootState, "paymentState" | "priceState">;
 
 export interface AppStorage {
   load: () => Promise<SerializedState>;

@@ -54,9 +54,6 @@ export function createFormInitialValue(
 }
 
 export const testState: SerializedState = {
-  appModeState: {
-    mode: "show-report",
-  },
   paymentState: testTotalReport,
   priceState: {
     actualPrice: price,

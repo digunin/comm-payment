@@ -1,6 +1,6 @@
 import { AppStorage } from ".";
 
-export const BrowserStorage: AppStorage = {
+const BrowserStorage: AppStorage = {
   load: () => {
     const source = localStorage.getItem("state");
     if (source === null) return Promise.reject("Not found");
@@ -15,3 +15,5 @@ export const BrowserStorage: AppStorage = {
     }
   },
 };
+
+export default BrowserStorage;

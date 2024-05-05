@@ -5,7 +5,7 @@ import SubmitBlock from "../SubmitBlock";
 import PriceForm from "../PriceForm";
 import { useFormPayload } from "../useFormPayload";
 import { setPrice } from "../../../store/price/priceReducer";
-import { setMode } from "../../../store/app-mode/appModeReducer";
+import { setMode, setNeedSaving } from "../../../store/app-mode/appModeReducer";
 import { setPriceInputField } from "../../../store/form/createMonthReportReducer";
 import { setMetersInputField } from "../../../store/form/createMonthReportReducer";
 import { useSelected } from "../../reportpage/reportPageHooks/useSelected";
@@ -44,6 +44,7 @@ const EditMonthReport = () => {
     }
     dispatch(setPrice(payload.price));
     dispatch(setMode("show-report"));
+    dispatch(setNeedSaving(true));
   };
 
   return (

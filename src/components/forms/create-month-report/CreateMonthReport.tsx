@@ -7,7 +7,7 @@ import MonthAndYearForm from "../MonthAndYearForm";
 import { addNewRecord } from "../../../store/payment/paymentReducer";
 import { useFormPayload } from "../useFormPayload";
 import { setPrice } from "../../../store/price/priceReducer";
-import { setMode } from "../../../store/app-mode/appModeReducer";
+import { setMode, setNeedSaving } from "../../../store/app-mode/appModeReducer";
 import { setPriceInputField } from "../../../store/form/createMonthReportReducer";
 import { setMetersInputField } from "../../../store/form/createMonthReportReducer";
 import { setMonthAndYearInputField } from "../../../store/form/createMonthReportReducer";
@@ -23,6 +23,7 @@ const CreateMonthReport = () => {
     dispatch(addNewRecord(payload));
     dispatch(setPrice(payload.price));
     dispatch(setMode("show-report"));
+    dispatch(setNeedSaving(true));
   };
 
   return (

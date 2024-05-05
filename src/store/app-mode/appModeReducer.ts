@@ -10,10 +10,12 @@ export type AppMode =
 
 export interface AppModeState {
   mode: AppMode;
+  needSaving: boolean;
 }
 
 const initialState: AppModeState = {
   mode: "starting-page",
+  needSaving: false,
 };
 
 const appModeSlice = createSlice({
@@ -23,9 +25,12 @@ const appModeSlice = createSlice({
     setMode: (state, action: PayloadAction<AppMode>) => {
       state.mode = action.payload;
     },
+    setNeedSaving: (state, action: PayloadAction<boolean>) => {
+      state.needSaving = action.payload;
+    },
   },
 });
 
-export const setMode = appModeSlice.actions.setMode;
+export const { setMode, setNeedSaving } = appModeSlice.actions;
 
 export default appModeSlice.reducer;

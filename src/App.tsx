@@ -6,35 +6,47 @@ import { useAppMode } from "./useAppMode";
 import ChangeMonthReport from "./components/forms/edit-month-report/EditMonthReport";
 import { setPaymentsState } from "./store/payment/paymentReducer";
 import { setPriceState } from "./store/price/priceReducer";
-import { setMode } from "./store/app-mode/appModeReducer";
-import { useAppDispatch } from "./AppHooks";
-import { loadState } from "./store/app-storage/storageReducer";
+import { setMode, setNeedSaving } from "./store/app-mode/appModeReducer";
+import { useAppDispatch, useAppSelector } from "./AppHooks";
+import { loadState, saveState } from "./store/app-storage/storageReducer";
 import { SerializedState } from "./store/app-storage";
 
 function App({ testState }: { testState?: SerializedState }) {
   const dispatch = useAppDispatch();
+  const paymentState = useAppSelector((state) => state.paymentState);
+  const priceState = useAppSelector((state) => state.priceState);
   const {
     isMonthReportCreate,
     isStartingPage,
     isReportShow,
     isMonthReportChange,
+    needSaving,
   } = useAppMode();
+
   useEffect(() => {
     if (testState) {
       dispatch(setPaymentsState(testState.paymentState));
       dispatch(setPriceState(testState.priceState));
-      dispatch(setMode(testState.appModeState.mode));
+      dispatch(setMode("show-report"));
     } else {
       dispatch(loadState())
         .unwrap()
-        .then(({ appModeState, paymentState, priceState }) => {
+        .then(({ paymentState, priceState }) => {
           dispatch(setPaymentsState(paymentState));
           dispatch(setPriceState(priceState));
-          dispatch(setMode(appModeState.mode));
+          dispatch(setMode("show-report"));
         })
         .catch((err) => console.log(err));
     }
   }, []);
+
+  useEffect(() => {
+    if (needSaving && !testState) {
+      dispatch(saveState({ paymentState, priceState }));
+      dispatch(setNeedSaving(false));
+    }
+  }, [needSaving]);
+
   return (
     <div className="App">
       {isMonthReportCreate && <CreateMonthReport />}

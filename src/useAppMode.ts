@@ -1,11 +1,12 @@
 import { useAppSelector } from "./AppHooks";
 
 export function useAppMode() {
-  const appMode = useAppSelector((state) => state.appModeState.mode);
+  const { needSaving, mode } = useAppSelector((state) => state.appModeState);
   return {
-    isMonthReportCreate: appMode === "create-month-report",
-    isStartingPage: appMode === "starting-page",
-    isReportShow: appMode === "show-report",
-    isMonthReportChange: appMode === "change-month-report",
+    isMonthReportCreate: mode === "create-month-report",
+    isStartingPage: mode === "starting-page",
+    isReportShow: mode === "show-report",
+    isMonthReportChange: mode === "change-month-report",
+    needSaving,
   };
 }

@@ -123,10 +123,30 @@ export function calcPayAmount(
   };
 }
 
+export const zeroReadings: MeterReadings = {
+  cold: {
+    totalValue: 0,
+    monthValue: 0,
+  },
+  hot: {
+    totalValue: 0,
+    monthValue: 0,
+  },
+  electricity: {
+    totalValue: 0,
+    monthValue: 0,
+  },
+  waterWaste: {
+    totalValue: 0,
+    monthValue: 0,
+  },
+};
+
 export function calcNewReadings(
   readings: { [key in keyof MeterReadings]: number },
-  previousReadings: MeterReadings
+  previousReadings?: MeterReadings
 ): MeterReadings {
+  previousReadings = previousReadings ? previousReadings : zeroReadings;
   return {
     cold: {
       totalValue: readings.cold,

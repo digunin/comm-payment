@@ -15,10 +15,10 @@ const App = () => {
         onClick={() =>
           dispatch(
             addStartReadings({
-              hot: { totalValue: 111, monthValue: 11 },
-              cold: { totalValue: 222, monthValue: 22 },
-              electricity: { totalValue: 333, monthValue: 33 },
-              waterWaste: { totalValue: 444, monthValue: 44 },
+              hot: 111,
+              cold: 222,
+              electricity: 333,
+              waterWaste: 0,
             })
           )
         }
@@ -58,5 +58,5 @@ test("app render and startReadings adding", () => {
   expect(div_hot.textContent).toBe("111");
   expect(div_cold.textContent).toBe("222");
   expect(div_el.textContent).toBe("333");
-  expect(div_ww.textContent).toBe("444");
+  expect(div_ww.textContent).toBe("333");
 });

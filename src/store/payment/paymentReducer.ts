@@ -46,8 +46,11 @@ const paymentSlice = createSlice({
   name: "payment",
   initialState,
   reducers: {
-    addStartReadings: (state, action: PayloadAction<MeterReadings>) => {
-      state.startReadings = action.payload;
+    addStartReadings: (
+      state,
+      action: PayloadAction<{ [key in keyof MeterReadings]: number }>
+    ) => {
+      state.startReadings = calcNewReadings(action.payload);
     },
     addNewRecord: (state, action: PayloadAction<AddRecordPayload>) => {
       const { year, month, readings, price } = action.payload;

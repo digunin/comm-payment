@@ -12,7 +12,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../../../AppHooks";
 import { renderWithProvider } from "../../../utils";
 import {
-  checkEnteredText,
+  getEnteredText,
   enterText,
   errorInputQuantity,
   getError,
@@ -42,9 +42,9 @@ test("form render", () => {
   expect(getByTestId("btn-setstate")).toBeInTheDocument();
   fireEvent.click(getByTestId("btn-setstate"));
   expect(container.getElementsByClassName("input-element").length).toBe(3);
-  expect(checkEnteredText("cold", "meters", container, "0")).toBe(true);
-  expect(checkEnteredText("hot", "meters", container, "0")).toBe(true);
-  expect(checkEnteredText("electricity", "meters", container, "0")).toBe(true);
+  expect(getEnteredText("cold", "meters", container)).toBe("0");
+  expect(getEnteredText("hot", "meters", container)).toBe("0");
+  expect(getEnteredText("electricity", "meters", container)).toBe("0");
   expect(errorInputQuantity(container)).toBe(0);
 });
 
@@ -53,46 +53,40 @@ test("handle input", () => {
   fireEvent.click(getByTestId("btn-setstate"));
 
   enterText("hot", "meters", container, "211002");
-  expect(checkEnteredText("hot", "meters", container, "211002")).toBe(true);
+  expect(getEnteredText("hot", "meters", container)).toBe("211002");
 
   enterText("hot", "meters", container, "21as");
-  expect(checkEnteredText("hot", "meters", container, "21as")).toBe(true);
+  expect(getEnteredText("hot", "meters", container)).toBe("21as");
 
   enterText("hot", "meters", container, "222222");
-  expect(checkEnteredText("hot", "meters", container, "222222")).toBe(true);
+  expect(getEnteredText("hot", "meters", container)).toBe("222222");
 
   enterText("hot", "meters", container, "0");
-  expect(checkEnteredText("hot", "meters", container, "0")).toBe(true);
+  expect(getEnteredText("hot", "meters", container)).toBe("0");
 
   enterText("cold", "meters", container, "211002");
-  expect(checkEnteredText("cold", "meters", container, "211002")).toBe(true);
+  expect(getEnteredText("cold", "meters", container)).toBe("211002");
 
   enterText("cold", "meters", container, "21as");
-  expect(checkEnteredText("cold", "meters", container, "21as")).toBe(true);
+  expect(getEnteredText("cold", "meters", container)).toBe("21as");
 
   enterText("cold", "meters", container, "222222");
-  expect(checkEnteredText("cold", "meters", container, "222222")).toBe(true);
+  expect(getEnteredText("cold", "meters", container)).toBe("222222");
 
   enterText("cold", "meters", container, "0");
-  expect(checkEnteredText("cold", "meters", container, "0")).toBe(true);
+  expect(getEnteredText("cold", "meters", container)).toBe("0");
 
   enterText("electricity", "meters", container, "211002");
-  expect(checkEnteredText("electricity", "meters", container, "211002")).toBe(
-    true
-  );
+  expect(getEnteredText("electricity", "meters", container)).toBe("211002");
 
   enterText("electricity", "meters", container, "21as");
-  expect(checkEnteredText("electricity", "meters", container, "21as")).toBe(
-    true
-  );
+  expect(getEnteredText("electricity", "meters", container)).toBe("21as");
 
   enterText("electricity", "meters", container, "222222");
-  expect(checkEnteredText("electricity", "meters", container, "222222")).toBe(
-    true
-  );
+  expect(getEnteredText("electricity", "meters", container)).toBe("222222");
 
   enterText("electricity", "meters", container, "0");
-  expect(checkEnteredText("electricity", "meters", container, "0")).toBe(true);
+  expect(getEnteredText("electricity", "meters", container)).toBe("0");
 });
 
 test("errors meters form", () => {
@@ -166,7 +160,7 @@ test("errors meters form", () => {
   expect(getError("electricity", "meters", container)).toBe(notInteger);
 
   enterText("electricity", "meters", container, "-21999");
-  checkEnteredText("electricity", "meters", container, "21999");
+  expect(getEnteredText("electricity", "meters", container)).toBe("21999");
   expect(errorInputQuantity(container)).toBe(1);
   expect(buttonOK).toBeDisabled();
   expect(getError("cold", "meters", container)).toBe(notInteger);
@@ -174,7 +168,7 @@ test("errors meters form", () => {
   expect(getError("electricity", "meters", container)).toBe(errorNotFound);
 
   enterText("hot", "meters", container, "-2");
-  checkEnteredText("hot", "meters", container, "2");
+  expect(getEnteredText("hot", "meters", container)).toBe("2");
   expect(errorInputQuantity(container)).toBe(1);
   expect(buttonOK).toBeDisabled();
   expect(getError("cold", "meters", container)).toBe(notInteger);
@@ -182,7 +176,7 @@ test("errors meters form", () => {
   expect(getError("electricity", "meters", container)).toBe(errorNotFound);
 
   enterText("cold", "meters", container, "-1");
-  checkEnteredText("cold", "meters", container, "1");
+  expect(getEnteredText("cold", "meters", container)).toBe("1");
   expect(errorInputQuantity(container)).toBe(0);
   expect(buttonOK).not.toBeDisabled();
   expect(getError("cold", "meters", container)).toBe(errorNotFound);

@@ -1,11 +1,11 @@
 import React from "react";
-import { fireEvent, waitFor } from "@testing-library/react";
+import { fireEvent, waitFor, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import App from "./App";
 import { renderWithProvider, testState } from "./utils";
 import {
   enterText,
-  checkEnteredText,
+  getEnteredText,
   errorInputQuantity,
   getError,
 } from "./components/forms/create-month-report/CreateMonthReport.test";
@@ -155,17 +155,13 @@ test("create new record", () => {
   expect(container.getElementsByClassName("submit-block").length).toBe(1);
   expect(getByTestId("calendar").getAttribute("value")).toEqual("2021-11-01");
   expect(errorInputQuantity(container)).toBe(0);
-  expect(checkEnteredText("cold", "meters", container, "211000")).toBe(true);
-  expect(checkEnteredText("hot", "meters", container, "211001")).toBe(true);
-  expect(checkEnteredText("electricity", "meters", container, "211002")).toBe(
-    true
-  );
-  expect(checkEnteredText("cold", "price", container, "24.04")).toBe(true);
-  expect(checkEnteredText("hot", "price", container, "167.93")).toBe(true);
-  expect(checkEnteredText("electricity", "price", container, "5.05")).toBe(
-    true
-  );
-  expect(checkEnteredText("waterWaste", "price", container, "52.2")).toBe(true);
+  expect(getEnteredText("cold", "meters", container)).toBe("211000");
+  expect(getEnteredText("hot", "meters", container)).toBe("211001");
+  expect(getEnteredText("electricity", "meters", container)).toBe("211002");
+  expect(getEnteredText("cold", "price", container)).toBe("24.04");
+  expect(getEnteredText("hot", "price", container)).toBe("167.93");
+  expect(getEnteredText("electricity", "price", container)).toBe("5.05");
+  expect(getEnteredText("waterWaste", "price", container)).toBe("52.2");
   expect(getByTestId("btn-ok")).not.toBeDisabled();
 
   fireEvent.click(getByTestId("btn-ok"));
@@ -464,23 +460,23 @@ test("edit record", () => {
   fireEvent.click(container.getElementsByClassName("show-all-payments")[0]);
 
   fireEvent.click(container.getElementsByClassName("edit-month-report")[0]);
-  expect(checkEnteredText("cold", "price", container, "24.04"));
-  expect(checkEnteredText("hot", "price", container, "168.93"));
-  expect(checkEnteredText("electricity", "price", container, "5.09"));
-  expect(checkEnteredText("waterWaste", "price", container, "53.03"));
+  expect(getEnteredText("cold", "price", container)).toBe("24.04");
+  expect(getEnteredText("hot", "price", container)).toBe("168.93");
+  expect(getEnteredText("electricity", "price", container)).toBe("5.09");
+  expect(getEnteredText("waterWaste", "price", container)).toBe("53.03");
 
-  expect(checkEnteredText("cold", "meters", container, "211003"));
-  expect(checkEnteredText("hot", "meters", container, "211003"));
-  expect(checkEnteredText("electricity", "meters", container, "211053"));
+  expect(getEnteredText("cold", "meters", container)).toBe("211003");
+  expect(getEnteredText("hot", "meters", container)).toBe("211003");
+  expect(getEnteredText("electricity", "meters", container)).toBe("211053");
 
   fireEvent.click(getByTestId("btn-cancel"));
   expect(container.getElementsByClassName("payment").length).toBe(2);
 
   fireEvent.click(container.getElementsByClassName("add-button")[0]);
-  expect(checkEnteredText("cold", "price", container, "24.04"));
-  expect(checkEnteredText("hot", "price", container, "168.93"));
-  expect(checkEnteredText("electricity", "price", container, "5.09"));
-  expect(checkEnteredText("waterWaste", "price", container, "53.03"));
+  expect(getEnteredText("cold", "price", container)).toBe("24.04");
+  expect(getEnteredText("hot", "price", container)).toBe("168.93");
+  expect(getEnteredText("electricity", "price", container)).toBe("5.09");
+  expect(getEnteredText("waterWaste", "price", container)).toBe("53.03");
 
   fireEvent.click(getByTestId("btn-cancel"));
   expect(container.getElementsByClassName("payment").length).toBe(2);
@@ -563,11 +559,6 @@ test("multiple price edit", () => {
   );
   let chb = getCheckboxes(container);
   expect(chb.all.length).toBe(1);
-  // expect(
-  //   chb.all
-  //     .map((input) => (input.nextSibling as HTMLElement).innerHTML)
-  //     .join(",")
-  // ).toBe("2");
   expect(chb.checked.length).toBe(1);
   expect(chb.disabled.length).toBe(1);
   expect(chb.checked[0]).toBe(chb.disabled[0]);

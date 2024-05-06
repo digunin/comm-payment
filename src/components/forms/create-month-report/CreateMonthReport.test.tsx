@@ -79,16 +79,15 @@ export const enterText = (
   });
 };
 
-export const checkEnteredText = (
+export const getEnteredText = (
   meterName: PriceFieldName,
   formName: FormName,
-  container: HTMLElement,
-  text: string
-): boolean => {
+  container: HTMLElement
+): string => {
   const input = container.getElementsByClassName(
     `${formName}-input-element ${meterName}`
   )[0] as HTMLInputElement;
-  return input.value === text;
+  return input.value;
 };
 
 export const errorInputQuantity = (container: HTMLElement) => {
@@ -119,62 +118,52 @@ test("create month report render", () => {
 test("check meters form input value", () => {
   const { container, getByTestId } = renderWithProvider(<App />);
   fireEvent.click(getByTestId("btn-setstate"));
-  expect(checkEnteredText("cold", "meters", container, "211000")).toBe(true);
-  expect(checkEnteredText("hot", "meters", container, "211001")).toBe(true);
-  expect(checkEnteredText("electricity", "meters", container, "211002")).toBe(
-    true
-  );
+  expect(getEnteredText("cold", "meters", container)).toBe("211000");
+  expect(getEnteredText("hot", "meters", container)).toBe("211001");
+  expect(getEnteredText("electricity", "meters", container)).toBe("211002");
   enterText("hot", "meters", container, "211002");
-  expect(checkEnteredText("hot", "meters", container, "211002")).toBe(true);
+  expect(getEnteredText("hot", "meters", container)).toBe("211002");
 
   enterText("hot", "meters", container, "21as");
-  expect(checkEnteredText("hot", "meters", container, "21as")).toBe(true);
+  expect(getEnteredText("hot", "meters", container)).toBe("21as");
 
   enterText("hot", "meters", container, "222222");
-  expect(checkEnteredText("hot", "meters", container, "222222")).toBe(true);
+  expect(getEnteredText("hot", "meters", container)).toBe("222222");
 
   enterText("hot", "meters", container, "0");
-  expect(checkEnteredText("hot", "meters", container, "0")).toBe(true);
+  expect(getEnteredText("hot", "meters", container)).toBe("0");
 
   enterText("cold", "meters", container, "211002");
-  expect(checkEnteredText("cold", "meters", container, "211002")).toBe(true);
+  expect(getEnteredText("cold", "meters", container)).toBe("211002");
 
   enterText("cold", "meters", container, "21as");
-  expect(checkEnteredText("cold", "meters", container, "21as")).toBe(true);
+  expect(getEnteredText("cold", "meters", container)).toBe("21as");
 
   enterText("cold", "meters", container, "222222");
-  expect(checkEnteredText("cold", "meters", container, "222222")).toBe(true);
+  expect(getEnteredText("cold", "meters", container)).toBe("222222");
 
   enterText("cold", "meters", container, "0");
-  expect(checkEnteredText("cold", "meters", container, "0")).toBe(true);
+  expect(getEnteredText("cold", "meters", container)).toBe("0");
 
   enterText("electricity", "meters", container, "211002");
-  expect(checkEnteredText("electricity", "meters", container, "211002")).toBe(
-    true
-  );
+  expect(getEnteredText("electricity", "meters", container)).toBe("211002");
 
   enterText("electricity", "meters", container, "21as");
-  expect(checkEnteredText("electricity", "meters", container, "21as")).toBe(
-    true
-  );
+  expect(getEnteredText("electricity", "meters", container)).toBe("21as");
 
   enterText("electricity", "meters", container, "222222");
-  expect(checkEnteredText("electricity", "meters", container, "222222")).toBe(
-    true
-  );
+  expect(getEnteredText("electricity", "meters", container)).toBe("222222");
 
   enterText("electricity", "meters", container, "0");
-  expect(checkEnteredText("electricity", "meters", container, "0")).toBe(true);
+  expect(getEnteredText("electricity", "meters", container)).toBe("0");
 });
 
 test("errors meters form", () => {
   const { container, getByTestId } = renderWithProvider(<App />);
   fireEvent.click(getByTestId("btn-setstate"));
-  expect(checkEnteredText("cold", "meters", container, "211000")).toBe(true);
-  expect(checkEnteredText("hot", "meters", container, "211001")).toBe(true);
-  expect(checkEnteredText("electricity", "meters", container, "211002")).toBe(
-    true
-  );
+  expect(getEnteredText("cold", "meters", container)).toBe("211000");
+  expect(getEnteredText("hot", "meters", container)).toBe("211001");
+  expect(getEnteredText("electricity", "meters", container)).toBe("211002");
   expect(errorInputQuantity(container)).toBe(0);
 
   const buttonOK = getByTestId("btn-ok");
@@ -247,28 +236,22 @@ test("errors meters form", () => {
 test("check price form input value and errors", () => {
   const { container, getByTestId } = renderWithProvider(<App />);
   fireEvent.click(getByTestId("btn-setstate"));
-  expect(checkEnteredText("cold", "price", container, "24.04")).toBe(true);
-  expect(checkEnteredText("hot", "price", container, "167.93")).toBe(true);
-  expect(checkEnteredText("electricity", "price", container, "5.05")).toBe(
-    true
-  );
-  expect(checkEnteredText("waterWaste", "price", container, "52.2")).toBe(true);
+  expect(getEnteredText("cold", "price", container)).toBe("24.04");
+  expect(getEnteredText("hot", "price", container)).toBe("167.93");
+  expect(getEnteredText("electricity", "price", container)).toBe("5.05");
+  expect(getEnteredText("waterWaste", "price", container)).toBe("52.2");
 
   const buttonOK = getByTestId("btn-ok");
   expect(buttonOK).not.toBeDisabled();
 
   enterText("cold", "price", container, "2233");
-  expect(checkEnteredText("cold", "price", container, "2233")).toBe(true);
+  expect(getEnteredText("cold", "price", container)).toBe("2233");
   enterText("hot", "price", container, ".5");
-  expect(checkEnteredText("hot", "price", container, "0.5")).toBe(true);
+  expect(getEnteredText("hot", "price", container)).toBe("0.5");
   enterText("electricity", "price", container, "4455,");
-  expect(checkEnteredText("electricity", "price", container, "4455.")).toBe(
-    true
-  );
+  expect(getEnteredText("electricity", "price", container)).toBe("4455.");
   enterText("waterWaste", "price", container, ",788");
-  expect(checkEnteredText("waterWaste", "price", container, "0.788")).toBe(
-    true
-  );
+  expect(getEnteredText("waterWaste", "price", container)).toBe("0.788");
   expect(errorInputQuantity(container)).toBe(1);
   expect(buttonOK).toBeDisabled();
   expect(getError("cold", "price", container)).toBe(errorNotFound);
@@ -277,7 +260,7 @@ test("check price form input value and errors", () => {
   expect(getError("waterWaste", "price", container)).toBe(max2digitsAfterDot);
 
   enterText("hot", "price", container, "767n.5654");
-  expect(checkEnteredText("hot", "price", container, "767n.5654")).toBe(true);
+  expect(getEnteredText("hot", "price", container)).toBe("767n.5654");
   expect(errorInputQuantity(container)).toBe(2);
   expect(buttonOK).toBeDisabled();
   expect(getError("cold", "price", container)).toBe(errorNotFound);
@@ -286,9 +269,7 @@ test("check price form input value and errors", () => {
   expect(getError("waterWaste", "price", container)).toBe(max2digitsAfterDot);
 
   enterText("electricity", "price", container, "74.5h67");
-  expect(checkEnteredText("electricity", "price", container, "74.5h67")).toBe(
-    true
-  );
+  expect(getEnteredText("electricity", "price", container)).toBe("74.5h67");
   expect(errorInputQuantity(container)).toBe(3);
   expect(buttonOK).toBeDisabled();
   expect(getError("cold", "price", container)).toBe(errorNotFound);

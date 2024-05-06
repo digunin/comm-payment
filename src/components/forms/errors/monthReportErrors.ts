@@ -44,3 +44,8 @@ export const priceMutator: Mutator = (inputed) => {
   if (inputed.startsWith(".")) inputed = `0${inputed}`;
   return inputed;
 };
+
+export const meterMutator: Mutator = (inputed) => {
+  if (inputed.startsWith("-")) return inputed.slice(1);
+  return inputed;
+};

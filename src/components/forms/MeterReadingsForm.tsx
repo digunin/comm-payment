@@ -1,7 +1,11 @@
 import React from "react";
 import InputElement from "./InputElement";
 import { FormType, useForm } from "./useForm";
-import { notInteger, lessThanPrevious } from "./errors/monthReportErrors";
+import {
+  notInteger,
+  lessThanPrevious,
+  meterMutator,
+} from "./errors/monthReportErrors";
 import { PhysicalMeterName } from "../../store/form/types";
 import { useMinReadings } from "./useMinReadings";
 
@@ -33,6 +37,7 @@ const MeterReadingsForm: FormType<PhysicalMeterName> = ({ reducer }) => {
             }
             value={value}
             error={error}
+            mutators={[meterMutator]}
             checkers={[notInteger, lessThanPrevious]}
             checkOptions={{ min: minReadings[meterName].totalValue }}
             key={`meter-readings-form-input-${meterName}`}

@@ -26,6 +26,7 @@ const MonthDetails = () => {
           <button
             className="action-button edit-month-report"
             onClick={onEditButtonClick}
+            title="Редактировать запись"
           >
             &#10000;
           </button>
@@ -33,6 +34,7 @@ const MonthDetails = () => {
             onClick={onShowAllPaymentsClick}
             className="action-button show-all-payments"
             disabled={showPaymentsDisabled}
+            title="Все платежи за месяц"
           >
             •••
           </button>

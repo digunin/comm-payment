@@ -678,3 +678,24 @@ test("loadState", async () => {
   expect(container.getElementsByClassName("start-page").length).toBe(0);
   expect(container.getElementsByClassName("add-button").length).not.toBe(0);
 });
+
+test("add initial readings", () => {
+  const { container } = renderWithProvider(<App />);
+  expect(
+    screen.getByText(
+      /Для начала нужно установить начальные значения счетчиков/i
+    )
+  ).toBeInTheDocument();
+  fireEvent.click(screen.getByText(/Добавить стартовые показания счетчиков/i));
+  expect(
+    screen.getByText(/Введите начальные показания счетчиков/i)
+  ).toBeInTheDocument();
+  enterText("cold", "meters", container, "4");
+  enterText("hot", "meters", container, "-2");
+  enterText("electricity", "meters", container, "55");
+  fireEvent.click(screen.getByText(/ok/i));
+  fireEvent.click(screen.getByTitle(/Добавить новую запись/i));
+  expect(getEnteredText("cold", "meters", container)).toBe("4");
+  expect(getEnteredText("hot", "meters", container)).toBe("2");
+  expect(getEnteredText("electricity", "meters", container)).toBe("55");
+});

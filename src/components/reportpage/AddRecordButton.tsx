@@ -24,7 +24,11 @@ const AddRecordButton = () => {
   };
 
   return (
-    <button className="add-button" onClick={onAddButtonClick}>
+    <button
+      className="add-button"
+      onClick={onAddButtonClick}
+      title="Добавить новую запись"
+    >
       +
     </button>
   );

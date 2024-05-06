@@ -33,7 +33,9 @@ test("renders starting page", () => {
   expect(container.getElementsByClassName("start-page").length).toBe(0);
   expect(container.getElementsByClassName("info-text").length).toBe(0);
   expect(container.getElementsByClassName("btn-add-starting").length).toBe(0);
-  expect(container.getElementsByClassName("global-report").length).toBe(1);
+  expect(container.getElementsByClassName("add-initial-readings").length).toBe(
+    1
+  );
 });
 
 test("report-blocks render", () => {

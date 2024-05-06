@@ -10,6 +10,7 @@ import { setMode, setNeedSaving } from "./store/app-mode/appModeReducer";
 import { useAppDispatch, useAppSelector } from "./AppHooks";
 import { loadState, saveState } from "./store/app-storage/storageReducer";
 import { SerializedState } from "./store/app-storage";
+import AddInitialReadings from "./components/forms/add-initial-readings/AddInitialReadings";
 
 function App({ testState }: { testState?: SerializedState }) {
   const dispatch = useAppDispatch();
@@ -20,6 +21,7 @@ function App({ testState }: { testState?: SerializedState }) {
     isStartingPage,
     isReportShow,
     isMonthReportChange,
+    isAddInitialReadings,
     needSaving,
   } = useAppMode();
 
@@ -49,6 +51,7 @@ function App({ testState }: { testState?: SerializedState }) {
 
   return (
     <div className="App">
+      {isAddInitialReadings && <AddInitialReadings />}
       {isMonthReportCreate && <CreateMonthReport />}
       {isMonthReportChange && <ChangeMonthReport />}
       {isStartingPage && <StartPage />}

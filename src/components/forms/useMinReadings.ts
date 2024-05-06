@@ -1,4 +1,4 @@
-import { Months } from "../../store/payment/paymentReducer.utils";
+import { Months, zeroReadings } from "../../store/payment/paymentReducer.utils";
 import { useSelected } from "../reportpage/reportPageHooks/useSelected";
 import { useLastRecord } from "./useLastRecord";
 import { selectLatestRecord } from "../../store/payment/paymentReducer";
@@ -12,5 +12,6 @@ export const useMinReadings = () => {
     return useAppSelector((state) =>
       selectLatestRecord(state, selectedMonth as Months)
     );
+  if (appMode == "add-starting") return zeroReadings;
   return latestRecord;
 };

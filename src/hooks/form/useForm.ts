@@ -1,6 +1,6 @@
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 import { InputField, InputFieldName } from "../../store/form/types";
-import { useAppDispatch, useAppSelector } from "../../AppHooks";
+import { useAppDispatch, useAppSelector } from "../redux-hoks";
 
 export type FormType<N extends InputFieldName> = ({
   reducer,

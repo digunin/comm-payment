@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { pathNames } from "../route-paths";
+import { pathNames } from "../utils/values";
 
 export function StartPage() {
   return (

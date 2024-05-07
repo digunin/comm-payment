@@ -1,19 +1,19 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { selectIsValidForm } from "../../../store/form/createMonthReportReducer";
 import MeterReadingsForm from "../MeterReadingsForm";
 import SubmitBlock from "../SubmitBlock";
 import PriceForm from "../PriceForm";
 import MonthAndYearForm from "../MonthAndYearForm";
 import { addNewRecord } from "../../../store/payment/paymentReducer";
-import { useFormPayload } from "../useFormPayload";
+import { useFormPayload } from "../../../hooks/form/useFormPayload";
 import { setPrice } from "../../../store/price/priceReducer";
 import { setNeedSaving } from "../../../store/savingStatusReducer";
 import { setPriceInputField } from "../../../store/form/createMonthReportReducer";
 import { setMetersInputField } from "../../../store/form/createMonthReportReducer";
 import { setMonthAndYearInputField } from "../../../store/form/createMonthReportReducer";
-import { useAppDispatch, useAppSelector } from "../../../AppHooks";
-import { useNavigate } from "react-router-dom";
-import { pathNames } from "../../../route-paths";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux-hoks";
+import { pathNames } from "../../../utils/values";
 
 const CreateMonthReport = () => {
   const dispatch = useAppDispatch();

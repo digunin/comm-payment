@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelected } from "./reportPageHooks/useSelected";
+import { useSelected } from "../../hooks/report-page/useSelected";
 
 const YearDetails = () => {
   const { selectedYear } = useSelected();

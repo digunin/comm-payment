@@ -49,16 +49,6 @@ export function isPriceInArray(array: Array<Price>, newPrice: Price): boolean {
   );
 }
 
-// const initialState: PriceState = {
-//   status: "idle",
-//   price: {
-//     cold: 2404,
-//     hot: 16793,
-//     electricity: 505,
-//     waterWaste: 5220,
-//   },
-// };
-
 const priceSlice = createSlice({
   name: "price",
   initialState,

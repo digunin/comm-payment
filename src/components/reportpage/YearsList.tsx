@@ -1,7 +1,7 @@
 import React from "react";
 import YearButton from "./YearButton";
 import AddRecordButton from "./AddRecordButton";
-import { useYearsList } from "./reportPageHooks/useYearsList";
+import { useYearsList } from "../../hooks/report-page/useYearsList";
 
 const YearsList = () => {
   const { years, selectedYear, onYearButtonClick } = useYearsList();

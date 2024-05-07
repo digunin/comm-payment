@@ -1,4 +1,4 @@
-import { Months } from "../../store/payment/paymentReducer.utils";
+import { Months } from "../../store/payment/types";
 
 export const useDatePicker = (
   minYear: number,

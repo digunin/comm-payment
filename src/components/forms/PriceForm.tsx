@@ -1,6 +1,6 @@
 import React from "react";
 import InputElement from "./InputElement";
-import { FormType, useForm } from "./useForm";
+import { FormType, useForm } from "../../hooks/form/useForm";
 import { priceMutator } from "./errors/monthReportErrors";
 import { notNumber, max2digitsAfterDot } from "./errors/monthReportErrors";
 import { PriceFieldName } from "../../store/form/types";

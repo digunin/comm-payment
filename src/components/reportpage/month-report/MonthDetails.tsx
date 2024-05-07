@@ -1,7 +1,7 @@
 import React from "react";
-import { Months, Payment } from "../../../store/payment/paymentReducer.utils";
+import { Months, Payment } from "../../../store/payment/types";
 import PaymentDetails from "./PaymentDetails";
-import { useMonthDetails } from "../reportPageHooks/useMonthDetails";
+import { useMonthDetails } from "../../../hooks/report-page/useMonthDetails";
 import CompareBar from "./CompareBar";
 
 const MonthDetails = () => {

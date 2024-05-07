@@ -1,8 +1,8 @@
 import React from "react";
 import { fireEvent } from "@testing-library/react";
 import { selectStartReadings, addStartReadings } from "./paymentReducer";
-import { renderWithProvider } from "../../utils";
-import { useAppDispatch, useAppSelector } from "../../AppHooks";
+import { renderWithProvider } from "../../utils/rtl-render-helper";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux-hoks";
 
 const App = () => {
   const dispatch = useAppDispatch();

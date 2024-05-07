@@ -1,21 +1,19 @@
 import React from "react";
 import "@testing-library/jest-dom";
-import CreateMonthReport from "./CreateMonthReport";
-import {
-  Months,
-  testTotalReport,
-} from "../../../store/payment/paymentReducer.utils";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { fireEvent } from "@testing-library/react";
+import CreateMonthReport from "./CreateMonthReport";
+import { Months } from "../../../store/payment/types";
+import { testTotalReport } from "../../../utils/values";
 import { Price, setPriceState } from "../../../store/price/priceReducer";
 import { oldPrices } from "../../../store/price/priceReducer.spec";
 import { setPaymentsState } from "../../../store/payment/paymentReducer";
 import { setInitialValues } from "../../../store/form/createMonthReportReducer";
 import { errorsText } from "../errors/monthReportErrors";
-import { renderWithProviderAndRouter } from "../../../utils";
+import { renderWithProviderAndRouter } from "../../../utils/rtl-render-helper";
 import { PriceFieldName } from "../../../store/form/types";
-import { useAppDispatch } from "../../../AppHooks";
-import { Route, Routes, useNavigate } from "react-router-dom";
-import { pathNames } from "../../../route-paths";
+import { useAppDispatch } from "../../../hooks/redux-hoks";
+import { pathNames } from "../../../utils/values";
 
 const App = () => {
   const dispatch = useAppDispatch();

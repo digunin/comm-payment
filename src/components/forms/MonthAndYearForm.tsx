@@ -1,6 +1,6 @@
 import React from "react";
-import { FormType, useForm } from "./useForm";
-import { useLastRecord } from "./useLastRecord";
+import { FormType, useForm } from "../../hooks/form/useForm";
+import { useLastRecord } from "../../hooks/form/useLastRecord";
 import DatePicker from "./DatePicker";
 import { MonthAndYearFieldName } from "../../store/form/types";
 

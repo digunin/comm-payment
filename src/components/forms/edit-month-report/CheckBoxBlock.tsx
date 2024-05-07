@@ -1,6 +1,6 @@
 import React from "react";
-import { CHeckBoxList } from "../useMultipleFix";
-import { Months } from "../../../store/payment/paymentReducer.utils";
+import { CHeckBoxList } from "../../../hooks/form/useMultipleFix";
+import { Months } from "../../../store/payment/types";
 import CheckBoxYear from "./CheckBoxYear";
 
 type CBLProps = {

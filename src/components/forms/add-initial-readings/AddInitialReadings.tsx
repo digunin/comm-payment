@@ -1,16 +1,16 @@
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../../../AppHooks";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux-hoks";
 import {
   selectIsValidForm,
   setMetersInputField,
 } from "../../../store/form/createMonthReportReducer";
-import { useFormPayload } from "../useFormPayload";
+import { useFormPayload } from "../../../hooks/form/useFormPayload";
 import MeterReadingsForm from "../MeterReadingsForm";
 import SubmitBlock from "../SubmitBlock";
 import { addStartReadings } from "../../../store/payment/paymentReducer";
 import { setNeedSaving } from "../../../store/savingStatusReducer";
-import { useNavigate } from "react-router-dom";
-import { pathNames } from "../../../route-paths";
+import { pathNames } from "../../../utils/values";
 
 const AddInitialReadings = () => {
   const dispatch = useAppDispatch();

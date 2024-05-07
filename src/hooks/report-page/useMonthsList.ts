@@ -1,14 +1,11 @@
-import {
-  Months,
-  YearReport,
-} from "../../../store/payment/paymentReducer.utils";
+import { Months, YearReport } from "../../store/payment/types";
 import {
   selectYearOfLatestRecord,
   selectMonthOfLatestRecord,
   setSelected,
-} from "../../../store/payment/paymentReducer";
+} from "../../store/payment/paymentReducer";
 import { useSelected } from "./useSelected";
-import { useAppDispatch, useAppSelector } from "../../../AppHooks";
+import { useAppDispatch, useAppSelector } from "../redux-hoks";
 
 type returnedFromUseMonthsList = {
   fullYear: Array<number>;

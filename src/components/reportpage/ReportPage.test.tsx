@@ -2,15 +2,15 @@ import React from "react";
 import { fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import ReportPage from "./ReportPage";
-import { testTotalReport } from "../../store/payment/paymentReducer.utils";
+import { testTotalReport } from "../../utils/values";
 import { oldPrices } from "../../store/price/priceReducer.spec";
 import {
   selectStartReadings,
   setPaymentsState,
 } from "../../store/payment/paymentReducer";
 import { Price, setPriceState } from "../../store/price/priceReducer";
-import { renderWithProviderAndRouter } from "../../utils";
-import { useAppDispatch, useAppSelector } from "../../AppHooks";
+import { renderWithProviderAndRouter } from "../../utils/rtl-render-helper";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux-hoks";
 
 const App = () => {
   const dispatch = useAppDispatch();

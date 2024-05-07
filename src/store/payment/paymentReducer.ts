@@ -1,41 +1,20 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import {
+  AddRecordPayload,
   MeterReadings,
   MonthReport,
   Months,
-  YearReport,
+  MultipleReacalcPayload,
+  PaymentsState,
+  Selected,
+} from "./types";
+import {
   calcNewReadings,
   calcPayAmount,
   getLatestMeterReadings,
   getPreviousYearsDesc,
-} from "./paymentReducer.utils";
+} from "../../utils/payment-reducer";
 import { RootState } from "..";
-import { Price } from "../price/priceReducer";
-
-interface Selected {
-  selectedYear: number | null;
-  selectedMonth: Months | null;
-}
-export interface PaymentsState {
-  startReadings: MeterReadings | null;
-  // key is year
-  [key: number]: YearReport;
-  selected: Selected;
-}
-
-type AddRecordPayload = {
-  year: number;
-  month: Months;
-  readings: { [key in keyof MeterReadings]: number };
-  price: Price;
-};
-
-type MultipleReacalcPayload = {
-  checked: {
-    [key: number]: Array<Months>;
-  };
-  newPrice: Price;
-};
 
 const initialState: PaymentsState = {
   startReadings: null,

@@ -1,8 +1,5 @@
 import React from "react";
-import {
-  MeterReadings,
-  Payment,
-} from "../../../store/payment/paymentReducer.utils";
+import { MeterReadings, Payment } from "../../../store/payment/types";
 import PaymentRow from "./PaymentRow";
 
 type PDProps = {

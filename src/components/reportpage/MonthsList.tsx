@@ -1,6 +1,6 @@
 import React from "react";
 import MonthButton from "./MonthButton";
-import { useMonthsList } from "./reportPageHooks/useMonthsList";
+import { useMonthsList } from "../../hooks/report-page/useMonthsList";
 import AddRecordButton from "./AddRecordButton";
 
 const MonthsList = () => {

@@ -1,5 +1,5 @@
 import { PayloadAction } from "@reduxjs/toolkit";
-import { MeterReadings } from "../payment/paymentReducer.utils";
+import { MeterReadings } from "../payment/types";
 
 export type InputField = {
   value: number | string;

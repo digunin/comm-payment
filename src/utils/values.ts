@@ -1,128 +1,6 @@
-import { SerializedState } from "../app-storage";
-import { Price } from "./../price/priceReducer";
-import { PaymentsState } from "./paymentReducer";
-
-export enum Months {
-  jan = 0,
-  feb,
-  mar,
-  apr,
-  may,
-  jun,
-  jul,
-  aug,
-  sep,
-  oct,
-  nov,
-  dec,
-}
-
-type MeterReading = { totalValue: number; monthValue: number };
-
-export type MeterReadings = {
-  cold: MeterReading;
-  hot: MeterReading;
-  electricity: MeterReading;
-  waterWaste: MeterReading;
-};
-
-export interface PayAmount extends Price {
-  total: number;
-}
-
-export type Payment = {
-  date: number;
-  meterReadings: MeterReadings;
-  price: Price;
-  payAmount: PayAmount;
-};
-
-export type MonthReport = {
-  showAllPayments: boolean;
-  lastPayment: Payment;
-  previousPayments: Array<Payment>;
-  selected: number;
-};
-
-export type YearReport = { [key in Months]?: MonthReport };
-
-export function getLatestMeterReadings(
-  totalReport: PaymentsState,
-  month?: Months
-): {
-  latestYear: number;
-  latestMonth: Months | -1;
-  latestReadings: MeterReadings;
-} {
-  const years = getPreviousYearsDesc(totalReport);
-
-  for (const year of years) {
-    month = years.indexOf(year) === 0 ? month : undefined;
-    const result = getLatestMeterReadingsInYear(totalReport[year], month);
-    if (result) {
-      return {
-        latestYear: year,
-        latestMonth: result.month,
-        latestReadings: result.readings,
-      };
-    }
-  }
-  return {
-    latestYear: -1,
-    latestMonth: -1,
-    latestReadings: totalReport.startReadings as MeterReadings,
-  };
-}
-
-export function getLatestMeterReadingsInYear(
-  yearReport: YearReport,
-  start?: Months
-): { readings: MeterReadings; month: Months } | null {
-  if (start === Months.jan) return null;
-  start = start ? start - 1 : Months.dec;
-  for (let i = start; i >= Months.jan; i--) {
-    if (i in yearReport) {
-      return {
-        readings: <MeterReadings>yearReport[i]?.lastPayment.meterReadings,
-        month: i,
-      };
-    }
-  }
-  return null;
-}
-
-export function getPreviousYearsDesc(
-  totalReport: PaymentsState,
-  year?: number
-): Array<number> {
-  let yearsArray: Array<number> = Object.keys(totalReport)
-    .filter((key) => isNaN(Number(key)) === false)
-    .map((str) => Number(str));
-  yearsArray.sort((a, b) => b - a);
-  if (typeof year === "number") return yearsArray.filter((y) => y < year);
-  return yearsArray;
-}
-
-export function getCurrentDate(): { year: number; month: Months } {
-  const date = new Date();
-  return { year: date.getFullYear(), month: date.getMonth() };
-}
-
-export function calcPayAmount(
-  readings: MeterReadings,
-  price: Price
-): Omit<PayAmount, "date"> {
-  let payment = {
-    cold: readings.cold.monthValue * price.cold,
-    hot: readings.hot.monthValue * price.hot,
-    electricity: readings.electricity.monthValue * price.electricity,
-    waterWaste: readings.waterWaste.monthValue * price.waterWaste,
-  };
-  return {
-    ...payment,
-    total: Object.values(payment).reduce((acc, value) => acc + value),
-  };
-}
+import { SerializedState } from "../store/app-storage";
+import { MeterReadings, Months, PaymentsState } from "../store/payment/types";
+import { Price } from "../store/price/priceReducer";
 
 export const zeroReadings: MeterReadings = {
   cold: {
@@ -142,33 +20,6 @@ export const zeroReadings: MeterReadings = {
     monthValue: 0,
   },
 };
-
-export function calcNewReadings(
-  readings: { [key in keyof MeterReadings]: number },
-  previousReadings?: MeterReadings
-): MeterReadings {
-  previousReadings = previousReadings ? previousReadings : zeroReadings;
-  return {
-    cold: {
-      totalValue: readings.cold,
-      monthValue: readings.cold - previousReadings.cold.totalValue,
-    },
-    hot: {
-      totalValue: readings.hot,
-      monthValue: readings.hot - previousReadings.hot.totalValue,
-    },
-    electricity: {
-      totalValue: readings.electricity,
-      monthValue:
-        readings.electricity - previousReadings.electricity.totalValue,
-    },
-    waterWaste: {
-      totalValue: readings.cold + readings.hot,
-      monthValue:
-        readings.cold + readings.hot - previousReadings.waterWaste.totalValue,
-    },
-  };
-}
 
 export const price: Price = {
   cold: 2404,
@@ -463,4 +314,11 @@ export const testState: SerializedState = {
     actualPrice: price,
     oldPrices: [],
   },
+};
+
+export const pathNames = {
+  home: "/",
+  create: "/add-new-record",
+  edit: "/edit-record",
+  addInitial: "/add-initial-readings",
 };

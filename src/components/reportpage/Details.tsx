@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelected } from "./reportPageHooks/useSelected";
+import { useSelected } from "../../hooks/report-page/useSelected";
 import MonthDetails from "./month-report/MonthDetails";
 import YearDetails from "./YearDetails";
 

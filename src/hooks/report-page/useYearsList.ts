@@ -1,9 +1,9 @@
 import {
   selectYearsDesc,
   setSelected,
-} from "../../../store/payment/paymentReducer";
+} from "../../store/payment/paymentReducer";
 import { useSelected } from "./useSelected";
-import { useAppDispatch, useAppSelector } from "../../../AppHooks";
+import { useAppDispatch, useAppSelector } from "../redux-hoks";
 
 export function useYearsList() {
   const dispatch = useAppDispatch();

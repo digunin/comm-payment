@@ -1,7 +1,7 @@
 import { selectListOfReports } from "../../store/payment/paymentReducer";
-import { Months } from "../../store/payment/paymentReducer.utils";
+import { Months } from "../../store/payment/types";
 import { useState } from "react";
-import { useAppSelector } from "../../AppHooks";
+import { useAppSelector } from "../redux-hoks";
 
 export type CHeckBoxList = { [key: number]: { [key in Months]?: boolean } };
 

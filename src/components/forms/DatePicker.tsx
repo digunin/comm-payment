@@ -1,6 +1,6 @@
 import React from "react";
-import { Months } from "../../store/payment/paymentReducer.utils";
-import { useDatePicker } from "./useDatePicker";
+import { Months } from "../../store/payment/types";
+import { useDatePicker } from "../../hooks/form/useDatePicker";
 
 type DPProps = {
   onchange: (year: number, month: Months) => void;

@@ -2,7 +2,7 @@ import React from "react";
 import { fireEvent, waitFor, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import App from "./App";
-import { renderWithProviderAndRouter } from "./utils";
+import { renderWithProviderAndRouter } from "./utils/rtl-render-helper";
 import {
   enterText,
   getEnteredText,
@@ -10,7 +10,7 @@ import {
   getError,
 } from "./components/forms/create-month-report/CreateMonthReport.test";
 import { errorsText } from "./components/forms/errors/monthReportErrors";
-import { testState } from "./store/payment/paymentReducer.utils";
+import { testState } from "./utils/values";
 
 const getCheckboxes = (container: HTMLElement) => {
   const all = Array.from(container.getElementsByTagName("input")).filter(

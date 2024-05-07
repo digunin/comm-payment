@@ -1,25 +1,25 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { selectIsValidForm } from "../../../store/form/createMonthReportReducer";
 import MeterReadingsForm from "../MeterReadingsForm";
 import SubmitBlock from "../SubmitBlock";
 import PriceForm from "../PriceForm";
-import { useFormPayload } from "../useFormPayload";
+import { useFormPayload } from "../../../hooks/form/useFormPayload";
 import { setPrice } from "../../../store/price/priceReducer";
 import { setNeedSaving } from "../../../store/savingStatusReducer";
 import { setPriceInputField } from "../../../store/form/createMonthReportReducer";
 import { setMetersInputField } from "../../../store/form/createMonthReportReducer";
-import { useSelected } from "../../reportpage/reportPageHooks/useSelected";
-import { useLastRecord } from "../useLastRecord";
-import { Months } from "../../../store/payment/paymentReducer.utils";
+import { useSelected } from "../../../hooks/report-page/useSelected";
+import { useLastRecord } from "../../../hooks/form/useLastRecord";
+import { Months } from "../../../store/payment/types";
 import {
   multiplePriceFix,
   recalcPayment,
 } from "../../../store/payment/paymentReducer";
-import { useMultipleFix } from "../useMultipleFix";
+import { useMultipleFix } from "../../../hooks/form/useMultipleFix";
 import CheckBoxBlock from "./CheckBoxBlock";
-import { useAppDispatch, useAppSelector } from "../../../AppHooks";
-import { useNavigate } from "react-router-dom";
-import { pathNames } from "../../../route-paths";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux-hoks";
+import { pathNames } from "../../../utils/values";
 
 const EditMonthReport = () => {
   const dispatch = useAppDispatch();

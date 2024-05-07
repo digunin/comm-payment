@@ -1,12 +1,10 @@
-import { PaymentsState } from "./paymentReducer";
+import { Months } from "./types";
 import {
   getPreviousYearsDesc,
   getLatestMeterReadingsInYear,
-  Months,
-  testTotalReport,
-  getCurrentDate,
   getLatestMeterReadings,
-} from "./paymentReducer.utils";
+} from "../../utils/payment-reducer";
+import { testTotalReport } from "../../utils/values";
 
 describe("paymentReducer utility function testing", () => {
   describe("sort by desc", () => {

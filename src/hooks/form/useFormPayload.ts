@@ -1,5 +1,5 @@
-import { Months } from "../../store/payment/paymentReducer.utils";
-import { useAppSelector } from "../../AppHooks";
+import { Months } from "../../store/payment/types";
+import { useAppSelector } from "../redux-hoks";
 
 export const useFormPayload = () => {
   const { metersInputFields, priceInputFields, monthAndYearInputFields } =

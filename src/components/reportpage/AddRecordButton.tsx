@@ -1,11 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { setInitialValues } from "../../store/form/createMonthReportReducer";
 import { selectActualPrice } from "../../store/price/priceReducer";
-import { useLastRecord } from "../forms/useLastRecord";
-import { createFormInitialValue } from "../../utils";
-import { useAppDispatch, useAppSelector } from "../../AppHooks";
-import { useNavigate } from "react-router-dom";
-import { pathNames } from "../../route-paths";
+import { useLastRecord } from "../../hooks/form/useLastRecord";
+import { createFormInitialValue } from "../../utils/form";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux-hoks";
+import { pathNames } from "../../utils/values";
 
 const AddRecordButton = () => {
   const dispatch = useAppDispatch();

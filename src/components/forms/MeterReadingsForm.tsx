@@ -1,13 +1,13 @@
 import React from "react";
 import InputElement from "./InputElement";
-import { FormType, useForm } from "./useForm";
+import { FormType, useForm } from "../../hooks/form/useForm";
 import {
   notInteger,
   lessThanPrevious,
   meterMutator,
 } from "./errors/monthReportErrors";
 import { PhysicalMeterName } from "../../store/form/types";
-import { useMinReadings } from "./useMinReadings";
+import { useMinReadings } from "../../hooks/form/useMinReadings";
 
 const MeterReadingsForm: FormType<PhysicalMeterName> = ({ reducer }) => {
   const {

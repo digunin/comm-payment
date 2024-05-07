@@ -1,5 +1,5 @@
 import React from "react";
-import { useAppSelector } from "../AppHooks";
+import { useAppSelector } from "../hooks/redux-hoks";
 import { StartPage } from "./StartPage";
 import ReportPage from "./reportpage/ReportPage";
 

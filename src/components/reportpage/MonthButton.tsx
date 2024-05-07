@@ -1,5 +1,5 @@
 import React from "react";
-import { Months } from "../../store/payment/paymentReducer.utils";
+import { Months } from "../../store/payment/types";
 
 type MBProps = {
   month: Months;

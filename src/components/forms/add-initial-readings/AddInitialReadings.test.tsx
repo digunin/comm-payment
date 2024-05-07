@@ -1,8 +1,9 @@
 import React from "react";
 import "@testing-library/jest-dom";
-import AddInitialReadings from "./AddInitialReadings";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { fireEvent } from "@testing-library/react";
-import { renderWithProviderAndRouter } from "../../../utils";
+import AddInitialReadings from "./AddInitialReadings";
+import { renderWithProviderAndRouter } from "../../../utils/rtl-render-helper";
 import {
   getEnteredText,
   enterText,
@@ -10,8 +11,7 @@ import {
   getError,
 } from "../create-month-report/CreateMonthReport.test";
 import { errorsText } from "../errors/monthReportErrors";
-import { pathNames } from "../../../route-paths";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { pathNames } from "../../../utils/values";
 
 const { notInteger } = errorsText;
 const errorNotFound = "error-not-found";

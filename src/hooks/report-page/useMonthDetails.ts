@@ -1,20 +1,16 @@
-import { MonthReport } from "./../../../store/payment/paymentReducer.utils";
+import { MonthReport } from "../../store/payment/types";
 import { useSelected } from "./useSelected";
-import { createFormInitialValue } from "../../../utils";
-import {
-  MeterReadings,
-  Months,
-  Payment,
-} from "../../../store/payment/paymentReducer.utils";
-import { Price } from "../../../store/price/priceReducer";
-import { setInitialValues } from "../../../store/form/createMonthReportReducer";
+import { createFormInitialValue } from "../../utils/form";
+import { MeterReadings, Months, Payment } from "../../store/payment/types";
+import { Price } from "../../store/price/priceReducer";
+import { setInitialValues } from "../../store/form/createMonthReportReducer";
 import {
   setSelectedPayment,
   toggleAllPaymentsShow,
-} from "../../../store/payment/paymentReducer";
-import { useAppDispatch } from "../../../AppHooks";
+} from "../../store/payment/paymentReducer";
+import { useAppDispatch } from "../redux-hoks";
 import { useNavigate } from "react-router-dom";
-import { pathNames } from "../../../route-paths";
+import { pathNames } from "../../utils/values";
 
 export const useMonthDetails = () => {
   const dispatch = useAppDispatch();

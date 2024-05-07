@@ -1,6 +1,6 @@
 import { SerializedState } from "./index";
 import { AppStorage } from ".";
-import { testState } from "../payment/paymentReducer.utils";
+import { testState } from "../../utils/values";
 
 const MockStorage: AppStorage = {
   load: () =>

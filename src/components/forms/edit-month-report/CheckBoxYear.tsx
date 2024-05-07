@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Months } from "../../../store/payment/paymentReducer.utils";
-import { useSelected } from "../../reportpage/reportPageHooks/useSelected";
+import { Months } from "../../../store/payment/types";
+import { useSelected } from "../../../hooks/report-page/useSelected";
 
 const CheckBoxYear = ({
   yearList,

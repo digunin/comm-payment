@@ -1,6 +1,6 @@
 import React from "react";
-import { pathNames } from "../../route-paths";
 import { useNavigate } from "react-router-dom";
+import { pathNames } from "../../utils/values";
 
 type SBProps = {
   onSubmit: () => void;

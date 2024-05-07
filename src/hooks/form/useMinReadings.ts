@@ -1,10 +1,11 @@
-import { Months, zeroReadings } from "../../store/payment/paymentReducer.utils";
-import { useSelected } from "../reportpage/reportPageHooks/useSelected";
+import { useLocation } from "react-router-dom";
+import { Months } from "../../store/payment/types";
+import { zeroReadings } from "../../utils/values";
+import { useSelected } from "../report-page/useSelected";
 import { useLastRecord } from "./useLastRecord";
 import { selectLatestRecord } from "../../store/payment/paymentReducer";
-import { useAppSelector } from "../../AppHooks";
-import { useLocation } from "react-router-dom";
-import { pathNames } from "../../route-paths";
+import { useAppSelector } from "../redux-hoks";
+import { pathNames } from "../../utils/values";
 
 export const useMinReadings = () => {
   const { latestRecord } = useLastRecord();

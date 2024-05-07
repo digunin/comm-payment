@@ -1,16 +1,8 @@
 import React from "react";
 import "@testing-library/jest-dom";
 import AddInitialReadings from "./AddInitialReadings";
-import { testTotalReport } from "../../../store/payment/paymentReducer.utils";
 import { fireEvent } from "@testing-library/react";
-import { Price, setPriceState } from "../../../store/price/priceReducer";
-import { oldPrices } from "../../../store/price/priceReducer.spec";
-import {
-  selectStartReadings,
-  setPaymentsState,
-} from "../../../store/payment/paymentReducer";
-import { useAppDispatch, useAppSelector } from "../../../AppHooks";
-import { renderWithProvider } from "../../../utils";
+import { renderWithProviderAndRouter } from "../../../utils";
 import {
   getEnteredText,
   enterText,
@@ -18,27 +10,34 @@ import {
   getError,
 } from "../create-month-report/CreateMonthReport.test";
 import { errorsText } from "../errors/monthReportErrors";
-import { setMode } from "../../../store/app-mode/appModeReducer";
+import { pathNames } from "../../../route-paths";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
-const { lessThanPrevious, notInteger } = errorsText;
+const { notInteger } = errorsText;
 const errorNotFound = "error-not-found";
 
 const App = () => {
-  const dispatch = useAppDispatch();
-  const appMode = useAppSelector((state) => state.appModeState.mode);
-  const setState = () => {
-    dispatch(setMode("add-starting"));
-  };
+  const navigate = useNavigate();
   return (
-    <div>
-      {appMode === "add-starting" && <AddInitialReadings />}
-      <button data-testid="btn-setstate" onClick={setState}></button>
-    </div>
+    <>
+      <Routes>
+        <Route path={pathNames.addInitial} element={<AddInitialReadings />} />
+        <Route
+          path={pathNames.home}
+          element={
+            <button
+              data-testid="btn-setstate"
+              onClick={() => navigate(pathNames.addInitial)}
+            ></button>
+          }
+        />
+      </Routes>
+    </>
   );
 };
 
 test("form render", () => {
-  const { container, getByTestId } = renderWithProvider(<App />);
+  const { container, getByTestId } = renderWithProviderAndRouter(<App />);
   expect(getByTestId("btn-setstate")).toBeInTheDocument();
   fireEvent.click(getByTestId("btn-setstate"));
   expect(container.getElementsByClassName("input-element").length).toBe(3);
@@ -49,7 +48,7 @@ test("form render", () => {
 });
 
 test("handle input", () => {
-  const { container, getByTestId } = renderWithProvider(<App />);
+  const { container, getByTestId } = renderWithProviderAndRouter(<App />);
   fireEvent.click(getByTestId("btn-setstate"));
 
   enterText("hot", "meters", container, "211002");
@@ -90,7 +89,7 @@ test("handle input", () => {
 });
 
 test("errors meters form", () => {
-  const { container, getByTestId } = renderWithProvider(<App />);
+  const { container, getByTestId } = renderWithProviderAndRouter(<App />);
   fireEvent.click(getByTestId("btn-setstate"));
 
   const buttonOK = getByTestId("btn-ok");

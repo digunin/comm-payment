@@ -2,7 +2,7 @@ import React from "react";
 import { fireEvent, waitFor, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import App from "./App";
-import { renderWithProvider, testState } from "./utils";
+import { renderWithProviderAndRouter } from "./utils";
 import {
   enterText,
   getEnteredText,
@@ -10,6 +10,7 @@ import {
   getError,
 } from "./components/forms/create-month-report/CreateMonthReport.test";
 import { errorsText } from "./components/forms/errors/monthReportErrors";
+import { testState } from "./store/payment/paymentReducer.utils";
 
 const getCheckboxes = (container: HTMLElement) => {
   const all = Array.from(container.getElementsByTagName("input")).filter(
@@ -21,7 +22,7 @@ const getCheckboxes = (container: HTMLElement) => {
 };
 
 test("renders starting page", () => {
-  const { container, getByTestId } = renderWithProvider(<App />);
+  const { container, getByTestId } = renderWithProviderAndRouter(<App />);
 
   expect(container.getElementsByClassName("start-page").length).toBe(1);
   expect(container.getElementsByClassName("info-text").length).toBe(1);
@@ -39,7 +40,7 @@ test("renders starting page", () => {
 });
 
 test("report-blocks render", () => {
-  const { container, queryAllByText } = renderWithProvider(
+  const { container, queryAllByText } = renderWithProviderAndRouter(
     <App testState={testState} />
   );
   expect(container.getElementsByClassName("start-page").length).toBe(0);
@@ -125,7 +126,7 @@ test("report-blocks render", () => {
 });
 
 test("create new record", () => {
-  const { container, getByTestId } = renderWithProvider(
+  const { container, getByTestId } = renderWithProviderAndRouter(
     <App testState={testState} />
   );
 
@@ -221,7 +222,7 @@ test("create new record", () => {
 });
 
 test("edit record", () => {
-  const { container, getByTestId } = renderWithProvider(
+  const { container, getByTestId } = renderWithProviderAndRouter(
     <App testState={testState} />
   );
 
@@ -499,7 +500,7 @@ test("edit record", () => {
 });
 
 test("multiple price edit", () => {
-  const { container, getByTestId } = renderWithProvider(
+  const { container, getByTestId } = renderWithProviderAndRouter(
     <App testState={testState} />
   );
 
@@ -665,7 +666,7 @@ test("multiple price edit", () => {
 });
 
 test("loadState", async () => {
-  const { container, getByText } = renderWithProvider(<App />);
+  const { container, getByText } = renderWithProviderAndRouter(<App />);
   expect(
     getByText("Для начала нужно установить начальные значения счетчиков")
   ).toBeInTheDocument();
@@ -680,7 +681,7 @@ test("loadState", async () => {
 });
 
 test("add initial readings", () => {
-  const { container } = renderWithProvider(<App />);
+  const { container } = renderWithProviderAndRouter(<App />);
   expect(
     screen.getByText(
       /Для начала нужно установить начальные значения счетчиков/i

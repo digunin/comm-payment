@@ -5,7 +5,7 @@ import SubmitBlock from "../SubmitBlock";
 import PriceForm from "../PriceForm";
 import { useFormPayload } from "../useFormPayload";
 import { setPrice } from "../../../store/price/priceReducer";
-import { setMode, setNeedSaving } from "../../../store/app-mode/appModeReducer";
+import { setNeedSaving } from "../../../store/savingStatusReducer";
 import { setPriceInputField } from "../../../store/form/createMonthReportReducer";
 import { setMetersInputField } from "../../../store/form/createMonthReportReducer";
 import { useSelected } from "../../reportpage/reportPageHooks/useSelected";
@@ -18,6 +18,8 @@ import {
 import { useMultipleFix } from "../useMultipleFix";
 import CheckBoxBlock from "./CheckBoxBlock";
 import { useAppDispatch, useAppSelector } from "../../../AppHooks";
+import { useNavigate } from "react-router-dom";
+import { pathNames } from "../../../route-paths";
 
 const EditMonthReport = () => {
   const dispatch = useAppDispatch();
@@ -25,6 +27,7 @@ const EditMonthReport = () => {
   const payload = useFormPayload();
   const { checkboxList, isMultiChoice, onCheckBox, listOfChecked } =
     useMultipleFix();
+  const navigate = useNavigate();
 
   const { selectedMonth, selectedYear } = useSelected();
   const { latestMonth, latestYear } = useLastRecord();
@@ -43,8 +46,8 @@ const EditMonthReport = () => {
       dispatch(recalcPayment(payload));
     }
     dispatch(setPrice(payload.price));
-    dispatch(setMode("show-report"));
     dispatch(setNeedSaving(true));
+    navigate(pathNames.home);
   };
 
   return (
@@ -56,11 +59,7 @@ const EditMonthReport = () => {
         <MeterReadingsForm reducer={setMetersInputField} />
       )}
       <PriceForm reducer={setPriceInputField} />
-      <SubmitBlock
-        isValidForm={isValidForm}
-        onSubmit={onSubmit}
-        onCancel={() => dispatch(setMode("show-report"))}
-      />
+      <SubmitBlock isValidForm={isValidForm} onSubmit={onSubmit} />
     </div>
   );
 };

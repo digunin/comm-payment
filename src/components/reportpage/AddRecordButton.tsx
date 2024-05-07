@@ -2,14 +2,16 @@ import React from "react";
 import { setInitialValues } from "../../store/form/createMonthReportReducer";
 import { selectActualPrice } from "../../store/price/priceReducer";
 import { useLastRecord } from "../forms/useLastRecord";
-import { setMode } from "../../store/app-mode/appModeReducer";
 import { createFormInitialValue } from "../../utils";
 import { useAppDispatch, useAppSelector } from "../../AppHooks";
+import { useNavigate } from "react-router-dom";
+import { pathNames } from "../../route-paths";
 
 const AddRecordButton = () => {
   const dispatch = useAppDispatch();
   const { latestRecord, newYear, newMonth } = useLastRecord();
   const price = useAppSelector(selectActualPrice);
+  const navigate = useNavigate();
 
   const initialValue = createFormInitialValue(
     newMonth,
@@ -19,8 +21,8 @@ const AddRecordButton = () => {
   );
 
   const onAddButtonClick = () => {
-    dispatch(setMode("create-month-report"));
     dispatch(setInitialValues(initialValue));
+    navigate(pathNames.create);
   };
 
   return (

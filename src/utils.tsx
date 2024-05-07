@@ -3,14 +3,10 @@ import rootReducer from "./store/rootReducer";
 import { Provider } from "react-redux";
 import { render } from "@testing-library/react";
 import React from "react";
-import {
-  MeterReadings,
-  Months,
-  price,
-  testTotalReport,
-} from "./store/payment/paymentReducer.utils";
+import { MeterReadings, Months } from "./store/payment/paymentReducer.utils";
 import { Price } from "./store/price/priceReducer";
-import { SerializedState } from "./store/app-storage";
+import { BrowserRouter } from "react-router-dom";
+import { pathNames } from "./route-paths";
 
 export const renderWithProvider = (element: React.ReactElement) => {
   const store = configureStore({
@@ -18,6 +14,21 @@ export const renderWithProvider = (element: React.ReactElement) => {
   });
   const wrapper = ({ children }: { children: React.ReactElement }) => {
     return <Provider store={store}>{children}</Provider>;
+  };
+  return render(element, { wrapper });
+};
+
+export const renderWithProviderAndRouter = (element: React.ReactElement) => {
+  const store = configureStore({
+    reducer: rootReducer,
+  });
+  window.history.pushState({}, "", pathNames.home);
+  const wrapper = ({ children }: { children: React.ReactElement }) => {
+    return (
+      <BrowserRouter>
+        <Provider store={store}>{children}</Provider>
+      </BrowserRouter>
+    );
   };
   return render(element, { wrapper });
 };
@@ -52,11 +63,3 @@ export function createFormInitialValue(
     },
   };
 }
-
-export const testState: SerializedState = {
-  paymentState: testTotalReport,
-  priceState: {
-    actualPrice: price,
-    oldPrices: [],
-  },
-};

@@ -9,7 +9,7 @@ import {
   setPaymentsState,
 } from "../../store/payment/paymentReducer";
 import { Price, setPriceState } from "../../store/price/priceReducer";
-import { renderWithProvider } from "../../utils";
+import { renderWithProviderAndRouter } from "../../utils";
 import { useAppDispatch, useAppSelector } from "../../AppHooks";
 
 const App = () => {
@@ -30,7 +30,9 @@ const App = () => {
 };
 
 test("renders report page", () => {
-  const { container, getByTestId, queryByText } = renderWithProvider(<App />);
+  const { container, getByTestId, queryByText } = renderWithProviderAndRouter(
+    <App />
+  );
 
   fireEvent.click(getByTestId("btn-setstate"));
   expect(container.firstChild).toHaveClass("global-report");

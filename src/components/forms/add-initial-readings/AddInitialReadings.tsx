@@ -8,29 +8,28 @@ import { useFormPayload } from "../useFormPayload";
 import MeterReadingsForm from "../MeterReadingsForm";
 import SubmitBlock from "../SubmitBlock";
 import { addStartReadings } from "../../../store/payment/paymentReducer";
-import { setMode, setNeedSaving } from "../../../store/app-mode/appModeReducer";
+import { setNeedSaving } from "../../../store/savingStatusReducer";
+import { useNavigate } from "react-router-dom";
+import { pathNames } from "../../../route-paths";
 
 const AddInitialReadings = () => {
   const dispatch = useAppDispatch();
   const isValidForm = useAppSelector(selectIsValidForm);
   const payload = useFormPayload();
+  const navigate = useNavigate();
 
   const onSubmit = () => {
     if (!isValidForm) return;
     dispatch(addStartReadings(payload.readings));
-    dispatch(setMode("show-report"));
     dispatch(setNeedSaving(true));
+    navigate(pathNames.home);
   };
 
   return (
     <div className="add-initial-readings">
       <h1>Введите начальные показания счетчиков</h1>
       <MeterReadingsForm reducer={setMetersInputField} />
-      <SubmitBlock
-        isValidForm={isValidForm}
-        onSubmit={onSubmit}
-        onCancel={() => dispatch(setMode("show-report"))}
-      />
+      <SubmitBlock isValidForm={isValidForm} onSubmit={onSubmit} />
     </div>
   );
 };

@@ -1,3 +1,4 @@
+import { SerializedState } from "../app-storage";
 import { Price } from "./../price/priceReducer";
 import { PaymentsState } from "./paymentReducer";
 
@@ -453,5 +454,13 @@ export const testTotalReport: PaymentsState = {
         price,
       },
     },
+  },
+};
+
+export const testState: SerializedState = {
+  paymentState: testTotalReport,
+  priceState: {
+    actualPrice: price,
+    oldPrices: [],
   },
 };

@@ -7,23 +7,26 @@ import MonthAndYearForm from "../MonthAndYearForm";
 import { addNewRecord } from "../../../store/payment/paymentReducer";
 import { useFormPayload } from "../useFormPayload";
 import { setPrice } from "../../../store/price/priceReducer";
-import { setMode, setNeedSaving } from "../../../store/app-mode/appModeReducer";
+import { setNeedSaving } from "../../../store/savingStatusReducer";
 import { setPriceInputField } from "../../../store/form/createMonthReportReducer";
 import { setMetersInputField } from "../../../store/form/createMonthReportReducer";
 import { setMonthAndYearInputField } from "../../../store/form/createMonthReportReducer";
 import { useAppDispatch, useAppSelector } from "../../../AppHooks";
+import { useNavigate } from "react-router-dom";
+import { pathNames } from "../../../route-paths";
 
 const CreateMonthReport = () => {
   const dispatch = useAppDispatch();
   const isValidForm = useAppSelector(selectIsValidForm);
   const payload = useFormPayload();
+  const navigate = useNavigate();
 
   const onSubmit = () => {
     if (!isValidForm) return;
     dispatch(addNewRecord(payload));
     dispatch(setPrice(payload.price));
-    dispatch(setMode("show-report"));
     dispatch(setNeedSaving(true));
+    navigate(pathNames.home);
   };
 
   return (
@@ -32,11 +35,7 @@ const CreateMonthReport = () => {
       <MonthAndYearForm reducer={setMonthAndYearInputField} />
       <MeterReadingsForm reducer={setMetersInputField} />
       <PriceForm reducer={setPriceInputField} />
-      <SubmitBlock
-        isValidForm={isValidForm}
-        onSubmit={onSubmit}
-        onCancel={() => dispatch(setMode("show-report"))}
-      />
+      <SubmitBlock isValidForm={isValidForm} onSubmit={onSubmit} />
     </div>
   );
 };

@@ -7,17 +7,19 @@ import {
   Payment,
 } from "../../../store/payment/paymentReducer.utils";
 import { Price } from "../../../store/price/priceReducer";
-import { setMode } from "../../../store/app-mode/appModeReducer";
 import { setInitialValues } from "../../../store/form/createMonthReportReducer";
 import {
   setSelectedPayment,
   toggleAllPaymentsShow,
 } from "../../../store/payment/paymentReducer";
 import { useAppDispatch } from "../../../AppHooks";
+import { useNavigate } from "react-router-dom";
+import { pathNames } from "../../../route-paths";
 
 export const useMonthDetails = () => {
   const dispatch = useAppDispatch();
   const { selectedMonth, selectedYear, selectedReport } = useSelected();
+  const navigate = useNavigate();
   const showPaymentsDisabled = selectedReport?.previousPayments.length === 0;
   const initialValue = createFormInitialValue(
     selectedMonth as Months,
@@ -40,8 +42,8 @@ export const useMonthDetails = () => {
   const isCompareBarShow = selectedReport?.showAllPayments;
 
   const onEditButtonClick = () => {
-    dispatch(setMode("change-month-report"));
     dispatch(setInitialValues(initialValue));
+    navigate(pathNames.edit);
   };
 
   const onShowAllPaymentsClick = () =>

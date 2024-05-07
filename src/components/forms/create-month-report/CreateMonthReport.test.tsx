@@ -8,20 +8,19 @@ import {
 import { fireEvent } from "@testing-library/react";
 import { Price, setPriceState } from "../../../store/price/priceReducer";
 import { oldPrices } from "../../../store/price/priceReducer.spec";
-import {
-  selectStartReadings,
-  setPaymentsState,
-} from "../../../store/payment/paymentReducer";
+import { setPaymentsState } from "../../../store/payment/paymentReducer";
 import { setInitialValues } from "../../../store/form/createMonthReportReducer";
 import { errorsText } from "../errors/monthReportErrors";
-import { renderWithProvider } from "../../../utils";
+import { renderWithProviderAndRouter } from "../../../utils";
 import { PriceFieldName } from "../../../store/form/types";
-import { useAppDispatch, useAppSelector } from "../../../AppHooks";
+import { useAppDispatch } from "../../../AppHooks";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import { pathNames } from "../../../route-paths";
 
 const App = () => {
   const dispatch = useAppDispatch();
-  const isNewReport = !useAppSelector(selectStartReadings);
   const actualPrice: Price = oldPrices[4];
+  const navigate = useNavigate();
   const setState = () => {
     dispatch(setPaymentsState(testTotalReport));
     dispatch(setPriceState({ actualPrice, oldPrices: [] }));
@@ -50,13 +49,21 @@ const App = () => {
         },
       })
     );
+    navigate(pathNames.create);
   };
 
   return (
-    <div>
-      {!isNewReport && <CreateMonthReport />}
-      <button data-testid="btn-setstate" onClick={setState}></button>
-    </div>
+    <>
+      <Routes>
+        <Route path={pathNames.create} element={<CreateMonthReport />} />
+        <Route
+          path={pathNames.home}
+          element={
+            <button data-testid="btn-setstate" onClick={setState}></button>
+          }
+        />
+      </Routes>
+    </>
   );
 };
 
@@ -106,7 +113,7 @@ export const getError = (
 };
 
 test("create month report render", () => {
-  const { container, getByTestId } = renderWithProvider(<App />);
+  const { container, getByTestId } = renderWithProviderAndRouter(<App />);
   expect(getByTestId("btn-setstate")).toBeInTheDocument();
   expect(container.getElementsByClassName("create-month-report").length).toBe(
     0
@@ -116,7 +123,7 @@ test("create month report render", () => {
 });
 
 test("check meters form input value", () => {
-  const { container, getByTestId } = renderWithProvider(<App />);
+  const { container, getByTestId } = renderWithProviderAndRouter(<App />);
   fireEvent.click(getByTestId("btn-setstate"));
   expect(getEnteredText("cold", "meters", container)).toBe("211000");
   expect(getEnteredText("hot", "meters", container)).toBe("211001");
@@ -159,7 +166,7 @@ test("check meters form input value", () => {
 });
 
 test("errors meters form", () => {
-  const { container, getByTestId } = renderWithProvider(<App />);
+  const { container, getByTestId } = renderWithProviderAndRouter(<App />);
   fireEvent.click(getByTestId("btn-setstate"));
   expect(getEnteredText("cold", "meters", container)).toBe("211000");
   expect(getEnteredText("hot", "meters", container)).toBe("211001");
@@ -234,7 +241,7 @@ test("errors meters form", () => {
 });
 
 test("check price form input value and errors", () => {
-  const { container, getByTestId } = renderWithProvider(<App />);
+  const { container, getByTestId } = renderWithProviderAndRouter(<App />);
   fireEvent.click(getByTestId("btn-setstate"));
   expect(getEnteredText("cold", "price", container)).toBe("24.04");
   expect(getEnteredText("hot", "price", container)).toBe("167.93");
@@ -279,7 +286,7 @@ test("check price form input value and errors", () => {
 });
 
 test("calendar", () => {
-  const { getByTestId } = renderWithProvider(<App />);
+  const { getByTestId } = renderWithProviderAndRouter(<App />);
   fireEvent.click(getByTestId("btn-setstate"));
   const calendar = getByTestId("calendar");
   expect(calendar.getAttribute("value")).toEqual("2021-11-01");

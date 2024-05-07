@@ -1,12 +1,14 @@
 import React from "react";
+import { pathNames } from "../../route-paths";
+import { useNavigate } from "react-router-dom";
 
 type SBProps = {
   onSubmit: () => void;
-  onCancel: () => void;
   isValidForm: boolean;
 };
 
-const SubmitBlock = ({ onSubmit, onCancel, isValidForm }: SBProps) => {
+const SubmitBlock = ({ onSubmit, isValidForm }: SBProps) => {
+  const navigate = useNavigate();
   return (
     <div className="submit-block">
       <button
@@ -18,7 +20,7 @@ const SubmitBlock = ({ onSubmit, onCancel, isValidForm }: SBProps) => {
       >
         OK
       </button>
-      <button data-testid="btn-cancel" onClick={onCancel}>
+      <button data-testid="btn-cancel" onClick={() => navigate(pathNames.home)}>
         Cancel
       </button>
     </div>

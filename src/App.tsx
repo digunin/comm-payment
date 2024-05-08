@@ -12,6 +12,7 @@ import { pathNames } from "./utils/values";
 import HomePage from "./components/HomePage";
 import EditMonthReport from "./components/forms/edit-month-report/EditMonthReport";
 import NotFound from "./components/404";
+import DemoBlock from "./components/DemoBlock";
 
 function App({ testState }: { testState?: SerializedState }) {
   const dispatch = useAppDispatch();
@@ -46,6 +47,7 @@ function App({ testState }: { testState?: SerializedState }) {
 
   return (
     <div className="app">
+      <DemoBlock />
       <Routes>
         <Route path={pathNames.home} element={<HomePage />} />
         <Route path={pathNames.create} element={<CreateMonthReport />} />

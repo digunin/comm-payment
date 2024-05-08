@@ -35,7 +35,7 @@ export const testTotalReport: PaymentsState = {
     electricity: { monthValue: 0, totalValue: 103 },
     waterWaste: { monthValue: 0, totalValue: 104 },
   },
-  selected: { selectedYear: null, selectedMonth: null },
+  selected: { selectedYear: 2021, selectedMonth: Months.oct },
   2014: {
     [Months.apr]: {
       selected: -1,

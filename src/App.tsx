@@ -11,6 +11,7 @@ import AddInitialReadings from "./components/forms/add-initial-readings/AddIniti
 import { pathNames } from "./utils/values";
 import HomePage from "./components/HomePage";
 import EditMonthReport from "./components/forms/edit-month-report/EditMonthReport";
+import NotFound from "./components/404";
 
 function App({ testState }: { testState?: SerializedState }) {
   const dispatch = useAppDispatch();
@@ -50,6 +51,7 @@ function App({ testState }: { testState?: SerializedState }) {
         <Route path={pathNames.create} element={<CreateMonthReport />} />
         <Route path={pathNames.edit} element={<EditMonthReport />} />
         <Route path={pathNames.addInitial} element={<AddInitialReadings />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );

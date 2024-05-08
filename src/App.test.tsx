@@ -145,8 +145,8 @@ test("create new record", () => {
   expect(container.getElementsByClassName("year-details").length).toBe(0);
   expect(container.getElementsByClassName("month-details").length).toBe(0);
 
-  expect(container.getElementsByClassName("App")[0].firstChild).toHaveClass(
-    "create-month-report"
+  expect(container.getElementsByClassName("create-month-report").length).toBe(
+    1
   );
   expect(container.getElementsByClassName("month-year-form").length).toBe(1);
   expect(container.getElementsByClassName("meter-readings-form").length).toBe(

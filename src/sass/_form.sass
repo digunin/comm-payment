@@ -1,8 +1,7 @@
 .form
-    border: 1px solid black
+    border-top: 1px solid $active-color
     margin: 5px
     padding: 5px
-    border-radius: 5px
     &.checkbox-block
         padding: 3px
         .checkbox-year
@@ -16,12 +15,32 @@
                 display: flex
                 flex-direction: column
                 margin: 3px
+    .input-wrapper
+        .input-error
+            font-size: .8em
+            background-color: rgb(255, 100, 100,50%)
+        .input-element
+            padding-left: .2em
 
-.input-error
-    background-color: rgb(255, 100, 100,50%)
+.form-header
+    padding: .5em
+    h1
+        font-size: 1em
 
-h1
-    font-size: 1em
+.submit-block
+    border-top: 1px solid $active-color
+    padding: .5em 
+    display: flex
+    justify-content: end
+    .form-button
+        background-color: $light-color
+        padding: .3em
+        border: 1px solid $active-color
+        border-radius: 3px
+        margin: 1px
+        min-width: 5em
+
+
 
 h2
     font-size: 1em

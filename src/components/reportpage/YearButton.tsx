@@ -10,7 +10,9 @@ const YearButton = ({ year, selected = false, onclick }: YBProps) => {
   return (
     <button
       onClick={() => onclick(year)}
-      className={`year-button year-${year}${selected ? " selected" : ""}`}
+      className={`button year-button year-${year}${
+        selected ? " selected" : ""
+      }`}
     >
       {year}
     </button>

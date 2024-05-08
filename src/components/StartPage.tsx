@@ -9,7 +9,10 @@ export function StartPage() {
         Для начала нужно установить начальные значения счетчиков
       </p>
       <Link to={pathNames.addInitial}>
-        <button className="btn-add-starting" data-testid="btn-add-starting">
+        <button
+          className="button btn-add-starting"
+          data-testid="btn-add-starting"
+        >
           Добавить стартовые показания счетчиков
         </button>
       </Link>

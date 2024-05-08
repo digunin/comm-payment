@@ -13,6 +13,7 @@ const SubmitBlock = ({ onSubmit, isValidForm }: SBProps) => {
     <div className="submit-block">
       <button
         data-testid="btn-ok"
+        className="form-button"
         disabled={!isValidForm}
         onClick={() => {
           if (isValidForm) onSubmit();
@@ -20,7 +21,11 @@ const SubmitBlock = ({ onSubmit, isValidForm }: SBProps) => {
       >
         OK
       </button>
-      <button data-testid="btn-cancel" onClick={() => navigate(pathNames.home)}>
+      <button
+        data-testid="btn-cancel"
+        className="form-button"
+        onClick={() => navigate(pathNames.home)}
+      >
         Cancel
       </button>
     </div>

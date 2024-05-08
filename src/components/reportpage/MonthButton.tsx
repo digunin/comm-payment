@@ -15,8 +15,10 @@ const MonthButton = ({
   onclick = () => {},
 }: MBProps) => {
   const classname = disabled
-    ? "month-button disabled"
-    : `month-button month-${Months[month]}${selected ? " selected" : ""}`;
+    ? "button month-button disabled"
+    : `button month-button month-${Months[month]}${
+        selected ? " selected" : ""
+      }`;
   return (
     <button
       disabled={disabled}

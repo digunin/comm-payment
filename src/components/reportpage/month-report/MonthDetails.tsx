@@ -24,7 +24,7 @@ const MonthDetails = () => {
         <div className="month-details-header">
           <p>{`${Months[selectedMonth]} ${selectedYear} details`}</p>
           <button
-            className="action-button edit-month-report"
+            className="button action-button edit-month-report"
             onClick={onEditButtonClick}
             title="Редактировать запись"
           >
@@ -32,7 +32,7 @@ const MonthDetails = () => {
           </button>
           <button
             onClick={onShowAllPaymentsClick}
-            className="action-button show-all-payments"
+            className="button action-button show-all-payments"
             disabled={showPaymentsDisabled}
             title="Все платежи за месяц"
           >

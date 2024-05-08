@@ -27,7 +27,9 @@ const AddInitialReadings = () => {
 
   return (
     <div className="add-initial-readings">
-      <h1>Введите начальные показания счетчиков</h1>
+      <div className="form-header">
+        <h1>Введите начальные показания счетчиков</h1>
+      </div>
       <MeterReadingsForm reducer={setMetersInputField} />
       <SubmitBlock isValidForm={isValidForm} onSubmit={onSubmit} />
     </div>

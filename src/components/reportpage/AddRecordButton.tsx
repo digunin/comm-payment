@@ -12,6 +12,7 @@ const AddRecordButton = () => {
   const { latestRecord, newYear, newMonth } = useLastRecord();
   const price = useAppSelector(selectActualPrice);
   const navigate = useNavigate();
+  const isEmptyReport = newYear === -1;
 
   const initialValue = createFormInitialValue(
     newMonth,
@@ -27,11 +28,13 @@ const AddRecordButton = () => {
 
   return (
     <button
-      className="add-button"
+      className={`button add-button${
+        isEmptyReport ? " the-only-one-button" : ""
+      }`}
       onClick={onAddButtonClick}
       title="Добавить новую запись"
     >
-      +
+      {isEmptyReport ? "Создайте первую запись" : "+"}
     </button>
   );
 };

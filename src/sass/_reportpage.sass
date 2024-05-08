@@ -3,15 +3,13 @@
     flex-direction: column
 
 .report-block
-    border: 1px solid black
-    border-radius: 3px
     margin: 1px
-    padding: 1px
+    padding: 2px
     .meter
         display: flex
         justify-content: space-between
         &:nth-child(even)
-            background-color: rgb(225, 225, 225)
+            background-color: $light-color
         p
             text-align: right
             &:first-of-type
@@ -27,10 +25,13 @@
             p
                 flex-grow: 1
         .payment
-            border-top: 1px solid black
+            border: 3px solid rgb(255,255,255)
             cursor: pointer
+            margin: .2em
+            padding: .2em
             &.selected
-                background-color: rgb(208, 247, 214)
+                border: 3px solid $active-color
+                border-radius: 3px
             .total
                 display: flex
                 justify-content: space-between
@@ -40,5 +41,16 @@
                 background-color: rgb(246, 197, 197)
             .pos
                 background-color: rgb(208, 247, 214)
+    .button
+        @include button
+        width: 2em
+        &.selected
+            background-color: $active-color
+            color: white
+        &.year-button
+            width: 3em
+        &.the-only-one-button
+            width: 100%
+            padding: .5em
     .action-button
         margin-left: 3px

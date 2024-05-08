@@ -44,7 +44,7 @@ function App({ testState }: { testState?: SerializedState }) {
   }, [needSaving]);
 
   return (
-    <div className="App">
+    <div className="app">
       <Routes>
         <Route path={pathNames.home} element={<HomePage />} />
         <Route path={pathNames.create} element={<CreateMonthReport />} />

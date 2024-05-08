@@ -31,7 +31,9 @@ const CreateMonthReport = () => {
 
   return (
     <div className="create-month-report">
-      <h1>Добавить новую запись</h1>
+      <div className="form-header">
+        <h1>Добавить новую запись</h1>
+      </div>
       <MonthAndYearForm reducer={setMonthAndYearInputField} />
       <MeterReadingsForm reducer={setMetersInputField} />
       <PriceForm reducer={setPriceInputField} />

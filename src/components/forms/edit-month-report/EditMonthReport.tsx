@@ -52,8 +52,10 @@ const EditMonthReport = () => {
 
   return (
     <div className="change-month-report">
-      <h1>Изменение записи</h1>
-      <h2>{`${Months[selectedMonth as Months]} ${selectedYear}`}</h2>
+      <div className="form-header">
+        <h1>Изменение записи</h1>
+        <h2>{`${Months[selectedMonth as Months]} ${selectedYear}`}</h2>
+      </div>
       <CheckBoxBlock list={checkboxList} onclick={onCheckBox} />
       {isPossibleChangeReadings && (
         <MeterReadingsForm reducer={setMetersInputField} />

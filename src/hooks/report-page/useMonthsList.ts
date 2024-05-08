@@ -6,6 +6,7 @@ import {
 } from "../../store/payment/paymentReducer";
 import { useSelected } from "./useSelected";
 import { useAppDispatch, useAppSelector } from "../redux-hoks";
+import { useCallback } from "react";
 
 type returnedFromUseMonthsList = {
   fullYear: Array<number>;
@@ -30,9 +31,12 @@ export function useMonthsList(): returnedFromUseMonthsList {
   let isAddButtonNeed = false;
   if (latestYear === selectedYear && latestMonth < Months.dec)
     isAddButtonNeed = true;
-  const onMonthButtonClick = (month: Months) => {
-    dispatch(setSelected({ selectedYear, selectedMonth: month }));
-  };
+  const onMonthButtonClick = useCallback(
+    (month: Months) => {
+      dispatch(setSelected({ selectedYear, selectedMonth: month }));
+    },
+    [selectedYear]
+  );
 
   const recordedMonths = Object.keys(yearReport).map((month) => Number(month));
   const fullYear =

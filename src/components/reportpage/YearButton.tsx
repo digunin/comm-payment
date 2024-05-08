@@ -9,7 +9,9 @@ type YBProps = {
 const YearButton = ({ year, selected = false, onclick }: YBProps) => {
   return (
     <button
-      onClick={() => onclick(year)}
+      onClick={() => {
+        if (!selected) onclick(year);
+      }}
       className={`button year-button year-${year}${
         selected ? " selected" : ""
       }`}
@@ -19,4 +21,4 @@ const YearButton = ({ year, selected = false, onclick }: YBProps) => {
   );
 };
 
-export default YearButton;
+export default React.memo(YearButton);

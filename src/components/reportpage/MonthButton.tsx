@@ -19,10 +19,13 @@ const MonthButton = ({
     : `button month-button month-${Months[month]}${
         selected ? " selected" : ""
       }`;
+
   return (
     <button
       disabled={disabled}
-      onClick={() => onclick(month)}
+      onClick={() => {
+        if (!selected) onclick(month);
+      }}
       className={classname}
     >
       {month + 1}
@@ -30,4 +33,4 @@ const MonthButton = ({
   );
 };
 
-export default MonthButton;
+export default React.memo(MonthButton);

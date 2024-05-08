@@ -15,9 +15,11 @@
             &:first-of-type
                 text-align: left
             &:nth-child(n+1)
-                flex-basis: 19%
+                flex-basis: 16%
             &:nth-child(1)
-                flex-basis: 24%
+                flex-basis: 32%
+            &:nth-child(2)
+                flex-basis: 14% 
     .month-details
         &-header
             display: flex
@@ -25,12 +27,11 @@
             p
                 flex-grow: 1
         .payment
-            border: 3px solid rgb(255,255,255)
+            border: 2px solid rgb(255,255,255)
             cursor: pointer
-            margin: .2em
             padding: .2em
             &.selected
-                border: 3px solid $active-color
+                border: 2px solid $active-color
                 border-radius: 3px
             .total
                 display: flex

@@ -1,6 +1,7 @@
 import React from "react";
 import { MeterReadings, Payment } from "../../../store/payment/types";
 import PaymentRow from "./PaymentRow";
+import { meterNames_ru } from "../../../utils/values";
 
 type PDProps = {
   payment: Payment;
@@ -33,7 +34,7 @@ const PaymentDetails = ({ payment, selected, onclick }: PDProps) => {
         return (
           <PaymentRow
             key={`${meterName}-${totalValue}-${monthValue}`}
-            name={meterName}
+            name={meterNames_ru[meterName as keyof MeterReadings]}
             totalValue={totalValue}
             monthValue={monthValue}
             price={meterPrice}
@@ -42,7 +43,7 @@ const PaymentDetails = ({ payment, selected, onclick }: PDProps) => {
         );
       })}
       <div className="total">
-        <p>total:</p>
+        <p>Итого:</p>
         <p>{payAmount.total / 100}</p>
       </div>
     </div>

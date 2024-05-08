@@ -46,11 +46,11 @@ test("report-blocks render", () => {
   expect(container.getElementsByClassName("start-page").length).toBe(0);
   expect(container.getElementsByClassName("global-report").length).toBe(1);
   expect(container.getElementsByClassName("report-block").length).toBe(3);
-  expect(container.getElementsByClassName("add-button").length).toBe(1);
+  expect(container.getElementsByClassName("add-button").length).toBe(2);
   expect(container.getElementsByClassName("year-button").length).toBe(3);
-  expect(container.getElementsByClassName("month-button").length).toBe(0);
+  expect(container.getElementsByClassName("month-button").length).toBe(10);
   expect(container.getElementsByClassName("year-details").length).toBe(0);
-  expect(container.getElementsByClassName("month-details").length).toBe(0);
+  expect(container.getElementsByClassName("month-details").length).toBe(1);
 
   fireEvent.click(container.getElementsByClassName("year-2014")[0]);
 

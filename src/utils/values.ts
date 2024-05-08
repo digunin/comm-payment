@@ -322,3 +322,25 @@ export const pathNames = {
   edit: "/edit-record",
   addInitial: "/add-initial-readings",
 };
+
+export const meterNames_ru: { [key in keyof MeterReadings]: string } = {
+  cold: "Холодная вода",
+  hot: "Горячая вода",
+  electricity: "Электричество",
+  waterWaste: "Водотведение",
+};
+
+export const monthsNames_ru = {
+  [Months.jan]: "январь",
+  [Months.feb]: "февраль",
+  [Months.mar]: "март",
+  [Months.apr]: "апрель",
+  [Months.may]: "май",
+  [Months.jun]: "июнь",
+  [Months.jul]: "июль",
+  [Months.aug]: "август",
+  [Months.sep]: "сентябрь",
+  [Months.oct]: "октябрь",
+  [Months.nov]: "ноябрь",
+  [Months.dec]: "декабрь",
+};

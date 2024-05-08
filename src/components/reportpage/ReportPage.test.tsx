@@ -37,9 +37,9 @@ test("renders report page", () => {
   fireEvent.click(getByTestId("btn-setstate"));
   expect(container.firstChild).toHaveClass("global-report");
   expect(container.getElementsByClassName("years-list").length).toBe(1);
-  expect(container.getElementsByClassName("add-button").length).toBe(1);
+  expect(container.getElementsByClassName("add-button").length).toBe(2);
   expect(container.getElementsByClassName("year-button selected").length).toBe(
-    0
+    1
   );
   expect(container.getElementsByClassName("year-button").length).toBe(3);
 

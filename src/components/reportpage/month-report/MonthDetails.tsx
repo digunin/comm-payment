@@ -3,6 +3,7 @@ import { Months, Payment } from "../../../store/payment/types";
 import PaymentDetails from "./PaymentDetails";
 import { useMonthDetails } from "../../../hooks/report-page/useMonthDetails";
 import CompareBar from "./CompareBar";
+import { monthsNames_ru } from "../../../utils/values";
 
 const MonthDetails = () => {
   const {
@@ -22,7 +23,7 @@ const MonthDetails = () => {
     <>
       <div className="details month-details">
         <div className="month-details-header">
-          <p>{`${Months[selectedMonth]} ${selectedYear} details`}</p>
+          <p>{`${monthsNames_ru[selectedMonth]} ${selectedYear}`}</p>
           <button
             className="button action-button edit-month-report"
             onClick={onEditButtonClick}

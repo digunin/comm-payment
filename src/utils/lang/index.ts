@@ -6,4 +6,4 @@ export type Names = {
   monthNames: { [key in Months]: string };
 };
 
-export const actualNames = ruNames;
+export const actualNames: Names = ruNames;

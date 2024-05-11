@@ -8,7 +8,7 @@ import {
 } from "./errors/monthReportErrors";
 import { PhysicalMeterName } from "../../store/form/types";
 import { useMinReadings } from "../../hooks/form/useMinReadings";
-import { meterNames_ru } from "../../utils/values";
+import { actualNames } from "../../utils/lang";
 
 const MeterReadingsForm: FormType<PhysicalMeterName> = ({ reducer }) => {
   const {
@@ -32,7 +32,7 @@ const MeterReadingsForm: FormType<PhysicalMeterName> = ({ reducer }) => {
             wrapperClassName={wrapperClassName}
             inputClassName={inputClassName}
             errorClassName={errorClassName}
-            title={meterNames_ru[meterName]}
+            title={actualNames.meterNames[meterName]}
             onchange={(value, error) =>
               onChangeHandler(value, meterName, error)
             }

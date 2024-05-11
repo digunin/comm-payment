@@ -4,7 +4,7 @@ import { FormType, useForm } from "../../hooks/form/useForm";
 import { priceMutator } from "./errors/monthReportErrors";
 import { notNumber, max2digitsAfterDot } from "./errors/monthReportErrors";
 import { PriceFieldName } from "../../store/form/types";
-import { meterNames_ru } from "../../utils/values";
+import { actualNames } from "../../utils/lang";
 
 const PriceForm: FormType<PriceFieldName> = ({ reducer }) => {
   const {
@@ -27,7 +27,7 @@ const PriceForm: FormType<PriceFieldName> = ({ reducer }) => {
             wrapperClassName={wrapperClassName}
             inputClassName={inputClassName}
             errorClassName={errorClassName}
-            title={meterNames_ru[meterName]}
+            title={actualNames.meterNames[meterName]}
             onchange={(value, error) =>
               onChangeHandler(value, meterName, error)
             }

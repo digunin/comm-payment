@@ -20,6 +20,7 @@ import { useMultipleFix } from "../../../hooks/form/useMultipleFix";
 import CheckBoxBlock from "./CheckBoxBlock";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux-hoks";
 import { pathNames } from "../../../utils/values";
+import { actualNames } from "../../../utils/lang";
 
 const EditMonthReport = () => {
   const dispatch = useAppDispatch();
@@ -54,7 +55,9 @@ const EditMonthReport = () => {
     <div className="change-month-report">
       <div className="form-header">
         <h1>Изменение записи</h1>
-        <h2>{`${Months[selectedMonth as Months]} ${selectedYear}`}</h2>
+        <h2>{`${
+          actualNames.monthNames[selectedMonth as Months]
+        } ${selectedYear}`}</h2>
       </div>
       <CheckBoxBlock list={checkboxList} onclick={onCheckBox} />
       {isPossibleChangeReadings && (
